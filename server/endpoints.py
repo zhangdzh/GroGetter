@@ -38,3 +38,15 @@ class Endpoints(Resource):
         endpoints = ''
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
+
+@api.route(f'/types/{LIST}')
+class TypeList(Resource):
+    """
+    This will get a list of types.
+    """
+    def get(self):
+        """
+        Returns a list of types.
+        """
+        return {'hello': 'world'}
+
