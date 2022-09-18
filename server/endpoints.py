@@ -39,7 +39,7 @@ class Endpoints(Resource):
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
 
-@api.route(f'/types/{LIST}')
+@api.route(f'/types/{}')
 class TypeList(Resource):
     """
     This will get a list of types.
