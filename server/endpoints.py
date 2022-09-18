@@ -9,6 +9,7 @@ from flask_restx import Resource, Api
 
 app = Flask(__name__)
 api = Api(app)
+LIST = 'list'
 
 
 @api.route('/hello')
@@ -39,7 +40,7 @@ class Endpoints(Resource):
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
 
-@api.route(f'/types/{}')
+@api.route(f'/types/{LIST}')
 class TypeList(Resource):
     """
     This will get a list of types.
