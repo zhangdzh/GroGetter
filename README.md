@@ -14,3 +14,6 @@ To create the env for a new developer, run `make dev_env`.
 
 ### Required Features
 - keep track of expiration dates for each grocery item
+- keep track of the number of items a user already has at home
+- suggest items to be thrown away/purchased depending on the expiration dates
+
