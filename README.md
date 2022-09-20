@@ -11,6 +11,7 @@ an application to keep track of groceries: current items and items to buy.
 ### build instructions
 To build production, type `make prod`.
 To create the env for a new developer, run `make dev_env`.
+To test locally, type `make unit`.
 
 ### Required Features
 - keep track of expiration dates for each grocery item
