@@ -1,6 +1,6 @@
 # Groceries Tracker
 A project for software engineering class. The project idea is to create 
-an application to keep track of groceries: current items and items to buy.
+an application to help customer keep track of groceries: current items and items to buy.
 
 ### Group Members: 
 - Dorothy Zhang
@@ -8,12 +8,14 @@ an application to keep track of groceries: current items and items to buy.
 - Jun Hyung Kim
 - Yeseon Kim
 
-### build instructions
+### Build instructions
 To build production, type `make prod`.
 To create the env for a new developer, run `make dev_env`.
 To test locally, type `make unit`.
 
 ### Required Features
+- allow users to create account with user authentication
+- login/logout page
 - keep track of expiration dates for each grocery item
 - keep track of the number of items a user already has at home
 - suggest items to be thrown away/purchased depending on the expiration dates
@@ -22,3 +24,6 @@ To test locally, type `make unit`.
 - list all current groceries (purchased)
 - list items on grocery list
 - provide sorted expiration dates and corresponding items
+
+### Meeting Notes
+[Software Engineering Project Team Notes](https://docs.google.com/document/d/11KMQVGyT2PAPuXw1jjtB6jfMHi0jvwKVs2K-rYYlDuw/edit?usp=sharing)
