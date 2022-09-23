@@ -20,10 +20,12 @@ To test locally, type `make unit`.
 - Keep track of the number of items a user already has at home
 - Suggest items to be thrown away/purchased depending on the expiration dates
 - Allow user entry of new grocery items to buy
+- Allow user to edit how many of a specific item should be bought/any description to the item 
 - Allow user entry of purchased items and expiration dates
 - List all current groceries (purchased)
 - List items on grocery list
 - Provide sorted expiration dates and corresponding items
+- Allow user to share grocery list with other users
 
 ### Design
 - Required features will correspond to API endpoints
