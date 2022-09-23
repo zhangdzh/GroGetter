@@ -10,8 +10,8 @@ from flask_restx import Resource, Api
 app = Flask(__name__)
 api = Api(app)
 
-# LIST = 'list'
-# TYPE_LIST = f'/types/{LIST}'
+LIST = 'list'
+GROCERIES_LIST = f'/groceries/{LIST}'
 
 
 @api.route('/hello')
@@ -43,15 +43,14 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-'''
-@api.route(TYPE_LIST)
-class TypeList(Resource):
+@api.route(GROCERIES_LIST)
+class GrocList(Resource):
     """
-    This will get a list types.
+    This will get a list of groceries. 
+    (decide/specify if this is to buy or purchased)
     """
     def get(self):
         """
-        Returns a list of types.
+        Returns a list of groceries.
         """
         return {'hello': 'world'}
-'''
