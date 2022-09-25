@@ -22,6 +22,7 @@ To test locally, type `make unit`.
 - Allow user entry of new grocery items to buy
 - Allow user to edit how many of a specific item should be bought/any description to the item 
 - Allow user entry of purchased items and expiration dates
+- Suggest expiration date if user does not manually input
 - List all current groceries (purchased)
 - List items on grocery list
 - Provide sorted expiration dates and corresponding items
@@ -29,6 +30,8 @@ To test locally, type `make unit`.
 
 ### Design
 - Required features will correspond to API endpoints
+- Database will store user information 
+- Web framework created with React
 
 ### Team Meeting Notes
 [Software Engineering Project Team Notes](https://docs.google.com/document/d/11KMQVGyT2PAPuXw1jjtB6jfMHi0jvwKVs2K-rYYlDuw/edit?usp=sharing)
