@@ -14,9 +14,10 @@ app = Flask(__name__)
 api = Api(app)
 
 LIST = 'list'
+ITEMS = 'items'
 GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
-GROC_TYPE_DETAILS = f'/groc_types/{DETAILS}'
+GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
 
 
 @api.route('/hello')
