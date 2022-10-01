@@ -14,5 +14,5 @@ def test_get_grocery_type_list():
     """
     Check if grocery type list is proper
     """
-    resp_json = TEST_CLIENT.get(ep.GROCERY_TYPE_LIST).get_json()
-    assert isinstance(resp_json[ep.GROCERY_TYPE_LIST_NM], list)
+    resp_json = TEST_CLIENT.get(ep.GROC_TYPE_LIST).get_json()
+    assert isinstance(resp_json[ep.GROC_TYPE_LIST_NM], list)
