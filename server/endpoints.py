@@ -5,13 +5,15 @@ The endpoint called `endpoints` will return all available endpoints.
 
 from flask import Flask
 from flask_restx import Resource, Api
-# import db.db as db
+
+import db.grocery_types as gtyp
 
 app = Flask(__name__)
 api = Api(app)
 
 LIST = 'list'
-GROCERIES_LIST = f'/groceries/{LIST}'
+GROCERY_TYPE_LIST = f'/grocery_types/{LIST}'
+GROCERY_TYPE_LIST_NM = 'grocery_types_list'
 
 
 @api.route('/hello')
@@ -43,14 +45,13 @@ class Endpoints(Resource):
         return {"Available endpoints": endpoints}
 
 
-@api.route(GROCERIES_LIST)
+@api.route(GROCERY_TYPE_LIST)
 class GrocList(Resource):
     """
-    This will get a list of groceries.
-    (decide/specify if this is to buy or purchased)
+    This will get a list of grocery types.
     """
     def get(self):
         """
-        Returns a list of groceries.
+        Returns a list of grocery types.
         """
-        return {'hello': 'world'}
+        return {GROCERY_TYPE_LIST_NM: gtyp.get_groc_types()}
