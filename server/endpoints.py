@@ -15,6 +15,8 @@ api = Api(app)
 
 LIST = 'list'
 ITEMS = 'items'
+MAIN_PAGE = '/main_page'
+MAIN_PAGE_NM = 'Main Page'
 GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
 GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
@@ -48,6 +50,16 @@ class Endpoints(Resource):
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
 
+@api.route(MAIN_PAGE)
+class MainPage(Resource):
+    """
+    This will deliver our main app page
+    """
+    def get(self):
+        """
+        Gets the main homepage
+        """
+        return {MAIN_PAGE_NM: {'the': 'grocery'}}
 
 @api.route(GROC_TYPE_LIST)
 class GrocList(Resource):
