@@ -37,7 +37,9 @@ def get_groc_items_by_type(groc_type):
 
 
 def main():
-    print(f'GROC_TYPES: {GROC_TYPES}')
+    print(f'Grocery types: {get_groc_types()}')
+    print(f'Grocery items by type (BAKED_GOODS): \
+            {get_groc_items_by_type(BAKED_GOODS)}')
 
 
 if __name__ == "__main__":
