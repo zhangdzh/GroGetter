@@ -20,20 +20,21 @@ MAIN_PAGE_NM = 'Main Page'
 GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
 GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
+LOGIN = '/login'
 
 
-@api.route('/hello')
-class HelloWorld(Resource):
-    """
-    The purpose of the HelloWorld class is to have a simple test to see if the
-    app is working at all.
-    """
-    def get(self):
-        """
-        A trivial endpoint to see if the server is running.
-        It just answers with "hello world."
-        """
-        return {'hello': 'world'}
+# @api.route('/hello')
+# class HelloWorld(Resource):
+#     """
+#     The purpose of the HelloWorld class is to have a simple test to see if the
+#     app is working at all.
+#     """
+#     def get(self):
+#         """
+#         A trivial endpoint to see if the server is running.
+#         It just answers with "hello world."
+#         """
+#         return {'hello': 'world'}
 
 
 @api.route('/endpoints')
@@ -88,3 +89,13 @@ class GroceryTypeDetails(Resource):
             return {groc_type: gt}
         else:
             raise wz.NotFound(f'{groc_type} not found.')
+
+
+@api.route(LOGIN)
+class Login(Resource):
+    """
+    I'm not too sure how this login route will work.
+    """
+    def login(self):
+        pass
+        
