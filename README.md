@@ -8,10 +8,15 @@ an application to help customers keep track of groceries: current items and item
 - Jun Hyung Kim
 - Yeseon Kim
 
-### Build Instructions
+### Build Instructions (makefile instructions)
 To build production, type `make prod`.
 To create the env for a new developer, run `make dev_env`.
 To test locally, type `make unit`.
+To run all tests, type `make all_tests`.
+To lint everything, type `make lint_all`.
+To test or lint a specific directory, type `make tests` or `make lint` 
+respectively.
+To push changes to github, type `make github`.
 
 ### Required Features
 - Allow users to create account with user authentication
