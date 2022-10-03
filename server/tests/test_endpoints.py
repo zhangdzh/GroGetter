@@ -9,8 +9,8 @@ TEST_GROC_TYPE = 'Meat'
 TEST_GROCERY_TYPTES = db.grocery_types.get_groc_types()
 
 
-def test_hello():
-    assert True
+# def test_hello():
+#     assert True
 
 
 def test_get_grocery_type_list():

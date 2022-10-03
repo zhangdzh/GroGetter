@@ -98,4 +98,3 @@ class Login(Resource):
     """
     def login(self):
         pass
-        
