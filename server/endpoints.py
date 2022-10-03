@@ -50,6 +50,7 @@ class Endpoints(Resource):
         # sorted(rule.rule for rule in api.app.url_map.iter_rules())
         return {"Available endpoints": endpoints}
 
+
 @api.route(MAIN_PAGE)
 class MainPage(Resource):
     """
@@ -60,6 +61,7 @@ class MainPage(Resource):
         Gets the main homepage
         """
         return {MAIN_PAGE_NM: {'the': 'grocery'}}
+
 
 @api.route(GROC_TYPE_LIST)
 class GrocList(Resource):
