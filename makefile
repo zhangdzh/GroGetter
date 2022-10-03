@@ -2,6 +2,8 @@ API_DIR = server
 DB_DIR = db
 REQ_DIR = .
 LINTER = flake8
+PYTESTFLAGS = -vv --verbose --tb=short
+
 
 FORCE:
 
@@ -11,10 +13,9 @@ github: FORCE
 	- git commit -a
 	git push origin master
 
-all_tests: lint_all unit
-
-unit: FORCE
-	cd $(API_DIR); pytest $(PYTESTFLAGS)
+all_tests:
+	cd $(API_DIR) && make tests
+	cd $(DB_DIR) && make tests
 
 dev_env: FORCE
 	pip install -r $(REQ_DIR)/requirements-dev.txt
