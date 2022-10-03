@@ -5,8 +5,8 @@ Gradually, we will fill in actual calls to our datastore.
 """
 
 
-def fetch_pets():
+def get_groc_types():
     """
-    A function to return all pets in the data store.
+    This will return a list of grocery types. I'm not sure how this is implemented yet.
     """
-    return {"tigers": 2, "lions": 3, "zebras": 1}
+    return ['Dairy', 'Meat', 'Produce', 'Bakery', 'Frozen']
