@@ -37,8 +37,7 @@ def get_groc_items_by_type(groc_type):
 
 
 def main():
-    groc_types = get_groc_types()
-    print(groc_types)
+    print(f'GROC_TYPES: {GROC_TYPES}')
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ Gradually, we will fill in actual calls to our datastore.
 
 def get_groc_types():
     """
-    This will return a list of grocery types. I'm not sure how this is 
+    This will return a list of grocery types. I'm not sure how this is
     implemented yet.
     """
     return ['Dairy', 'Meat', 'Produce', 'Bakery', 'Frozen']
@@ -15,7 +15,16 @@ def get_groc_types():
 
 def auth_user():
     """
-    This will authenticate a user. TODO: figure out how to authenticate user? 
+    This will authenticate a user. TODO: figure out how to authenticate user?
     + create user / delete user?
     """
     return True
+
+
+def main():
+    print(f'get_groc_types: {get_groc_types()}')
+    print(f'auth_user: {auth_user()}')
+
+
+if __name__ == '__main__':
+    main()
