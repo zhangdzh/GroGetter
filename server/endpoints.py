@@ -5,10 +5,11 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 
 from flask import Flask
-from flask_restx import Resource, Api
+from flask_restx import Resource, Api, fields
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
+import db.groc_lists as lst
 
 app = Flask(__name__)
 api = Api(app)
@@ -84,3 +85,9 @@ class Login(Resource):
     """
     def login(self):
         pass
+
+
+list_fields = api.model('NewList', {lst.USER_NAME: fields.String,
+                                    lst.LIST_NAME: fields.String,
+                                    lst.NUM_ITEMS: fields.Integer,
+                                    lst.GROC_LISTS: fields.List})
