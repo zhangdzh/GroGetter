@@ -5,11 +5,11 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 
 from flask import Flask
-from flask_restx import Resource, Api, fields
+from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
-import db.groc_lists as lst
+# import db.groc_lists as lst
 
 app = Flask(__name__)
 api = Api(app)
