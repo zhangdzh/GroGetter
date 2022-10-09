@@ -5,7 +5,7 @@ import server.endpoints as ep
 import db.groc_types as gtyp
 
 TEST_CLIENT = ep.app.test_client()
-TEST_GROCERY_TYPTES = gtyp.get_groc_types()
+TEST_GROCERY_TYPES = gtyp.get_groc_types()
 TEST_GROC_TYPE = "Dairy"
 
 
@@ -22,8 +22,8 @@ def test_get_grocery_type_details():
     """
     Check if grocery type details are correct
     """
-    for groc_type in TEST_GROCERY_TYPTES:
-        resp_json = TEST_CLIENT.get(
-                    f'{ep.GROC_TYPE_DETAILS}/{TEST_GROC_TYPE}').get_json()
+    for groc_type in TEST_GROCERY_TYPES:
+        resp_json = TEST_CLIENT.get(f'{ep.GROC_TYPE_DETAILS}/{TEST_GROC_TYPE}')
+                               .get_json()
         assert groc_type in resp_json
         assert isinstance(resp_json[groc_type], dict)

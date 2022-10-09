@@ -25,7 +25,7 @@ LOGIN = '/login'
 GROC_LISTS = f'/groc_lists/{LIST}'
 DETAILS = 'details'
 GROC_LIST_DETAILS = f'/groc_lists/{DETAILS}'
-LIST_ADD = f'/groc_lists/add'
+LIST_ADD = '/groc_lists/add'
 
 
 @api.route('/endpoints')
