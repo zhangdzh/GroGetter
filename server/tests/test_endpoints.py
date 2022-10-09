@@ -2,7 +2,7 @@
 Module for testing endpoints
 """
 import server.endpoints as ep
-import db.grocery_types as gtyp
+import db.groc_types as gtyp
 
 TEST_CLIENT = ep.app.test_client()
 TEST_GROCERY_TYPTES = gtyp.get_groc_types()

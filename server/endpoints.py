@@ -8,7 +8,7 @@ from flask import Flask
 from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 
-import db.grocery_types as gtyp
+import db.groc_types as gtyp
 
 app = Flask(__name__)
 api = Api(app)

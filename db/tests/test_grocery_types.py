@@ -2,7 +2,7 @@
 module for testing the grocery types
 """
 
-import db.grocery_types as gtyp
+import db.groc_types as gtyp
 
 
 def test_get_groc_types():
