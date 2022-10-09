@@ -17,20 +17,28 @@ To test or lint a specific directory, type `make tests` or `make lint`
 respectively.
 To push changes to github, type `make github`.
 
-### Required Features
-- Allow users to create account with user authentication
-- Display login/logout page
-- Keep track of expiration dates for each grocery item
-- Keep track of the number of items a user already has at home
-- Suggest items to be thrown away/purchased depending on the expiration dates
-- Allow user entry of new grocery items to buy
-- Allow user to edit how many of a specific item should be bought/any description to the item 
-- Allow user entry of purchased items and expiration dates
-- Suggest expiration date if user does not manually input
-- List all current groceries (purchased)
-- List items on grocery list
-- Provide sorted expiration dates and corresponding items
-- Allow user to share grocery list with other users
+### User Endpoints
+- User sign up
+- User sign in
+- List all available users
+- Get description of a user
+- Delete a user
+
+### Grocery List Endpoints
+- List all active user lists
+- Create a list
+- Delete a list
+- Get description of a list
+
+### Grocery Type Endpoints
+- List all grocery types
+- Get descriptions of each grocery type
+
+### List Manager Actions
+- Enter expiration dates
+- Add information to a list
+- Sort list items by expiration date
+- Add items to list
 
 ### Design
 - Required features will correspond to API endpoints
