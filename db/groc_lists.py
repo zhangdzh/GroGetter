@@ -21,16 +21,6 @@ def get_usernames():
     return list(lists.keys())
 
 
-def add_list(user, details):
-    if not isinstance(user, str):
-        raise TypeError(f'Wrong type for username: {type(details)=}')
-    # other type checks here
-    for field in REQUIRED_FIELDS:
-        if field not in details:
-            raise ValueError
-    lists[name] = details
-
-
 def main():
     usernames = get_usernames()
     print(usernames)

@@ -4,12 +4,11 @@ The endpoint called `endpoints` will return all available endpoints.
 """
 from http import HTTPStatus
 
-from flask import Flask, request
-from flask_restx import Resource, Api, fields
+from flask import Flask
+from flask_restx import Resource, Api
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
-import db.groc_lists as lst
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,10 +21,6 @@ GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
 GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
 LOGIN = '/login'
-GROC_LISTS = f'/groc_lists/{LIST}'
-DETAILS = 'details'
-GROC_LIST_DETAILS = f'/groc_lists/{DETAILS}'
-LIST_ADD = '/groc_lists/add'
 
 
 @api.route('/endpoints')
@@ -89,23 +84,3 @@ class Login(Resource):
     """
     def login(self):
         pass
-
-
-list_fields = api.model('NewList', {lst.USER_NAME: fields.String,
-                                    lst.LIST_NAME: fields.String,
-                                    lst.NUM_ITEMS: fields.Integer,
-                                    lst.GROC_LISTS: fields.List
-                                    })
-
-
-@api.route(LIST_ADD)
-class AddList(Resource):
-    """
-    Add a list
-    """
-    @api.expect(list_fields)
-    def post(self):
-        print(f'{request.json=}')
-        user = request.json[lst.USER_NAME]
-        del request.json[lst.USER_NAME]
-        lst.add_list(user, request.json)
