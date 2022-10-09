@@ -8,7 +8,7 @@ NUM_ITEMS = 'num_items'
 GROC_LISTS = {}
 
 REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LISTS]
-groc_lists = {USER_NAME: {LIST_NAME: 'trip1',
+lists = {USER_NAME: {LIST_NAME: 'trip1',
                             NUM_ITEMS: 1,
                             GROC_LISTS: {'itemA': '10-20-2022'}},
                 'user2': {LIST_NAME: 'trip2',
@@ -18,7 +18,7 @@ groc_lists = {USER_NAME: {LIST_NAME: 'trip1',
 
 
 def get_usernames():
-    return list(groc_manager.keys())
+    return list(lists.keys())
 
 
 def add_list(user, details):
@@ -28,7 +28,7 @@ def add_list(user, details):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError
-    groc_lists[name] = details
+    lists[name] = details
 
 
 def main():
