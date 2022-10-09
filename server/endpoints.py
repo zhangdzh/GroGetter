@@ -85,9 +85,3 @@ class Login(Resource):
     """
     def login(self):
         pass
-
-
-list_fields = api.model('NewList', {lst.USER_NAME: fields.String,
-                                    lst.LIST_NAME: fields.String,
-                                    lst.NUM_ITEMS: fields.Integer,
-                                    lst.GROC_LISTS: fields.List})
