@@ -21,6 +21,10 @@ def get_usernames():
     return list(lists.keys())
 
 
+def get_details(username):
+    return lists.get(username, None)
+
+
 def main():
     usernames = get_usernames()
     print(usernames)
