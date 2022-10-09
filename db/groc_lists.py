@@ -8,7 +8,7 @@ NUM_ITEMS = 'num_items'
 GROC_LISTS = {}
 
 REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LISTS]
-groc_manager = {USER_NAME: {LIST_NAME: 'trip1',
+groc_lists = {USER_NAME: {LIST_NAME: 'trip1',
                             NUM_ITEMS: 1,
                             GROC_LISTS: {'itemA': '10-20-2022'}},
                 'user2': {LIST_NAME: 'trip2',
@@ -19,6 +19,16 @@ groc_manager = {USER_NAME: {LIST_NAME: 'trip1',
 
 def get_usernames():
     return list(groc_manager.keys())
+
+
+def add_list(user, details):
+    if not isinstance(user, str):
+        raise TypeError(f'Wrong type for username: {type(details)=}')
+    # other type checks here
+    for field in REQUIRED_FIELDS:
+        if field not in details:
+            raise ValueError
+    groc_lists[name] = details
 
 
 def main():
