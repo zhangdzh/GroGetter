@@ -2,6 +2,7 @@
 This module encapsulates details about a user's grocery list
 '''
 
+TEST_USER_NAME = 'user1'
 USER_NAME = 'name'
 LIST_NAME = 'list_name'
 NUM_ITEMS = 'num_items'
@@ -25,6 +26,8 @@ REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LISTS]
 #         }
 #     }
 # }
+
+
 lists = [
     {
         USER_NAME: 'user1',
@@ -44,6 +47,10 @@ lists = [
         }
     }
 ]
+
+
+def groc_lst_exists(username):
+    return username in lists
 
 
 def get_usernames():
@@ -70,7 +77,7 @@ def add_groc(username, details):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
-    lists[username] = details
+    lists[len(lists)-1] = details
 
 
 def main():
