@@ -62,6 +62,17 @@ def get_details(username):
             return user
 
 
+def add_groc(username, details):
+    if not isinstance(username, str):
+        raise TypeError(f'Wrong type for name: {type(username)=}')
+    if not isinstance(details, dict):
+        raise TypeError(f'Wrong type for details: {type(details)=}')
+    for field in REQUIRED_FIELDS:
+        if field not in details:
+            raise ValueError(f'Required {field=} missing from details.')
+    lists[username] = details
+
+
 def main():
     usernames = get_usernames()
     print(usernames)
