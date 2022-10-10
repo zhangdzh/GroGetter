@@ -47,11 +47,19 @@ lists = [
 
 
 def get_usernames():
+    """
+    returns a list of usernames
+    """
     return [user[USER_NAME] for user in lists]
 
 
 def get_details(username):
-    return [user for user in lists if user[USER_NAME] == username]
+    """
+    returns a dictionary of details for a user
+    """
+    for user in lists:
+        if user[USER_NAME] == username:
+            return user
 
 
 def main():
