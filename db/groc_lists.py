@@ -50,7 +50,12 @@ lists = [
 
 
 def groc_lst_exists(username):
-    return username in lists
+    """
+    returns groc_list for specific user
+    """
+    for groc in lists:
+        if groc[USER_NAME] == username:
+            return groc
 
 
 def get_usernames():
@@ -70,6 +75,9 @@ def get_details(username):
 
 
 def add_groc(username, details):
+    """
+    add new groc_list to database
+    """
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     if not isinstance(details, dict):

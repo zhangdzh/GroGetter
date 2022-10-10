@@ -43,3 +43,15 @@ def test_add_missing_field():
     with pytest.raises(ValueError):
         glst.add_groc('new user list', {'foo': 'bar'})
 
+
+def test_add_groc():
+    details = {
+        USER_NAME: TEST_USER_NAME,
+        LIST_NAME: 'trip1',
+        NUM_ITEMS: 1,
+        GROC_LISTS: {
+            'itemA': '10-20-2022'
+        }
+        }
+    glst.add_groc(TEST_USER_NAME, details)
+    assert glst.groc_lst_exists(TEST_USER_NAME)
