@@ -57,6 +57,11 @@ def groc_lst_exists(username):
         if groc[USER_NAME] == username:
             return groc
 
+def get_number_of_items():
+    """
+    returns a list of number of items in the groc list
+    """
+    return [user[NUM_ITEMS] for user in lists]
 
 def get_usernames():
     """
