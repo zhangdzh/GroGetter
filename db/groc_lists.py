@@ -99,7 +99,6 @@ def get_user_lists(username):
     for entry in lists:
         if entry[USER_NAME] == username:
             return entry[GROC_LISTS]
-    return "User not found"
 
 
 def main():

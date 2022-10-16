@@ -55,3 +55,7 @@ def test_add_groc():
         }
     glst.add_groc(TEST_USER_NAME, details)
     assert glst.groc_lst_exists(TEST_USER_NAME)
+
+
+def test_get_user_lists():
+    assert isistance(glst.get_user_lists(TEST_USER_NAME), dict)
