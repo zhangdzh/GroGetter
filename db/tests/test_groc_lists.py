@@ -59,3 +59,7 @@ def test_add_groc():
 
 def test_get_user_lists():
     assert isinstance(glst.get_user_lists(TEST_USER_NAME), dict)
+
+
+def test_number_of_items():
+    assert isinstance(glst.get_number_of_items(), list)
