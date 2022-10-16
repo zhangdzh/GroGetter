@@ -4,7 +4,7 @@ The endpoint called `endpoints` will return all available endpoints.
 """
 from http import HTTPStatus
 
-from flask import Flask
+from flask import Flask, request
 from flask_restx import Resource, Api, fields
 import werkzeug.exceptions as wz
 
@@ -95,3 +95,19 @@ groc_fields = api.model('NewGrocList', {
     lst.NUM_ITEMS: fields.Integer,
     lst.GROC_LISTS: fields.List,
 })
+
+
+@api.route(GROC_LIST_ADD)
+class AddGrocList(Resource):
+    """
+    Add a game.
+    """
+    @api.expect(groc_fields)
+    def post(self):
+        """
+        Add list to groc_list database.
+        """
+        print(f'{request.json=}')
+        name = request.json[lst.USER_NAME]
+        del request.json[lst.USER_NAME]
+        lst.add_groc(name, request.json)
