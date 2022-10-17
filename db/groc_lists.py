@@ -31,21 +31,14 @@ lists = []
 # }
 
 
-def groc_lst_exists(username):
+def get_number_of_items(username):
     """
-    returns groc_list for specific user
+    returns the number of items in a user's grocery list
     """
-    for groc in lists:
-        if groc[USER_NAME] == username:
-            return True
-    return False
-
-
-def get_number_of_items():
-    """
-    returns a list of number of items in the groc list
-    """
-    return [user[NUM_ITEMS] for user in lists]
+    for entry in lists:
+        if entry[USER_NAME] == username:
+            return entry[NUM_ITEMS]
+    return None
 
 
 def get_usernames():
@@ -79,10 +72,23 @@ def add_groc(username, details):
 
 
 def get_user_groceries(username):
+    """
+    returns a dictionary of groceries for a user
+    """
     for entry in lists:
         if entry[USER_NAME] == username:
             return entry[GROC_LISTS]
     return None
+
+
+def groc_lst_exists(username):
+    """
+    checks if a grocery list exists for a user
+    """
+    for groc in lists:
+        if groc[USER_NAME] == username:
+            return True
+    return False
 
 
 def main():
