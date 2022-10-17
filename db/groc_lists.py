@@ -9,44 +9,26 @@ NUM_ITEMS = 'num_items'
 GROC_LISTS = 'groc_lists'
 
 REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LISTS]
-# lists = {
-#     USER_NAME: {
-#         LIST_NAME: 'trip1',
-#         NUM_ITEMS: 1,
-#         GROC_LISTS: {
-#             'itemA': '10-20-2022'
-#         }
-#     },
-#     'user2': {
-#         LIST_NAME: 'trip2',
-#         NUM_ITEMS: 2,
-#         GROC_LISTS: {
-#             'itemB': '11-03-2022',
-#             'itemC': '10-30-2022'
-#         }
+
+lists = []
+# example of what list should look like
+# {
+#     USER_NAME: 'user1',
+#     LIST_NAME: 'trip1',
+#     NUM_ITEMS: 1,
+#     GROC_LISTS: {
+#         'itemA': '10-20-2022'
+#     }
+# },
+# {
+#     USER_NAME: 'user2',
+#     LIST_NAME: 'trip2',
+#     NUM_ITEMS: 2,
+#     GROC_LISTS: {
+#         'itemB': '11-03-2022',
+#         'itemC': '10-30-2022'
 #     }
 # }
-
-
-lists = [
-    {
-        USER_NAME: 'user1',
-        LIST_NAME: 'trip1',
-        NUM_ITEMS: 1,
-        GROC_LISTS: {
-            'itemA': '10-20-2022'
-        }
-    },
-    {
-        USER_NAME: 'user2',
-        LIST_NAME: 'trip2',
-        NUM_ITEMS: 2,
-        GROC_LISTS: {
-            'itemB': '11-03-2022',
-            'itemC': '10-30-2022'
-        }
-    }
-]
 
 
 def groc_lst_exists(username):
@@ -55,7 +37,8 @@ def groc_lst_exists(username):
     """
     for groc in lists:
         if groc[USER_NAME] == username:
-            return groc
+            return True
+    return False
 
 
 def get_number_of_items():
@@ -92,13 +75,14 @@ def add_groc(username, details):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
-    lists[len(lists)-1] = details
+    lists.append(details)
 
 
-def get_user_lists(username):
+def get_user_groceries(username):
     for entry in lists:
         if entry[USER_NAME] == username:
             return entry[GROC_LISTS]
+    return None
 
 
 def main():
