@@ -23,6 +23,12 @@ GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
 GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
+GROC_FIELDS = api.model('NewGrocList', {
+    lst.USER_NAME: fields.String,
+    lst.LIST_NAME: fields.String,
+    lst.NUM_ITEMS: fields.Integer,
+    lst.GROC_LISTS: fields.List,
+})
 LOGIN = '/login'
 
 
@@ -89,20 +95,12 @@ class Login(Resource):
         pass
 
 
-groc_fields = api.model('NewGrocList', {
-    lst.USER_NAME: fields.String,
-    lst.LIST_NAME: fields.String,
-    lst.NUM_ITEMS: fields.Integer,
-    lst.GROC_LISTS: fields.List,
-})
-
-
 @api.route(GROC_LIST_ADD)
 class AddGrocList(Resource):
     """
-    Add a game.
+    This will add a new grocery list to the database.
     """
-    @api.expect(groc_fields)
+    @api.expect(GROC_FIELDS)
     def post(self):
         """
         Add list to groc_list database.
