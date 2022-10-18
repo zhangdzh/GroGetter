@@ -9,7 +9,7 @@ from flask_restx import Resource, Api, fields
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
-import db.groc_lists as lst
+import db.groc_lists as glst
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,12 +23,6 @@ GROC_TYPE_LIST = f'/groc_types/{LIST}'
 GROC_TYPE_LIST_NM = 'groc_types_list'
 GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
-GROC_FIELDS = api.model('NewGrocList', {
-    lst.USER_NAME: fields.String,
-    lst.LIST_NAME: fields.String,
-    lst.NUM_ITEMS: fields.Integer,
-    lst.GROC_LISTS: fields.List,
-})
 LOGIN = '/login'
 
 
@@ -95,8 +89,29 @@ class Login(Resource):
         pass
 
 
+class GrocList(fields.Raw):
+    """
+    This is a custom data type for the grocery list to be used 
+    for checking the input type.
+    """
+    def output(self, key, obj, **kwargs):
+        try:
+            dct = getattr(obj, self.attribute)
+        except AttributeError:
+            return {}
+        return dct or {}
+
+
+GROC_FIELDS = api.model('GROC_LIST_ADD', {
+    glst.USER_NAME: fields.String,
+    glst.LIST_NAME: fields.String,
+    glst.NUM_ITEMS: fields.Integer,
+    glst.GROC_LIST: GrocList,
+})
+
+
 @api.route(GROC_LIST_ADD)
-class AddGrocList(Resource):
+class AddGroceryList(Resource):
     """
     This will add a new grocery list to the database.
     """
@@ -106,6 +121,6 @@ class AddGrocList(Resource):
         Add list to groc_list database.
         """
         print(f'{request.json=}')
-        name = request.json[lst.USER_NAME]
-        del request.json[lst.USER_NAME]
-        lst.add_groc(name, request.json)
+        name = request.json[glst.USER_NAME]
+        del request.json[glst.USER_NAME]
+        glst.add_groc(name, request.json)

@@ -26,3 +26,11 @@ def test_get_grocery_type_details():
                 f'{ep.GROC_TYPE_DETAILS}/{groc_type}').get_json()
         assert groc_type in resp_json
         assert isinstance(resp_json[groc_type], dict)
+
+
+def test_add_grocery_list():
+    """
+    Check if grocery list can be added
+    """
+    pass
+

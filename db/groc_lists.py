@@ -6,9 +6,9 @@ TEST_USER_NAME = 'user1'
 USER_NAME = 'name'
 LIST_NAME = 'list_name'
 NUM_ITEMS = 'num_items'
-GROC_LISTS = 'groc_lists'
+GROC_LIST = 'groc_list'
 
-REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LISTS]
+REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LIST]
 
 lists = []
 # example of what list should look like
@@ -16,7 +16,7 @@ lists = []
 #     USER_NAME: 'user1',
 #     LIST_NAME: 'trip1',
 #     NUM_ITEMS: 1,
-#     GROC_LISTS: {
+#     GROC_LIST: {
 #         'itemA': '10-20-2022'
 #     }
 # },
@@ -24,7 +24,7 @@ lists = []
 #     USER_NAME: 'user2',
 #     LIST_NAME: 'trip2',
 #     NUM_ITEMS: 2,
-#     GROC_LISTS: {
+#     GROC_LIST: {
 #         'itemB': '11-03-2022',
 #         'itemC': '10-30-2022'
 #     }
@@ -77,7 +77,7 @@ def get_user_groceries(username):
     """
     for entry in lists:
         if entry[USER_NAME] == username:
-            return entry[GROC_LISTS]
+            return entry[GROC_LIST]
     return None
 
 
