@@ -19,9 +19,10 @@ ITEMS = 'items'
 ADD = 'add'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
-GROC_TYPE_LIST = f'/groc_types/{LIST}'
-GROC_TYPE_LIST_NM = 'groc_types_list'
-GROC_TYPE_DETAILS = f'/groc_types/{ITEMS}'
+GROC_TYPES = 'groc_types'
+GROC_TYPE_LIST = f'/{GROC_TYPES}/{LIST}'
+GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
+GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{ITEMS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
 LOGIN = '/login'
 
@@ -89,9 +90,9 @@ class Login(Resource):
         pass
 
 
-class GrocList(fields.Raw):
+class GrocListType(fields.Raw):
     """
-    This is a custom data type for the grocery list to be used 
+    This is a custom data type for the grocery list to be used
     for checking the input type.
     """
     def output(self, key, obj, **kwargs):
@@ -106,7 +107,7 @@ GROC_FIELDS = api.model('GROC_LIST_ADD', {
     glst.USER_NAME: fields.String,
     glst.LIST_NAME: fields.String,
     glst.NUM_ITEMS: fields.Integer,
-    glst.GROC_LIST: GrocList,
+    glst.GROC_LIST: GrocListType,
 })
 
 
