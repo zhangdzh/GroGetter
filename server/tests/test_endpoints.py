@@ -33,4 +33,3 @@ def test_add_grocery_list():
     Check if grocery list can be added
     """
     pass
-
