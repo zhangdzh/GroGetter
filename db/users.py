@@ -6,7 +6,7 @@ TEST_USER_NAME = 'user2'
 EMAIL = 'email'
 PASSWORD = 'password'
 USER_NAME = 'username'
-REQUIRED_FIELDS = [EMAIL]
+REQUIRED_FIELDS = [EMAIL, PASSWORD]
 
 TEST_USER_NAME = 'user1'
 TEST_EMAIL = 'user1@email.com'

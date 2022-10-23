@@ -40,6 +40,7 @@ SAMPLE_USER_NM = 'SampleUser'
 SAMPLE_USER = {
     usr.USER_NAME: SAMPLE_USER_NM,
     usr.EMAIL: 'x@y.com',
+    usr.PASSWORD: 'xxx123'
 }
 
 
