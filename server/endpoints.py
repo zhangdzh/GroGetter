@@ -10,6 +10,7 @@ import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
 import db.groc_lists as glst
+import db.users as usr
 
 app = Flask(__name__)
 api = Api(app)
@@ -88,6 +89,13 @@ class Login(Resource):
     """
     def login(self):
         pass
+
+
+user_fields = api.model('NewUser', {
+    usr.USERNAME: fields.String,
+    usr.EMAIL: fields.String,
+    usr.FULL_NAME: fields.String,
+})
 
 
 class GrocListType(fields.Raw):

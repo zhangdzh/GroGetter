@@ -23,12 +23,15 @@ users = []
 #     }
 # ]
 
-
 def get_usernames():
     """
     returns a list of usernames
     """
     return [user[USER_NAME] for user in users]
+
+
+def del_user(name):
+    del users[name]
 
 
 def add_user(username, details):
