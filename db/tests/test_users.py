@@ -22,4 +22,4 @@ def test_get_usernames():
     """
     usrs = usr.get_usernames()
     assert isinstance(usrs, list)
-    assert len(usrs) > 0
+    assert len(usrs) > 1

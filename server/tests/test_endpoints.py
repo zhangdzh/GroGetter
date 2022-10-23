@@ -3,6 +3,7 @@ Module for testing endpoints
 """
 import server.endpoints as ep
 import db.groc_types as gtyp
+import db.users as usr
 
 TEST_CLIENT = ep.app.test_client()
 TEST_GROCERY_TYPES = gtyp.get_groc_types()
@@ -33,3 +34,19 @@ def test_add_grocery_list():
     Check if grocery list can be added
     """
     pass
+
+
+SAMPLE_USER_NM = 'SampleUser'
+SAMPLE_USER = {
+    usr.USER_NAME: SAMPLE_USER_NM,
+    usr.EMAIL: 'x@y.com',
+}
+
+
+def test_add_user():
+    """
+    Test adding a user.
+    """
+    resp = TEST_CLIENT.post(ep.USER_ADD, json=SAMPLE_USER)
+    assert usr.user_exists(SAMPLE_USER_NM)
+    usr.del_user(SAMPLE_USER_NM)
