@@ -26,6 +26,8 @@ GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{ITEMS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
 LOGIN = '/login'
+USERS = 'users'
+USER_ADD = f'/{USERS}/{ADD}'
 
 
 @api.route('/endpoints')
@@ -95,6 +97,22 @@ user_fields = api.model('NewUser', {
     usr.USER_NAME: fields.String,
     usr.EMAIL: fields.String,
 })
+
+
+@api.route(USER_ADD)
+class AddUser(Resource):
+    """
+    Add a user.
+    """
+    @api.expect(user_fields)
+    def post(self):
+        """
+        Add a user.
+        """
+        print(f'{request.json=}')
+        name = request.json[usr.NAME]
+        del request.json[usr.NAME]
+        usr.add_user(name, request.json)
 
 
 class GrocListType(fields.Raw):
