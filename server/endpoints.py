@@ -92,9 +92,8 @@ class Login(Resource):
 
 
 user_fields = api.model('NewUser', {
-    usr.USERNAME: fields.String,
+    usr.USER_NAME: fields.String,
     usr.EMAIL: fields.String,
-    usr.FULL_NAME: fields.String,
 })
 
 
