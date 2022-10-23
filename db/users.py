@@ -13,16 +13,12 @@ TEST_EMAIL = 'user1@email.com'
 users = {TEST_USER_NAME: {EMAIL: 'x@y.com'},
          'user2': {EMAIL: 'z@y.com'}}
 # example structure of users list
-# [
-#     {
-#         EMAIL: 'user1',
-#         USER_NAME: 'user1'
+# {
+#     USER_NAME: {
+#         EMAIL: 'user1'
 #     },
-#     {
-#         EMAIL: 'user2',
-#         USER_NAME: 'user2'
-#     }
-# ]
+#     'user2': {EMAIL: 'user2'}
+# }
 
 
 def user_exists(name):
@@ -53,6 +49,14 @@ def add_user(username, details):
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
     users[username] = details
+
+
+def get_user_email(username):
+    if not isinstance(username, str):
+        raise TypeError(f'Wrong type for name: {type(username)=}')
+    if username not in users.keys():
+        raise KeyError('Username not found')
+    return users[username].get(EMAIL)
 
 
 def main():
