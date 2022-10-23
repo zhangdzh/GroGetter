@@ -4,14 +4,16 @@ This module is responsible for the users and their details
 
 TEST_USER_NAME = 'user2'
 EMAIL = 'email'
+PASSWORD = 'password'
 USER_NAME = 'username'
 REQUIRED_FIELDS = [EMAIL]
 
 TEST_USER_NAME = 'user1'
 TEST_EMAIL = 'user1@email.com'
+TEST_PASSWORD = 'xyz123'
 
-users = {TEST_USER_NAME: {EMAIL: 'x@y.com'},
-         'user2': {EMAIL: 'z@y.com'}}
+users = {TEST_USER_NAME: {EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
+         'user2': {EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
 # example structure of users list
 # {
 #     USER_NAME: {
@@ -57,6 +59,14 @@ def get_user_email(username):
     if username not in users.keys():
         raise KeyError('Username not found')
     return users[username].get(EMAIL)
+
+
+def get_user_password(username):
+    if not isinstance(username, str):
+        raise TypeError(f'Wrong type for name: {type(username)=}')
+    if username not in users.keys():
+        raise KeyError('Username not found')
+    return users[username].get(PASSWORD)
 
 
 def main():
