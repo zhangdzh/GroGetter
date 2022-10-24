@@ -6,6 +6,7 @@ import pytest
 import db.users as usr
 
 TEST_USER_NAME = 'user1'
+TEST_PW = "helloworld"
 
 
 def test_add_user():
@@ -42,3 +43,10 @@ def test_get_user_password():
     """
     password = usr.get_user_password(TEST_USER_NAME)
     assert isinstance(password, str)
+
+
+def test_change_password():
+    """
+    tests change_password()
+    """
+    usr.change_password(TEST_USER_NAME, TEST_PW)    

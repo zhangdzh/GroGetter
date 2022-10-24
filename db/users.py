@@ -69,6 +69,19 @@ def get_user_password(username):
     return users[username].get(PASSWORD)
 
 
+def change_password(username, new_password):
+    """
+    Changes user's password.
+    Note: In implementation, should precede this method call
+    by ensuring that the same password is entered twice.
+    """
+    if not isinstance(new_password, str):
+        raise TypeError
+    if username not in users.keys():
+        raise KeyError("Username not found")
+    users[username][PASSWORD] = new_password
+
+
 def main():
     usernames = get_usernames()
     print(f'{usernames=}')
