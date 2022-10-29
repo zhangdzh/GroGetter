@@ -11,22 +11,23 @@ GROC_LIST = 'groc_list'
 REQUIRED_FIELDS = [USER_NAME, LIST_NAME, NUM_ITEMS, GROC_LIST]
 
 lists = []
-# example of what list should look like
+# new structure of lists
 # {
-#     USER_NAME: 'user1',
-#     LIST_NAME: 'trip1',
-#     NUM_ITEMS: 1,
-#     GROC_LIST: {
-#         'itemA': '10-20-2022'
-#     }
-# },
-# {
-#     USER_NAME: 'user2',
-#     LIST_NAME: 'trip2',
-#     NUM_ITEMS: 2,
-#     GROC_LIST: {
-#         'itemB': '11-03-2022',
-#         'itemC': '10-30-2022'
+#     "user1": {
+#         "list1": {
+#             "item1" : ("groctype1", "10-20-2022"),
+#             "item2" : ("groctype2", "10-20-2022")
+#         },
+#         "list2": {
+#             "item1" : ("groctype1", "10-20-2022"),
+#             "item2" : ("groctype2", "10-20-2022")
+#         }
+#     },
+#     "user2": {
+#         "list1": {
+#             "item1" : ("groctype1", "10-20-2022"),
+#             "item2" : ("groctype2", "10-20-2022")
+#         }
 #     }
 # }
 

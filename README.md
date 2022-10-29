@@ -43,10 +43,11 @@ To push changes to github, type `make github`.
 ### Design
 - Required features will correspond to API endpoints
 - Database will store user information as a dictionary
-- Each user information in the database will have a username, grocery list name, number of items, and grocery list
-- Grocery list in the database is a dictionary with item name as the keys and expiration date as values
 - Database will constantly be updated
 - Web framework created with React
+- Each user will be in the key to a dictionary of grocery lists
+- Each grocery list has a name as the key and a dictionary of items as the value
+- Each item has a name as the key and tuple of grocery type and expiration date as the value
 
 ### Team Meeting Notes
 [Software Engineering Project Team Notes](https://docs.google.com/document/d/11KMQVGyT2PAPuXw1jjtB6jfMHi0jvwKVs2K-rYYlDuw/edit?usp=sharing)
