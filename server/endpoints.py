@@ -28,6 +28,7 @@ api.add_namespace(groc_lists)
 LIST = 'list'
 DETAILS = 'details'
 ADD = 'add'
+DICT = 'dict'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = 'groc_types'
@@ -38,6 +39,12 @@ GROC_LIST_ADD = f'/groc_list/{ADD}'
 LOGIN = '/login'
 USERS = 'users'
 USER_ADD = f'/{USERS}/{ADD}'
+USER_DICT = f'/{DICT}'
+USER_DICT_W_NS = f'{USERS_NS}/{DICT}'
+USER_DICT_NM = f'{USERS_NS}_dict'
+USER_LIST = f'/{LIST}'
+USER_LIST_W_NS = f'{USERS_NS}/{LIST}'
+USER_LIST_NM = f'{USERS_NS}_list'
 
 # for namespaces
 GROC_TYPE_LIST_W_NS = f'{GROC_TYPES_NS}/{LIST}'
@@ -117,6 +124,32 @@ user_fields = api.model('NewUser', {
     usr.USER_NAME: fields.String,
     usr.EMAIL: fields.String,
 })
+
+
+@api.route(USER_DICT)
+class UserDict(Resource):
+    """
+    This will get a list of currrent users.
+    """
+    def get(self):
+        """
+        Returns a list of current users.
+        """
+        return {'Data': usr.get_users_dict(),
+                'Type': 'Data',
+                'Title': 'Active Users'}
+
+
+@api.route(USER_LIST)
+class UserList(Resource):
+    """
+    This will get a list of currrent users.
+    """
+    def get(self):
+        """
+        Returns a list of current users.
+        """
+        return {USER_LIST_NM: usr.get_usernames()}
 
 
 @api.route(USER_ADD)

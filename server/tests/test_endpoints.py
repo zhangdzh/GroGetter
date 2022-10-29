@@ -61,3 +61,14 @@ def test_add_user():
     resp = TEST_CLIENT.post(ep.USER_ADD, json=SAMPLE_USER)
     assert usr.user_exists(SAMPLE_USER_NM)
     usr.del_user(SAMPLE_USER_NM)
+
+
+def test_get_user_list():
+    """
+    See if we can get a user list properly.
+    Return should look like:
+        {USER_LIST_NM: [list of users types...]}
+    """
+resp = TEST_CLIENT.get(ep.USER_LIST)
+resp_json = resp.get_json()
+assert isinstance(resp_json[ep.USER_LIST_NM], list)
