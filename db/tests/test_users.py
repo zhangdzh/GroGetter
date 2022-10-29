@@ -29,6 +29,12 @@ def test_get_usernames():
     assert len(usrs) > 1
 
 
+def test_get_users_dict():
+    usrs = usr.get_users_dict()
+    assert isinstance(usrs, dict)
+    assert len(usrs) > 1
+
+    
 def test_get_user_email():
     """
     tests get_user_email()

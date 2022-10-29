@@ -30,6 +30,10 @@ def user_exists(name):
     return name in users
 
 
+def get_users_dict():
+    return users
+
+
 def get_usernames():
     """
     returns a list of usernames
