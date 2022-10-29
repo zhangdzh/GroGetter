@@ -5,7 +5,7 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 
 from flask import Flask, request
-from flask_restx import Resource, Api, fields
+from flask_restx import Resource, Api, fields, Namespace
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
@@ -15,19 +15,35 @@ import db.users as usr
 app = Flask(__name__)
 api = Api(app)
 
+GROC_TYPES_NS = 'grocery_types'
+GROC_LISTS_NS = 'grocery_lists'
+USERS_NS = 'users'
+
+groc_types = Namespace(GROC_TYPES_NS, 'Grocery Types')
+api.add_namespace(groc_types)
+groc_lists = Namespace(GROC_LISTS_NS, 'Grocery Lists')
+api.add_namespace(groc_lists)
+
+
 LIST = 'list'
-ITEMS = 'items'
+DETAILS = 'details'
 ADD = 'add'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = 'groc_types'
 GROC_TYPE_LIST = f'/{GROC_TYPES}/{LIST}'
-GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
-GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{ITEMS}'
+# GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
+GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{DETAILS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
 LOGIN = '/login'
 USERS = 'users'
 USER_ADD = f'/{USERS}/{ADD}'
+
+# for namespaces
+GROC_TYPE_LIST_W_NS = f'{GROC_TYPES_NS}/{LIST}'
+GROC_TYPE_LIST_NM = f'{GROC_TYPES_NS}_list'
+GROC_TYPE_DETAILS = f'/{DETAILS}'
+GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES_NS}/{DETAILS}'
 
 
 @api.route('/endpoints')
@@ -54,22 +70,26 @@ class MainPage(Resource):
         """
         Gets the main homepage
         """
-        return {MAIN_PAGE_NM: {'the': 'grocery'}}
+        return {'Title': MAIN_PAGE_NM,
+                'Default': 0,
+                'Choices': {
+                    '1': {'text': 'List Grocery Types'},
+                    }}
+
+# causing issues 10/29 --- fix later if necessary
+# @groc_types.route(GROC_TYPE_LIST)
+# class GrocTypeList(Resource):
+#     """
+#     This will get a list of grocery types.
+#     """
+#     def get(self):
+#         """
+#         Returns a list of grocery types.
+#         """
+#         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
 
 
-@api.route(GROC_TYPE_LIST)
-class GrocList(Resource):
-    """
-    This will get a list of grocery types.
-    """
-    def get(self):
-        """
-        Returns a list of grocery types.
-        """
-        return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
-
-
-@api.route(f'{GROC_TYPE_DETAILS}/<groc_type>')
+@groc_types.route(f'{GROC_TYPE_DETAILS}/<groc_type>')
 class GroceryTypeDetails(Resource):
     """
     This will get the items by the type..
@@ -136,7 +156,7 @@ GROC_FIELDS = api.model('GROC_LIST_ADD', {
 })
 
 
-@api.route(GROC_LIST_ADD)
+@groc_lists.route(GROC_LIST_ADD)
 class AddGroceryList(Resource):
     """
     This will add a new grocery list to the database.
