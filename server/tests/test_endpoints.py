@@ -54,6 +54,11 @@ SAMPLE_USER = {
 }
 
 
+def test_user_dict():
+    resp_json = TEST_CLIENT.get(ep.USER_DICT).get_json()
+    assert isinstance(resp_json, dict)
+    
+
 def test_add_user():
     """
     Test adding a user.

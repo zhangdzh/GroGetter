@@ -23,6 +23,7 @@ groc_types = Namespace(GROC_TYPES_NS, 'Grocery Types')
 api.add_namespace(groc_types)
 groc_lists = Namespace(GROC_LISTS_NS, 'Grocery Lists')
 api.add_namespace(groc_lists)
+users = Namespace(USERS_NS, 'Users')
 
 
 LIST = 'list'
@@ -40,10 +41,8 @@ LOGIN = '/login'
 USERS = 'users'
 USER_ADD = f'/{USERS}/{ADD}'
 USER_DICT = f'/{DICT}'
-USER_DICT_W_NS = f'{USERS_NS}/{DICT}'
 USER_DICT_NM = f'{USERS_NS}_dict'
 USER_LIST = f'/{LIST}'
-USER_LIST_W_NS = f'{USERS_NS}/{LIST}'
 USER_LIST_NM = f'{USERS_NS}_list'
 
 # for namespaces
@@ -51,6 +50,9 @@ GROC_TYPE_LIST_W_NS = f'{GROC_TYPES_NS}/{LIST}'
 GROC_TYPE_LIST_NM = f'{GROC_TYPES_NS}_list'
 GROC_TYPE_DETAILS = f'/{DETAILS}'
 GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES_NS}/{DETAILS}'
+USER_LIST_W_NS = f'{USERS_NS}/{LIST}'
+USER_DICT_W_NS = f'{USERS_NS}/{DICT}'
+USER_ADD_W_NS = f'{USERS_NS}/{ADD}'
 
 
 @api.route('/endpoints')
@@ -150,6 +152,13 @@ class UserList(Resource):
         Returns a list of current users.
         """
         return {USER_LIST_NM: usr.get_usernames()}
+
+
+USER_FIELDS = api.model('NewUser', {
+    usr.USER_NAME: fields.String,
+    usr.EMAIL: fields.String,
+    usr.PASSWORD: fields.String,
+})
 
 
 @api.route(USER_ADD)
