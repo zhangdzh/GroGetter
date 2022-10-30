@@ -87,7 +87,6 @@ class MainPage(Resource):
                     }}
 
 
-# causing issues 10/29 --- fix later if necessary
 @groc_types.route(GROC_TYPE_LIST)
 class GrocTypeList(Resource):
     """
@@ -97,6 +96,7 @@ class GrocTypeList(Resource):
         """
         Returns a list of grocery types.
         """
+        # leads to "grocery_types_list" key error which is GROC_TYPE_LIST_NM
         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types}
 
 

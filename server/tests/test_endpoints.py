@@ -17,15 +17,24 @@ def test_main_page():
     assert isinstance(resp_json, dict)
     assert len(resp_json) > 0
 
-# for some reason not working --- commented out for now
+
 def test_get_grocery_type_list():
     """
     Check if grocery type list is proper
     """
     resp_json = TEST_CLIENT.get(ep.GROC_TYPE_LIST_W_NS).get_json()
-    #assert len(resp_json[ep.GROC_TYPE_LIST_NM]) > 0
+    print(resp_json)
+    # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
     assert isinstance(resp_json, dict)
 
+
+def test_get_character_type_list_not_empty():
+    """
+    Check if groc type list is proper
+    """
+    resp_json = TEST_CLIENT.get(ep.GROC_TYPE_LIST_W_NS).get_json()
+    # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
+    assert len(resp_json) > 0
 
 def test_get_grocery_type_details():
     """
