@@ -16,6 +16,7 @@ app = Flask(__name__)
 api = Api(app)
 
 GROC_TYPES_NS = 'grocery_types'
+GROC_NS = 'grocery'
 GROC_LISTS_NS = 'grocery_lists'
 USERS_NS = 'users'
 
@@ -33,7 +34,7 @@ DICT = 'dict'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = 'groc_types'
-GROC_TYPE_LIST = f'/{GROC_TYPES}/{LIST}'
+GROC_TYPE_LIST = f'/{LIST}'
 # GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{DETAILS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
@@ -85,17 +86,18 @@ class MainPage(Resource):
                     '1': {'text': 'List Grocery Types'},
                     }}
 
+
 # causing issues 10/29 --- fix later if necessary
-# @groc_types.route(GROC_TYPE_LIST)
-# class GrocTypeList(Resource):
-#     """
-#     This will get a list of grocery types.
-#     """
-#     def get(self):
-#         """
-#         Returns a list of grocery types.
-#         """
-#         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
+@groc_types.route(GROC_TYPE_LIST)
+class GrocTypeList(Resource):
+    """
+    This will get a list of grocery types.
+    """
+    def get(self):
+        """
+        Returns a list of grocery types.
+        """
+        return {GROC_TYPE_LIST_NM: gtyp.get_groc_types}
 
 
 @groc_types.route(f'{GROC_TYPE_DETAILS}/<groc_type>')
@@ -142,7 +144,7 @@ class UserDict(Resource):
                 'Title': 'Active Users'}
 
 
-@api.route(USER_LIST)
+@users.route(USER_LIST)
 class UserList(Resource):
     """
     This will get a list of currrent users.
