@@ -20,28 +20,28 @@ grocery_list = {
 }
 
 
-def get_items():
+def get_items() -> list:
     """
     returns a list of all items in the grocery list
     """
     return list(grocery_list.keys())
 
 
-def get_grocery_list():
+def get_grocery_list() -> dict:
     """
     returns the entire grocery list
     """
     return grocery_list
 
 
-def exists(item):
+def exists(item: str) -> bool:
     """
     returns True if item exists in the grocery list
     """
     return item in grocery_list
 
 
-def get_details(item):
+def get_details(item: str) -> dict:
     """
     returns a dictionary of details for a singular grocery item
     """
@@ -55,7 +55,7 @@ def get_types():
     return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
 
 
-def add_item(item, details):
+def add_item(item: str, details: dict):
     """
     adds an item to the grocery list
     """
@@ -70,13 +70,13 @@ def add_item(item, details):
             raise ValueError(f'Required {field=} missing from details.')
     if details[GROC_TYPE] not in gtyp.get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-            + f'Must be one of: {gtyp.get_groc_types()}')
+                         + f'Must be one of: {gtyp.get_groc_types()}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
 
 
-def remove_item(item):
+def remove_item(item: str):
     """
     removes an item from the grocery list
     """
@@ -87,7 +87,7 @@ def remove_item(item):
     del grocery_list[item]
 
 
-def update_item(item, details):
+def update_item(item: str, details: dict):
     """
     updates an item in the grocery list
     """
@@ -102,13 +102,13 @@ def update_item(item, details):
             raise ValueError(f'Required {field=} missing from details.')
     if details[GROC_TYPE] not in gtyp.get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-            + f'Must be one of: {gtyp.get_groc_types()}')
+                         + f'Must be one of: {gtyp.get_groc_types()}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
 
 
-def update_quantity(item, quantity):
+def update_quantity(item: str, quantity: int):
     """
     updates the quantity of an item in the grocery list
     """
