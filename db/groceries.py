@@ -27,6 +27,13 @@ def get_items():
     return list(grocery_list.keys())
 
 
+def get_grocery_list():
+    """
+    returns the entire grocery list
+    """
+    return grocery_list
+
+
 def exists(item):
     """
     returns True if item exists in the grocery list
@@ -54,6 +61,8 @@ def add_item(item, details):
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
+    if exists(item):
+        raise ValueError(f'Item {item=} already exists in grocery list.')
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
     for field in REQUIRED_FIELDS:
@@ -73,8 +82,26 @@ def remove_item(item):
     del grocery_list[item]
 
 
+def update_item(item, details):
+    """
+    updates an item in the grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if not exists(item):
+        raise ValueError(f'Item {item=} not in grocery list.')
+    if not isinstance(details, dict):
+        raise TypeError(f'Wrong type for details: {type(details)=}')
+    for field in REQUIRED_FIELDS:
+        if field not in details:
+            raise ValueError(f'Required {field=} missing from details.')
+    grocery_list[item] = details
+
+
 def main():
     print(get_items())
+    print(get_details("item1"))
+    print(get_types())
 
 
 if __name__ == '__main__':
