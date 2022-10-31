@@ -6,15 +6,15 @@ necessary to interact with a grocery list.
 import groc_types as gtyp
 
 GROC_TYPE = 'grocery_type'
-Quantity = 'quantity'
+QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
 
-REQUIRED_FIELDS = [GROC_TYPE, Quantity, EXPIRATION_DATE]
+REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 # example of a grocery list structure
 grocery_list = {
     "item1": {
         GROC_TYPE: gtyp.BAKED_GOODS,
-        Quantity: "10",
+        QUANTITY: 10,
         EXPIRATION_DATE: "10-20-2022"
     }
 }
@@ -68,6 +68,11 @@ def add_item(item, details):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
+    if details[GROC_TYPE] not in gtyp.get_groc_types():
+        raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
+            + f'Must be one of: {gtyp.get_groc_types()}')
+    if not isinstance(details[QUANTITY], int):
+        raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
 
 
@@ -77,7 +82,7 @@ def remove_item(item):
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
-    if item not in grocery_list:
+    if not exists:
         raise ValueError(f'Item {item=} not in grocery list.')
     del grocery_list[item]
 
@@ -95,7 +100,25 @@ def update_item(item, details):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
+    if details[GROC_TYPE] not in gtyp.get_groc_types():
+        raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
+            + f'Must be one of: {gtyp.get_groc_types()}')
+    if not isinstance(details[QUANTITY], int):
+        raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
+
+
+def update_quantity(item, quantity):
+    """
+    updates the quantity of an item in the grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if not exists(item):
+        raise ValueError(f'Item {item=} not in grocery list.')
+    if not isinstance(quantity, int):
+        raise TypeError(f'Wrong type for quantity: {type(quantity)=}')
+    grocery_list[item][QUANTITY] = quantity
 
 
 def main():

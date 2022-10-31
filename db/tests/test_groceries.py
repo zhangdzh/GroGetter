@@ -61,7 +61,7 @@ def test_add_and_remove_item():
     TEST_ITEM = "item2"
     TEST_GROCERY = {
         grocs.GROC_TYPE: gtyp.MISC,
-        grocs.Quantity: "10",
+        grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
     grocs.add_item(TEST_ITEM, TEST_GROCERY)
@@ -78,8 +78,18 @@ def test_update_item():
     TEST_ITEM = "item1"
     TEST_GROCERY = {
         grocs.GROC_TYPE: gtyp.MISC,
-        grocs.Quantity: "10",
+        grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
     grocs.update_item(TEST_ITEM, TEST_GROCERY)
     assert TEST_GROCERY == grocs.get_details(TEST_ITEM)
+
+
+def test_update_quantity():
+    """
+    tests update_quantity()
+    """
+    TEST_ITEM = "item1"
+    TEST_QUANTITY = 20
+    grocs.update_quantity(TEST_ITEM, TEST_QUANTITY)
+    assert TEST_QUANTITY == grocs.get_details(TEST_ITEM)[grocs.QUANTITY]

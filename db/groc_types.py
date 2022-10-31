@@ -26,7 +26,8 @@ GROC_TYPES = {BAKED_GOODS: {},
               VEGETABLES: {},
               SNACKS: {},
               DRINKS: {},
-              MEAT: {}}
+              MEAT: {},
+              MISC: {}}
 
 
 def get_groc_types():
