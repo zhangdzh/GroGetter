@@ -85,6 +85,33 @@ def test_update_item():
     assert TEST_GROCERY == grocs.get_details(TEST_ITEM)
 
 
+def test_raised_exceptions_for_add_item():
+    """
+    tests raised exceptions for add_item()
+    """
+    TEST_GROCERY = {
+        grocs.GROC_TYPE: gtyp.MISC,
+        grocs.QUANTITY: 10,
+        grocs.EXPIRATION_DATE: "10-20-2022"
+    }
+    TEST_ITEM = 1
+    with pytest.raises(TypeError):
+        grocs.add_item(TEST_ITEM, TEST_GROCERY)
+    TEST_ITEM = "item1"
+    with pytest.raises(ValueError):
+        grocs.add_item(TEST_ITEM, TEST_GROCERY)
+    TEST_ITEM = "item2"
+    TEST_GROCERY[grocs.GROC_TYPE] = "invalid"
+    with pytest.raises(ValueError):
+        grocs.add_item(TEST_ITEM, TEST_GROCERY)
+    TEST_GROCERY = {
+        grocs.QUANTITY: 10,
+        grocs.EXPIRATION_DATE: "10-20-2022"
+    }
+    with pytest.raises(KeyError):
+        grocs.add_item(TEST_ITEM, TEST_GROCERY)
+
+
 def test_update_quantity():
     """
     tests update_quantity()

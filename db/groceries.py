@@ -67,7 +67,7 @@ def add_item(item: str, details: dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
     for field in REQUIRED_FIELDS:
         if field not in details:
-            raise ValueError(f'Required {field=} missing from details.')
+            raise KeyError(f'Required {field=} missing from details.')
     if details[GROC_TYPE] not in gtyp.get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
                          + f'Must be one of: {gtyp.get_groc_types()}')
@@ -99,7 +99,7 @@ def update_item(item: str, details: dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
     for field in REQUIRED_FIELDS:
         if field not in details:
-            raise ValueError(f'Required {field=} missing from details.')
+            raise KeyError(f'Required {field=} missing from details.')
     if details[GROC_TYPE] not in gtyp.get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
                          + f'Must be one of: {gtyp.get_groc_types()}')
