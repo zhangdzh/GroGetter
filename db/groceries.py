@@ -20,22 +20,61 @@ grocery_list = {
 }
 
 
-def get_grocery_items():
+def get_items():
     """
     returns a list of all items in the grocery list
     """
     return list(grocery_list.keys())
 
 
-def get_grocery_details(item):
+def exists(item):
+    """
+    returns True if item exists in the grocery list
+    """
+    return item in grocery_list
+
+
+def get_details(item):
     """
     returns a dictionary of details for a singular grocery item
     """
     return grocery_list[item]
 
 
+def get_types():
+    """
+    returns all unique grocery types in the grocery list
+    """
+    return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
+
+
+def add_item(item, details):
+    """
+    adds an item to the grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if not isinstance(details, dict):
+        raise TypeError(f'Wrong type for details: {type(details)=}')
+    for field in REQUIRED_FIELDS:
+        if field not in details:
+            raise ValueError(f'Required {field=} missing from details.')
+    grocery_list[item] = details
+
+
+def remove_item(item):
+    """
+    removes an item from the grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if item not in grocery_list:
+        raise ValueError(f'Item {item=} not in grocery list.')
+    del grocery_list[item]
+
+
 def main():
-    print(get_grocery_items())
+    print(get_items())
 
 
 if __name__ == '__main__':
