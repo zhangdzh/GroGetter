@@ -10,6 +10,7 @@ VEGETABLES = 'Vegetables'
 SNACKS = 'Snacks'
 DRINKS = 'Drinks'
 MEAT = 'Meat'
+MISC = 'Misc'
 
 """
 Ex: {BAKED_GOODS: {'bread': [Quantity you want,
