@@ -2,7 +2,7 @@
 This module is responsible for the users and their details
 """
 
-TEST_USER_NAME = 'user2'
+# TEST_USER_NAME = 'user2'
 EMAIL = 'email'
 PASSWORD = 'password'
 USER_NAME = 'username'
@@ -12,8 +12,10 @@ TEST_USER_NAME = 'user1'
 TEST_EMAIL = 'user1@email.com'
 TEST_PASSWORD = 'xyz123'
 
-users = {TEST_USER_NAME: {EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
-         'user2': {EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
+users = {TEST_USER_NAME: {
+                EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
+         'user2': {
+                EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
 # example structure of users list
 # {
 #     USER_NAME: {
@@ -27,7 +29,11 @@ def user_exists(name):
     """
     Returns whether or not a user exists.
     """
-    return name in users
+    print("users.keys(): ", users.keys())
+    for user in users.keys():
+        if name == user:
+            return True
+    return False
 
 
 def get_users_dict():

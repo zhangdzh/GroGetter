@@ -63,15 +63,18 @@ SAMPLE_USER = {
 
 
 def test_user_dict():
-    resp_json = TEST_CLIENT.get(ep.USER_DICT).get_json()
+    resp_json = TEST_CLIENT.get(ep.USER_DICT_W_NS).get_json()
     assert isinstance(resp_json, dict)
+    assert len(resp_json) > 1 
     
 
 def test_add_user():
     """
     Test adding a user.
     """
-    resp = TEST_CLIENT.post(ep.USER_ADD, json=SAMPLE_USER)
+    print(dir(TEST_CLIENT))
+    resp = TEST_CLIENT.post(ep.USER_ADD_W_NS, json=SAMPLE_USER)
+    print(resp)
     assert usr.user_exists(SAMPLE_USER_NM)
     usr.del_user(SAMPLE_USER_NM)
 
