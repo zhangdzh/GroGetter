@@ -31,14 +31,6 @@ USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
 GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 
-# routes of endpoints with namespaces
-GROC_LIST_ADD_W_NS = f'/{GROC_LIST}/{ADD}'
-GROC_TYPE_LIST_W_NS = f'{GROC_TYPES}/{LIST}'
-GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES}/{DETAILS}'
-USER_LIST_W_NS = f'/{USERS}/{LIST}'
-USER_DICT_W_NS = f'/{USERS}/{DICT}'
-USER_ADD_W_NS = f'/{USERS}/{ADD}'
-
 # name spaces
 groc_types = Namespace(GROC_TYPES, 'Grocery Types')
 api.add_namespace(groc_types)
@@ -186,7 +178,7 @@ GROC_FIELDS = api.model('GROC_LIST_ADD', {
 })
 
 
-@groc_lists.route(GROC_LIST_ADD_W_NS)
+@groc_lists.route(f'/{ADD}')
 class AddGroceryList(Resource):
     """
     This will add a new grocery list to the database.
