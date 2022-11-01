@@ -12,8 +12,10 @@ TEST_USER_NAME = 'user1'
 TEST_EMAIL = 'user1@email.com'
 TEST_PASSWORD = 'xyz123'
 
-users = {TEST_USER_NAME: {EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
-         'user2': {EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
+users = {TEST_USER_NAME: {
+                EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
+         'user2': {
+                EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
 # example structure of users list
 # {
 #     USER_NAME: {

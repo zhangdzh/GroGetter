@@ -56,7 +56,10 @@ USER_LIST_W_NS = f'/{USERS_NS}/{LIST}'
 USER_DICT_W_NS = f'/{USERS_NS}/{DICT}'
 USER_ADD_W_NS = f'/{USERS_NS}/{ADD}'
 
+
 print(USER_ADD_W_NS)
+
+
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
@@ -164,7 +167,7 @@ USER_FIELDS = api.model('NewUser', {
 })
 
 
-@users.route(USER_ADD)
+@api.route(USER_ADD)
 class AddUser(Resource):
     """
     Add a user.
@@ -175,8 +178,8 @@ class AddUser(Resource):
         Add a user.
         """
         print(f'{request.json}')
-        name = request.json[usr.USERgi_NAME]
-        print("Name:",name)
+        name = request.json[usr.USER_NAME]
+        print("Name:", name)
         del request.json[usr.USER_NAME]
         usr.add_user(name, request.json)
 
