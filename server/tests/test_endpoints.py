@@ -6,7 +6,6 @@ import db.groc_types as gtyp
 import db.users as usr
 
 TEST_CLIENT = ep.app.test_client()
-TEST_GROCERY_TYPES = gtyp.get_groc_types()
 
 
 def test_main_page():
@@ -22,29 +21,22 @@ def test_get_grocery_type_list():
     """
     Check if grocery type list is proper
     """
-    resp_json = TEST_CLIENT.get(ep.GROC_TYPE_LIST_W_NS).get_json()
+    resp_json = TEST_CLIENT.get(f'/{ep.GROC_TYPES}/{ep.LIST}').get_json()
     print(resp_json)
     # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
     assert isinstance(resp_json, dict)
-
-
-def test_get_character_type_list_not_empty():
-    """
-    Check if groc type list is proper
-    """
-    resp_json = TEST_CLIENT.get(ep.GROC_TYPE_LIST_W_NS).get_json()
-    # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
     assert len(resp_json) > 0
 
 def test_get_grocery_type_details():
     """
     Check if grocery type details are correct
     """
-    for groc_type in TEST_GROCERY_TYPES:
-        resp_json = TEST_CLIENT.get(
-                f'{ep.GROC_TYPE_DETAILS_W_NS}/{groc_type}').get_json()
-        assert groc_type in resp_json
-        assert isinstance(resp_json[groc_type], dict)
+    # for groc_type in gtyp.get_groc_types():
+    #     resp_json = TEST_CLIENT.get(
+    #             f'{ep.GROC_TYPE_DETAILS_W_NS}/{groc_type}').get_json()
+    #     assert groc_type in resp_json
+    #     assert isinstance(resp_json[groc_type], dict)
+
 
 
 def test_add_grocery_list():
@@ -63,7 +55,7 @@ SAMPLE_USER = {
 
 
 def test_user_dict():
-    resp_json = TEST_CLIENT.get(ep.USER_DICT_W_NS).get_json()
+    resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{ep.DICT}').get_json()
     assert isinstance(resp_json, dict)
     assert len(resp_json) > 1 
     
@@ -73,7 +65,7 @@ def test_add_user():
     Test adding a user.
     """
     print(dir(TEST_CLIENT))
-    resp = TEST_CLIENT.post(ep.USER_ADD_W_NS, json=SAMPLE_USER)
+    resp = TEST_CLIENT.post(f'/{ep.USERS}/{ep.ADD}', json=SAMPLE_USER)
     print(resp)
     assert usr.user_exists(SAMPLE_USER_NM)
     usr.del_user(SAMPLE_USER_NM)
@@ -85,7 +77,6 @@ def test_get_user_list():
     Return should look like:
         {USER_LIST_NM: [list of users types...]}
     """
-    pass
-# resp = TEST_CLIENT.get(ep.USER_LIST_W_NS)
-# resp_json = resp.get_json()
-# assert isinstance(resp_json[ep.USER_LIST_NM], list)
+    resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{ep.LIST}').get_json()
+    assert isinstance(resp_json, dict)
+    assert isinstance(resp_json[ep.USER_LIST_NM], list)

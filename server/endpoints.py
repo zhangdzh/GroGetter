@@ -15,51 +15,44 @@ import db.users as usr
 app = Flask(__name__)
 api = Api(app)
 
-GROC_TYPES_NS = 'grocery_types'
-GROC_NS = 'grocery'
-GROC_LISTS_NS = 'grocery_lists'
-USERS_NS = 'users'
-
-groc_types = Namespace(GROC_TYPES_NS, 'Grocery Types')
-api.add_namespace(groc_types)
-groc_lists = Namespace(GROC_LISTS_NS, 'Grocery Lists')
-api.add_namespace(groc_lists)
-users = Namespace(USERS_NS, 'Users')
-api.add_namespace(users)
-# note to self/team: focusing just on users namespace rn
-# until we figure out the organization for groceries and such
-
+# string constants
+GROC = 'groc'
+USERS = 'users'
 LIST = 'list'
 DETAILS = 'details'
 ADD = 'add'
 DICT = 'dict'
+TYPES = 'types'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
-GROC_TYPES = 'groc_types'
-GROC_TYPE_LIST = f'/{LIST}'
-GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{DETAILS}'
-GROC_LIST_ADD = f'/groc_list/{ADD}'
-LOGIN = '/login'
-USERS = 'users'
-USER_ADD = f'/{USERS}/{ADD}'
-USER_DICT = f'/{DICT}'
-USER_DICT_NM = f'{USERS_NS}_dict'
-USER_LIST = f'/{LIST}'
-USER_LIST_NM = f'{USERS_NS}_list'
+GROC_TYPES = f'{GROC}_{TYPES}'
+GROC_LIST = f'{GROC}_{LIST}'
+USER_DICT_NM = f'{USERS}_{DICT}'
+USER_LIST_NM = f'{USERS}_{LIST}'
+GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 
-# for namespaces
-GROC_TYPE_LIST_W_NS = f'{GROC_TYPES_NS}/{LIST}'
-GROC_TYPE_LIST_NM = f'{GROC_TYPES_NS}_list'
-GROC_TYPE_DETAILS = f'/{DETAILS}'
-GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES_NS}/{DETAILS}'
-USER_LIST_W_NS = f'/{USERS_NS}/{LIST}'
-USER_DICT_W_NS = f'/{USERS_NS}/{DICT}'
-USER_ADD_W_NS = f'/{USERS_NS}/{ADD}'
+# routes of endpoints with namespaces
+GROC_LIST_ADD_W_NS = f'/{GROC_LIST}/{ADD}'
+GROC_TYPE_LIST_W_NS = f'{GROC_TYPES}/{LIST}'
+GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES}/{DETAILS}'
+USER_LIST_W_NS = f'/{USERS}/{LIST}'
+USER_DICT_W_NS = f'/{USERS}/{DICT}'
+USER_ADD_W_NS = f'/{USERS}/{ADD}'
+
+# name spaces
+groc_types = Namespace(GROC_TYPES, 'Grocery Types')
+api.add_namespace(groc_types)
+groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
+api.add_namespace(groc_lists)
+users = Namespace(USERS, 'Users')
+api.add_namespace(users)
+groceries = Namespace(GROC, 'Groceries')
+api.add_namespace(groceries)
+# note to self/team: focusing just on users namespace rn
+# until we figure out the organization for groceries and such
 
 
-print(USER_ADD_W_NS)
-
-
+# api namespace endpoints
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
@@ -91,7 +84,8 @@ class MainPage(Resource):
                     }}
 
 
-@groc_types.route(GROC_TYPE_LIST)
+# grocery types namespace endpoints
+@groc_types.route(f'/{LIST}')
 class GrocTypeList(Resource):
     """
     This will get a list of grocery types.
@@ -104,7 +98,7 @@ class GrocTypeList(Resource):
         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types}
 
 
-@groc_types.route(f'{GROC_TYPE_DETAILS}/<groc_type>')
+@groc_types.route(f'/{DETAILS}/<groc_type>')
 class GroceryTypeDetails(Resource):
     """
     This will get the items by the type..
@@ -119,22 +113,8 @@ class GroceryTypeDetails(Resource):
             raise wz.NotFound(f'{groc_type} not found.')
 
 
-@api.route(LOGIN)
-class Login(Resource):
-    """
-    I'm not too sure how this login route will work.
-    """
-    def login(self):
-        pass
-
-
-user_fields = api.model('NewUser', {
-    usr.USER_NAME: fields.String,
-    usr.EMAIL: fields.String,
-})
-
-
-@users.route(USER_DICT)
+# users namespace endpoints
+@users.route(f'/{DICT}')
 class UserDict(Resource):
     """
     This will get a dict of currrent users.
@@ -148,7 +128,7 @@ class UserDict(Resource):
                 'Title': 'Active Users'}
 
 
-@users.route(USER_LIST)
+@users.route(f'/{LIST}')
 class UserList(Resource):
     """
     This will get a list of currrent users.
@@ -167,12 +147,12 @@ USER_FIELDS = api.model('NewUser', {
 })
 
 
-@api.route(USER_ADD)
+@users.route(f'/{ADD}')
 class AddUser(Resource):
     """
     Add a user.
     """
-    @users.expect(user_fields)
+    @users.expect(USER_FIELDS)
     def post(self):
         """
         Add a user.
@@ -184,6 +164,7 @@ class AddUser(Resource):
         usr.add_user(name, request.json)
 
 
+# grocery lists namespace endpoints
 class GrocListType(fields.Raw):
     """
     This is a custom data type for the grocery list to be used
@@ -205,7 +186,7 @@ GROC_FIELDS = api.model('GROC_LIST_ADD', {
 })
 
 
-@groc_lists.route(GROC_LIST_ADD)
+@groc_lists.route(GROC_LIST_ADD_W_NS)
 class AddGroceryList(Resource):
     """
     This will add a new grocery list to the database.
