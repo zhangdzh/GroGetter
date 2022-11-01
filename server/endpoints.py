@@ -25,7 +25,9 @@ api.add_namespace(groc_types)
 groc_lists = Namespace(GROC_LISTS_NS, 'Grocery Lists')
 api.add_namespace(groc_lists)
 users = Namespace(USERS_NS, 'Users')
-
+api.add_namespace(users)
+# note to self/team: focusing just on users namespace rn
+# until we figure out the organization for groceries and such
 
 LIST = 'list'
 DETAILS = 'details'
@@ -35,7 +37,6 @@ MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = 'groc_types'
 GROC_TYPE_LIST = f'/{LIST}'
-# GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 GROC_TYPE_DETAILS = f'/{GROC_TYPES}/{DETAILS}'
 GROC_LIST_ADD = f'/groc_list/{ADD}'
 LOGIN = '/login'
@@ -51,11 +52,11 @@ GROC_TYPE_LIST_W_NS = f'{GROC_TYPES_NS}/{LIST}'
 GROC_TYPE_LIST_NM = f'{GROC_TYPES_NS}_list'
 GROC_TYPE_DETAILS = f'/{DETAILS}'
 GROC_TYPE_DETAILS_W_NS = f'{GROC_TYPES_NS}/{DETAILS}'
-USER_LIST_W_NS = f'{USERS_NS}/{LIST}'
-USER_DICT_W_NS = f'{USERS_NS}/{DICT}'
-USER_ADD_W_NS = f'{USERS_NS}/{ADD}'
+USER_LIST_W_NS = f'/{USERS_NS}/{LIST}'
+USER_DICT_W_NS = f'/{USERS_NS}/{DICT}'
+USER_ADD_W_NS = f'/{USERS_NS}/{ADD}'
 
-
+print(USER_ADD_W_NS)
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
@@ -130,10 +131,10 @@ user_fields = api.model('NewUser', {
 })
 
 
-@api.route(USER_DICT)
+@users.route(USER_DICT)
 class UserDict(Resource):
     """
-    This will get a list of currrent users.
+    This will get a dict of currrent users.
     """
     def get(self):
         """
@@ -163,18 +164,19 @@ USER_FIELDS = api.model('NewUser', {
 })
 
 
-@api.route(USER_ADD)
+@users.route(USER_ADD)
 class AddUser(Resource):
     """
     Add a user.
     """
-    @api.expect(user_fields)
+    @users.expect(user_fields)
     def post(self):
         """
         Add a user.
         """
-        print(f'{request.json=}')
-        name = request.json[usr.USER_NAME]
+        print(f'{request.json}')
+        name = request.json[usr.USERgi_NAME]
+        print("Name:",name)
         del request.json[usr.USER_NAME]
         usr.add_user(name, request.json)
 
