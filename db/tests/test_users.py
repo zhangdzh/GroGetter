@@ -20,6 +20,21 @@ def test_add_user():
     usr.add_user(usr.TEST_USER_NAME, details)
 
 
+def test_add_wrong_name_type():
+    with pytest.raises(TypeError):
+        usr.add_user(7, {})
+
+
+def test_add_wrong_details_type():
+    with pytest.raises(TypeError):
+        usr.add_user('a new user', [])
+
+
+def test_add_missing_field():
+    with pytest.raises(ValueError):
+        usr.add_user('a new user', {'foo': 'bar'})
+
+
 def test_get_usernames():
     """
     tests get_usernames()
