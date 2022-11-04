@@ -7,6 +7,7 @@ import db.users as usr
 
 TEST_USER_NAME = 'user1'
 TEST_PW = "helloworld"
+SAMPLE_PASSWORD = "password1234"
 
 
 def test_add_user():
@@ -71,3 +72,11 @@ def test_change_password():
     tests change_password()
     """
     usr.change_password(TEST_USER_NAME, TEST_PW)    
+
+
+def test_encrypted_password():
+    """
+    tests encrypt_password()
+    """
+    encrypted = usr.encrypt_password(SAMPLE_PASSWORD)
+    assert SAMPLE_PASSWORD != encrypted

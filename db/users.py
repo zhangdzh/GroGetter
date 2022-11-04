@@ -1,6 +1,7 @@
 """
 This module is responsible for the users and their details
 """
+import hashlib
 
 # TEST_USER_NAME = 'user2'
 EMAIL = 'email'
@@ -56,7 +57,6 @@ def add_user(username, details):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
-    print(details)
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')
@@ -90,6 +90,11 @@ def change_password(username, new_password):
     if username not in users.keys():
         raise KeyError("Username not found")
     users[username][PASSWORD] = new_password
+
+
+def encrypt_password(password):
+    encrypted = hashlib.sha1(password.encode('utf-8')).hexdigest().strip()
+    return encrypted
 
 
 def main():
