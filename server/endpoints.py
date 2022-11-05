@@ -9,7 +9,6 @@ from flask_restx import Resource, Api, fields, Namespace
 import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
-import db.groc_lists as glst
 import db.users as usr
 
 app = Flask(__name__)
@@ -168,27 +167,3 @@ class GrocListType(fields.Raw):
         except AttributeError:
             return {}
         return dct or {}
-
-
-GROC_FIELDS = api.model('GROC_LIST_ADD', {
-    glst.USER_NAME: fields.String,
-    glst.LIST_NAME: fields.String,
-    glst.NUM_ITEMS: fields.Integer,
-    glst.GROC_LIST: GrocListType,
-})
-
-
-@groc_lists.route(f'/{ADD}')
-class AddGroceryList(Resource):
-    """
-    This will add a new grocery list to the database.
-    """
-    @api.expect(GROC_FIELDS)
-    def post(self):
-        """
-        Add list to groc_list database.
-        """
-        print(f'{request.json=}')
-        name = request.json[glst.USER_NAME]
-        del request.json[glst.USER_NAME]
-        glst.add_groc(name, request.json)
