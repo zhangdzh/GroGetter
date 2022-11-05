@@ -6,7 +6,6 @@ from http import HTTPStatus
 
 from flask import Flask, request
 from flask_restx import Resource, Api, fields, Namespace
-import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
 import db.users as usr
@@ -91,21 +90,6 @@ class GrocTypeList(Resource):
         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types}
 
 
-@groc_types.route(f'/{DETAILS}/<groc_type>')
-class GroceryTypeDetails(Resource):
-    """
-    This will get the items by the type..
-    """
-    @api.response(HTTPStatus.OK, 'Success')
-    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    def get(self, groc_type):
-        gt = gtyp.get_groc_items_by_type(groc_type)
-        if gt is not None:
-            return {groc_type: gt}
-        else:
-            raise wz.NotFound(f'{groc_type} not found.')
-
-
 # users namespace endpoints
 @users.route(f'/{DICT}')
 class UserDict(Resource):
@@ -150,9 +134,7 @@ class AddUser(Resource):
         """
         Add a user.
         """
-        print(f'{request.json}')
         name = request.json[usr.USER_NAME]
-        print("Name:", name)
         del request.json[usr.USER_NAME]
         usr.add_user(name, request.json)
 
@@ -170,3 +152,27 @@ class GrocItems(Resource):
         Returns list of grocery list items.
         """
         return groc.get_items()
+
+
+GROC_FIELDS = api.model('item', {
+    "ITEMNAME": fields.String,
+    groc.GROC_TYPE: fields.String,
+    groc.QUANTITY: fields.Integer,
+    groc.EXPIRATION_DATE: fields.String,
+})
+
+
+@groceries.route(f'/{ADD}')
+class AddGrocItem(Resource):
+    """
+    Get number of items by types
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    def post(self):
+        """
+        Add grocery item
+        """
+        item = request.json["ITEMNAME"]
+        del request.json["ITEMNAME"]
+        groc.add_item(item, request.json)
