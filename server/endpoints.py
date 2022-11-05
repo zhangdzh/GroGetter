@@ -156,6 +156,7 @@ class AddUser(Resource):
         del request.json[usr.USER_NAME]
         usr.add_user(name, request.json)
 
+
 # groceries endpoints
 @groceries.route(f'/{ITEMS}')
 class GrocItems(Resource):
