@@ -157,7 +157,7 @@ class GrocItems(Resource):
 
 
 GROC_FIELDS = api.model('item', {
-    "ITEMNAME": fields.String,
+    ITEM: fields.String,
     groc.GROC_TYPE: fields.String,
     groc.QUANTITY: fields.Integer,
     groc.EXPIRATION_DATE: fields.String,
@@ -171,6 +171,7 @@ class AddGrocItem(Resource):
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect(GROC_FIELDS)
     def post(self):
         """
         Add grocery item
@@ -180,6 +181,9 @@ class AddGrocItem(Resource):
         groc.add_item(item, request.json)
 
 
+REMOVE_FIELDS = api.model('remove', {ITEM: fields.String})
+
+
 @groceries.route(f'/{REMOVE}')
 class RemoveGrocItem(Resource):
     """
@@ -187,10 +191,10 @@ class RemoveGrocItem(Resource):
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect(REMOVE_FIELDS)
     def post(self):
         """
         Remove grocery item from grocery list
         """
-        item = request.json[ITEM]
-        del request.json[ITEM]
-        groc.remove_item(item, request.json)
+        print(request.json)
+        groc.remove_item(request.json[ITEM])

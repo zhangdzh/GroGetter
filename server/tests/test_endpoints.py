@@ -86,8 +86,13 @@ SAMPLE_GROCLIST = {
 }
 
 
+SAMPLE_REMOVE_GROCITEM_NM = {
+    ep.ITEM: SAMPLE_GROCITEM_NM
+}
+
+
 def test_add_and_remove_grocitem():
     resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.ADD}', json=SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
-    groc.remove_item(SAMPLE_GROCITEM_NM)
+    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
     assert not groc.exists(SAMPLE_GROCITEM_NM)
