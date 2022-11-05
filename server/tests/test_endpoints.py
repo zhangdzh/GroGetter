@@ -79,15 +79,15 @@ def test_get_groc_items():
 
 SAMPLE_GROCITEM_NM = 'SampleItem'
 SAMPLE_GROCLIST = {
-    "ITEMNAME": SAMPLE_GROCITEM_NM,
+    ep.ITEM: SAMPLE_GROCITEM_NM,
     groc.GROC_TYPE: gtyp.BAKED_GOODS,
     groc.QUANTITY: 10, 
     groc.EXPIRATION_DATE: "10/10/2022"
 }
 
 
-def test_addgrocitem():
+def test_add_and_remove_grocitem():
     resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.ADD}', json=SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
     groc.remove_item(SAMPLE_GROCITEM_NM)
-    
+    assert not groc.exists(SAMPLE_GROCITEM_NM)

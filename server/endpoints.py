@@ -22,7 +22,9 @@ DETAILS = 'details'
 ADD = 'add'
 DICT = 'dict'
 TYPES = 'types'
+ITEM = 'item'
 ITEMS = 'items'
+REMOVE = 'remove'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = f'{GROC}_{TYPES}'
@@ -173,6 +175,22 @@ class AddGrocItem(Resource):
         """
         Add grocery item
         """
-        item = request.json["ITEMNAME"]
-        del request.json["ITEMNAME"]
+        item = request.json[ITEM]
+        del request.json[ITEM]
         groc.add_item(item, request.json)
+
+
+@groceries.route(f'/{REMOVE}')
+class RemoveGrocItem(Resource):
+    """
+    Remove grocery item from grocery list
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    def post(self):
+        """
+        Remove grocery item from grocery list
+        """
+        item = request.json[ITEM]
+        del request.json[ITEM]
+        groc.remove_item(item, request.json)
