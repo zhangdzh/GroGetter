@@ -80,3 +80,10 @@ def test_get_user_list():
     resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{ep.LIST}').get_json()
     assert isinstance(resp_json, dict)
     assert isinstance(resp_json[ep.USER_LIST_NM], list)
+
+
+# grocery endpoints tests
+def test_get_groc_items():
+    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.ITEMS}').get_json()
+    assert isinstance(resp_json, list)
+    assert len(resp_json) > 0

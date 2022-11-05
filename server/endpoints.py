@@ -10,6 +10,7 @@ import werkzeug.exceptions as wz
 
 import db.groc_types as gtyp
 import db.users as usr
+import db.groceries as groc
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,6 +23,7 @@ DETAILS = 'details'
 ADD = 'add'
 DICT = 'dict'
 TYPES = 'types'
+ITEMS = 'items'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = f'{GROC}_{TYPES}'
@@ -154,16 +156,16 @@ class AddUser(Resource):
         del request.json[usr.USER_NAME]
         usr.add_user(name, request.json)
 
-
-# grocery lists namespace endpoints
-class GrocListType(fields.Raw):
+# groceries endpoints
+@groceries.route(f'/{ITEMS}')
+class GrocItems(Resource):
     """
-    This is a custom data type for the grocery list to be used
-    for checking the input type.
+    Gets items in grocery list.
     """
-    def output(self, key, obj, **kwargs):
-        try:
-            dct = getattr(obj, self.attribute)
-        except AttributeError:
-            return {}
-        return dct or {}
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    def get(self):
+        """
+        Returns list of grocery list items.
+        """
+        return groc.get_items()

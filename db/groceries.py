@@ -3,7 +3,7 @@ This module is for a singular grocery list structure. It contains functions
 necessary to interact with a grocery list.
 """
 
-import groc_types as gtyp
+import db.groc_types as gtyp
 
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
