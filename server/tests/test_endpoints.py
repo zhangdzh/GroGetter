@@ -96,3 +96,10 @@ def test_add_and_remove_grocitem():
     assert groc.exists(SAMPLE_GROCITEM_NM)
     resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
     assert not groc.exists(SAMPLE_GROCITEM_NM)
+
+
+def test_get_groc_details():
+    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.DETAILS}/item1').get_json()
+    assert isinstance(resp_json, dict)
+    for field in groc.REQUIRED_FIELDS:
+        assert field in resp_json

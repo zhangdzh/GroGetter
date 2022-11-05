@@ -198,3 +198,17 @@ class RemoveGrocItem(Resource):
         """
         print(request.json)
         groc.remove_item(request.json[ITEM])
+
+
+@groceries.route(f'/{DETAILS}/<item>')
+class GrocTypes(Resource):
+    """
+    Get all groceries with given type
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    def get(self, item):
+        """
+        Returns number of items by types
+        """
+        return groc.get_details(item)
