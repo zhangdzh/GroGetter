@@ -18,6 +18,15 @@ def test_main_page():
     assert len(resp_json) > 0
 
 
+def test_main_menu():
+    """
+    Checks ability to display main menu
+    """
+    resp_json = TEST_CLIENT.get(ep.MAIN_MENU).get_json()
+    assert isinstance(resp_json, dict)
+    assert len(resp_json) > 0
+
+
 def test_get_grocery_type_list():
     """
     Check if grocery type list is proper

@@ -25,6 +25,8 @@ TYPES = 'types'
 ITEM = 'item'
 ITEMS = 'items'
 REMOVE = 'remove'
+MAIN_MENU = '/main_menu'
+MAIN_MENU_NM = 'Main Menu'
 MAIN_PAGE = '/main_page'
 MAIN_PAGE_NM = 'Main Page'
 GROC_TYPES = f'{GROC}_{TYPES}'
@@ -76,6 +78,27 @@ class MainPage(Resource):
                 'Choices': {
                     '1': {'text': 'List Grocery Types'},
                     }}
+
+
+@api.route(MAIN_MENU)
+class MainMenu(Resource):
+    """
+    This is the main menu for the app
+    """
+    def get(self):
+        """
+        Gets the main menu
+        """
+        return {'Title': MAIN_MENU_NM,
+                'Default': 0,
+                'Choices': {
+                    '1': {'text': 'List Grocery Types'},
+                    '2': {'url': '/groceries/list',
+                          'method': 'GET', 'text': 'List Groceries'},
+                    '3': {'url': '/users/dict',
+                          'method': 'get', 'text': 'List Users'},
+                    'X': {'text': 'Exit'},
+                }}
 
 
 # grocery types namespace endpoints
