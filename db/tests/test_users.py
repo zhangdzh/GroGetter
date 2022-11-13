@@ -5,7 +5,8 @@ Testing module for users.py
 import pytest
 import db.users as usr
 
-TEST_USER_NAME = 'user1'
+TEST_USER_NAME = 'user3'
+TEST_USER_NAME_DUP = 'user1'
 TEST_PW = "helloworld"
 SAMPLE_PASSWORD = "password1234"
 
@@ -48,7 +49,7 @@ def test_add_missing_field():
 
 def test_add_user_dup():
     with pytest.raises(ValueError):
-        usr.add_user(TEST_USER_NAME, NEW_DETAILS)
+        usr.add_user(TEST_USER_NAME_DUP, NEW_DETAILS)
 
 def test_get_usernames():
     """
