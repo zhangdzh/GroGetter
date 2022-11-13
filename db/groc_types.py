@@ -34,6 +34,10 @@ def get_groc_types():
     return list(GROC_TYPES.keys())
 
 
+def get_groc_types_dict():
+    return GROC_TYPES
+
+
 def main():
     print(f'Grocery types: {get_groc_types()}')
 

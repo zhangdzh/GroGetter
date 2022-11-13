@@ -92,7 +92,8 @@ class MainMenu(Resource):
         return {'Title': MAIN_MENU_NM,
                 'Default': 0,
                 'Choices': {
-                    '1': {'text': 'List Grocery Types'},
+                    '1': {'url': '/groc_types/dict',
+                          'method': 'get', 'text': 'List Grocery Types'},
                     '2': {'url': '/groc/dict',
                           'method': 'get', 'text': 'List Groceries'},
                     '3': {'url': '/users/dict',
@@ -112,7 +113,21 @@ class GrocTypeList(Resource):
         Returns a list of grocery types.
         """
         # leads to "grocery_types_list" key error which is GROC_TYPE_LIST_NM
-        return {GROC_TYPE_LIST_NM: gtyp.get_groc_types}
+        return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
+
+
+@groc_types.route(f'/{DICT}')
+class GrocTypeDict(Resource):
+    """
+    This will get a dict of current grocery types
+    """
+    def get(self):
+        """
+        Returns a list of grocery types
+        """
+        return {'Data': gtyp.get_groc_types_dict(),
+                'Type': 'Data',
+                'Title': 'Grocery Types'}
 
 
 # users namespace endpoints
