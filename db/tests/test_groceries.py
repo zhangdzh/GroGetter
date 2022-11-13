@@ -139,8 +139,8 @@ def test_update_quantity(new_groc_item):
 
 def test_add_item_dup(new_groc_item):
     with pytest.raises(ValueError):
-        gtyp.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
+        grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
 
 
 def test_groc_lst_not_exists():
-    assert not gtyp.exists('Some nonsense list')
+    assert not grocs.exists('Some nonsense list')
