@@ -57,6 +57,8 @@ def add_user(username, details):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
+    if user_exists:
+        raise KeyError('This username is taken')
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise ValueError(f'Required {field=} missing from details.')

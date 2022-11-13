@@ -46,6 +46,10 @@ def test_add_missing_field():
         usr.add_user('a new user', {'foo': 'bar'})
 
 
+def test_add_user_dup():
+    with pytest.raises(ValueError):
+        usr.add_user(TEST_USER_NAME, NEW_DETAILS)
+
 def test_get_usernames():
     """
     tests get_usernames()
