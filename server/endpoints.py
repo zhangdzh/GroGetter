@@ -93,8 +93,8 @@ class MainMenu(Resource):
                 'Default': 0,
                 'Choices': {
                     '1': {'text': 'List Grocery Types'},
-                    '2': {'url': '/groceries/list',
-                          'method': 'GET', 'text': 'List Groceries'},
+                    '2': {'url': '/groc/dict',
+                          'method': 'get', 'text': 'List Groceries'},
                     '3': {'url': '/users/dict',
                           'method': 'get', 'text': 'List Users'},
                     'X': {'text': 'Exit'},
@@ -177,6 +177,22 @@ class GrocItems(Resource):
         Returns list of grocery list items.
         """
         return groc.get_items()
+
+
+@groceries.route(f'/{DICT}')
+class GrocDict(Resource):
+    """
+    Gets a dictionary of grocery lists
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    def get(self):
+        """
+        Returns list of grocery lists
+        """
+        return {'Data': groc.get_grocery_list(),
+                'Type': 'Data',
+                'Title': 'Grocery List'}
 
 
 GROC_FIELDS = api.model('item', {
