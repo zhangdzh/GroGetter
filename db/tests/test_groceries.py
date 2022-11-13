@@ -5,6 +5,20 @@ import pytest
 import db.groceries as grocs
 import db.groc_types as gtyp
 
+NEW_GROC_NAME = "test"
+NEW_GROC_DETAILS = {
+                    grocs.GROC_TYPE: "Carbs", 
+                    grocs.QUANTITY: 2, 
+                    grocs.EXPIRATION_DATE: "10-31-2024" 
+                    }
+
+
+@pytest.fixture(scope='function')
+def new_groc_item():
+    grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
+    yield
+    grocs.remove_item(NEW_GROC_NAME)
+
 
 def test_get_items():
     """
@@ -26,22 +40,23 @@ def test_get_grocery_list():
         assert isinstance(groc_list[item], dict)
 
 
-def test_exists():
+def test_exists(new_groc_item):
     """
     tests exists()
     """
-    TEST_ITEM = "item1"
-    assert grocs.exists(TEST_ITEM)
+    # TEST_ITEM = "item1"
+    # assert grocs.exists(TEST_ITEM)
+    assert grocs.exists(NEW_GROC_NAME)
 
 
-def test_get_details():
+def test_get_details(new_groc_item):
     """
     tests get_details()
     """
-    TEST_GROCERY_NAME = "item1"
-    assert isinstance(grocs.get_details(TEST_GROCERY_NAME), dict)
+    # TEST_GROCERY_NAME = "item1"
+    assert isinstance(grocs.get_details(NEW_GROC_NAME), dict)
     for field in grocs.REQUIRED_FIELDS:
-        assert field in grocs.get_details(TEST_GROCERY_NAME)
+        assert field in grocs.get_details(NEW_GROC_NAME)
 
 
 def test_get_types():
@@ -54,7 +69,7 @@ def test_get_types():
         assert field in gtyp.GROC_TYPES
 
 
-def test_add_and_remove_item():
+def test_add_and_remove_item():  # fixture covers this?
     """
     tests add_item() and remove_item()
     """
@@ -71,21 +86,21 @@ def test_add_and_remove_item():
     assert not grocs.exists(TEST_ITEM)
 
 
-def test_update_item():
+def test_update_item(new_groc_item):
     """
     tests update_item()
     """
-    TEST_ITEM = "item1"
+    # TEST_ITEM = "item1"
     TEST_GROCERY = {
         grocs.GROC_TYPE: gtyp.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
-    grocs.update_item(TEST_ITEM, TEST_GROCERY)
-    assert TEST_GROCERY == grocs.get_details(TEST_ITEM)
+    grocs.update_item(NEW_GROC_NAME, TEST_GROCERY)
+    assert TEST_GROCERY == grocs.get_details(NEW_GROC_NAME)
 
 
-def test_raised_exceptions_for_add_item():
+def test_raised_exceptions_for_add_item():  # also edit w/ addition of fixture
     """
     tests raised exceptions for add_item()
     """
@@ -112,11 +127,11 @@ def test_raised_exceptions_for_add_item():
         grocs.add_item(TEST_ITEM, TEST_GROCERY)
 
 
-def test_update_quantity():
+def test_update_quantity(new_groc_item):
     """
     tests update_quantity()
     """
-    TEST_ITEM = "item1"
+    # TEST_ITEM = "item1"
     TEST_QUANTITY = 20
-    grocs.update_quantity(TEST_ITEM, TEST_QUANTITY)
-    assert TEST_QUANTITY == grocs.get_details(TEST_ITEM)[grocs.QUANTITY]
+    grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
+    assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
