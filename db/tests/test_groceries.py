@@ -135,3 +135,8 @@ def test_update_quantity(new_groc_item):
     TEST_QUANTITY = 20
     grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
     assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
+
+
+# def test_add_item_dup(new_groc_item):
+#     with pytest.raises(ValueError):
+#         gtyp.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
