@@ -112,3 +112,15 @@ def test_get_groc_details():
     assert isinstance(resp_json, dict)
     for field in groc.REQUIRED_FIELDS:
         assert field in resp_json
+
+
+def test_update_grocitem():
+    groc.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
+    assert groc.exists(SAMPLE_GROCITEM_NM)
+    SAMPLE_GROCLIST[groc.QUANTITY] = 20
+    SAMPLE_GROCLIST[groc.EXPIRATION_DATE] = "10/30/2022"
+    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.UPDATE}', json=SAMPLE_GROCLIST)
+    assert groc.exists(SAMPLE_GROCITEM_NM)
+    assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.QUANTITY] == 20
+    assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.EXPIRATION_DATE] == "10/30/2022"
+    groc.remove_item(SAMPLE_GROCITEM_NM)

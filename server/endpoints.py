@@ -25,6 +25,7 @@ TYPES = 'types'
 ITEM = 'item'
 ITEMS = 'items'
 REMOVE = 'remove'
+UPDATE = 'update'
 MAIN_MENU = '/main_menu'
 MAIN_MENU_NM = 'Main Menu'
 MAIN_PAGE = '/main_page'
@@ -266,3 +267,20 @@ class GrocTypes(Resource):
         Returns number of items by types
         """
         return groc.get_details(item)
+
+
+@groceries.route(f'/{UPDATE}')
+class UpdateGrocItem(Resource):
+    """
+    Update grocery item
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect(GROC_FIELDS)
+    def post(self):
+        """
+        Update grocery item
+        """
+        item = request.json[ITEM]
+        del request.json[ITEM]
+        groc.update_item(item, request.json)
