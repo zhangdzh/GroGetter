@@ -124,3 +124,13 @@ def test_update_grocitem():
     assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.QUANTITY] == 20
     assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.EXPIRATION_DATE] == "10/30/2022"
     groc.remove_item(SAMPLE_GROCITEM_NM)
+
+
+def test_update_quantity():
+    groc.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
+    assert groc.exists(SAMPLE_GROCITEM_NM)
+    SAMPLE_GROCLIST[groc.QUANTITY] = 15
+    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.UPDATE}_{ep.QUANTITY}', json=SAMPLE_GROCLIST)
+    assert groc.exists(SAMPLE_GROCITEM_NM)
+    assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.QUANTITY] == 15
+    groc.remove_item(SAMPLE_GROCITEM_NM)

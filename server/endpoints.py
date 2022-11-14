@@ -26,6 +26,7 @@ ITEM = 'item'
 ITEMS = 'items'
 REMOVE = 'remove'
 UPDATE = 'update'
+QUANTITY = 'quantity'
 MAIN_MENU = '/main_menu'
 MAIN_MENU_NM = 'Main Menu'
 MAIN_PAGE = '/main_page'
@@ -284,3 +285,24 @@ class UpdateGrocItem(Resource):
         item = request.json[ITEM]
         del request.json[ITEM]
         groc.update_item(item, request.json)
+
+
+UPDATE_QUANTITY_FIELDS = api.model('update_quantity',
+                                   {QUANTITY: fields.Integer})
+
+
+@groceries.route(f'/{UPDATE}_{QUANTITY}')
+class UpdateGrocItemQuantity(Resource):
+    """
+    Update grocery item quantity
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect(GROC_FIELDS)
+    def post(self):
+        """
+        Update grocery item quantity
+        """
+        item = request.json[ITEM]
+        del request.json[ITEM]
+        groc.update_item_quantity(item, request.json)
