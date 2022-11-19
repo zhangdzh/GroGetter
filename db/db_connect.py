@@ -20,3 +20,10 @@ def connect_db():
         if os.environ.get("LOCAL_MONGO", LOCAL) == LOCAL:
             print("Connecting to MongoDB locally.")
             client = pm.MongoClient()
+
+
+def fetch_all(collection, db=GROC_DB):
+    ret = []
+    for doc in client[db][collection].find():
+        ret.append(doc)
+    return ret
