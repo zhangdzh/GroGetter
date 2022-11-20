@@ -42,3 +42,11 @@ def fetch_one(collection, filt, db=GROC_DB):
     """
     for doc in client[db][collection].find(filt):
         return doc
+
+
+def fetch_all_as_dict(key, collection, db=GROC_DB):
+    ret = {}
+    for doc in client[db][collection].find():
+        del doc['_id']
+        ret[doc[key]] = doc
+    return ret
