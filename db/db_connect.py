@@ -27,3 +27,18 @@ def fetch_all(collection, db=GROC_DB):
     for doc in client[db][collection].find():
         ret.append(doc)
     return ret
+
+
+def insert_one(collection, doc, db=GROC_DB):
+    """
+    Insert a single doc into collection.
+    """
+    client[db][collection].insert_one(doc)
+
+
+def fetch_one(collection, filt, db=GROC_DB):
+    """
+    Find with a filter and return on the first doc found.
+    """
+    for doc in client[db][collection].find(filt):
+        return doc
