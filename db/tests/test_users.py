@@ -95,3 +95,13 @@ def test_encrypted_password():
     """
     encrypted = usr.encrypt_password(SAMPLE_PASSWORD)
     assert SAMPLE_PASSWORD != encrypted
+
+
+def test_wrong_password_type(new_user):
+    with pytest.raises(TypeError):
+        usr.change_password(NEW_USER_NAME, True)
+
+
+def test_invalid_user_change_password():
+    with pytest.raises(KeyError):
+        usr.change_password("invalid", "123")
