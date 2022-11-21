@@ -56,8 +56,8 @@ SAMPLE_USER = {
 def test_user_dict():
     resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{ep.DICT}').get_json()
     assert isinstance(resp_json, dict)
-    assert len(resp_json) > 1 
-    
+    assert len(resp_json) > 1
+
 
 def test_add_user():
     """
@@ -79,6 +79,18 @@ def test_get_user_list():
     assert isinstance(resp_json[ep.USER_LIST_NM], list)
 
 
+def test_del_user():
+    """
+    Test deleting a user.
+    """
+    usr.add_user(SAMPLE_USER_NM, SAMPLE_USER)
+    assert usr.user_exists(SAMPLE_USER_NM)
+    print("after adding: ", usr.get_users_dict())
+    resp = TEST_CLIENT.post(f'/{ep.USERS}/{ep.REMOVE}', json={usr.USER_NAME: SAMPLE_USER_NM})
+    print("after removing: ", usr.get_users_dict())
+    assert not usr.user_exists(SAMPLE_USER_NM)
+
+
 # grocery endpoints tests
 def test_get_groc_items():
     resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.ITEMS}').get_json()
@@ -90,7 +102,7 @@ SAMPLE_GROCITEM_NM = 'SampleItem'
 SAMPLE_GROCLIST = {
     ep.ITEM: SAMPLE_GROCITEM_NM,
     groc.GROC_TYPE: gtyp.BAKED_GOODS,
-    groc.QUANTITY: 10, 
+    groc.QUANTITY: 10,
     groc.EXPIRATION_DATE: "10/10/2022"
 }
 

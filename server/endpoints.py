@@ -181,6 +181,22 @@ class AddUser(Resource):
         usr.add_user(name, request.json)
 
 
+@users.route(f'/{REMOVE}')
+class RemoveUser(Resource):
+    """
+    Remove a user.
+    """
+    REMOVE_USER = api.model('RemoveUser', {usr.USER_NAME: fields.String})
+
+    @users.expect(REMOVE_USER)
+    def post(self):
+        """
+        Remove a user using the del_user function.
+        """
+        name = request.json[usr.USER_NAME]
+        usr.del_user(name)
+
+
 # groceries endpoints
 @groceries.route(f'/{ITEMS}')
 class GrocItems(Resource):
