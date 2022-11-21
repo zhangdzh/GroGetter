@@ -4,10 +4,13 @@ necessary to interact with a grocery list.
 """
 
 import db.groc_types as gtyp
+import db.db_connect as dbc
 
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
+GROC_COLLECT = "groceries"
+GROC_KEY = "item"
 
 REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 # example of a grocery list structure
@@ -31,7 +34,9 @@ def get_grocery_list() -> dict:
     """
     returns the entire grocery list
     """
-    return grocery_list
+    # return grocery_list
+    dbc.connect_db()
+    return dbc.fetch_all_as_dict(GROC_KEY, GROC_COLLECT)
 
 
 def exists(item: str) -> bool:
