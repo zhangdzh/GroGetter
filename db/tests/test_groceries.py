@@ -8,9 +8,9 @@ import db.groc_types as gtyp
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {
-                    grocs.GROC_TYPE: "Carbs", 
-                    grocs.QUANTITY: 2, 
-                    grocs.EXPIRATION_DATE: "10-31-2024" 
+                    grocs.GROC_TYPE: "Carbs",
+                    grocs.QUANTITY: 2,
+                    grocs.EXPIRATION_DATE: "10-31-2024"
                     }
 
 RUNNING_ON_CICD_SERVER = os.environ.get('CI', False)
@@ -54,8 +54,6 @@ def test_exists(new_groc_item):
     """
     tests exists()
     """
-    # TEST_ITEM = "item1"
-    # assert grocs.exists(TEST_ITEM)
     assert grocs.exists(NEW_GROC_NAME)
 
 
@@ -63,7 +61,6 @@ def test_get_details(new_groc_item):
     """
     tests get_details()
     """
-    # TEST_GROCERY_NAME = "item1"
     assert isinstance(grocs.get_details(NEW_GROC_NAME), dict)
     for field in grocs.REQUIRED_FIELDS:
         assert field in grocs.get_details(NEW_GROC_NAME)
@@ -79,7 +76,7 @@ def test_get_types():
         assert field in gtyp.GROC_TYPES
 
 
-def test_add_and_remove_item():  # fixture covers this?
+def test_add_and_remove_item():
     """
     tests add_item() and remove_item()
     """
@@ -110,7 +107,7 @@ def test_update_item(new_groc_item):
     assert TEST_GROCERY == grocs.get_details(NEW_GROC_NAME)
 
 
-def test_raised_exceptions_for_add_item():  # also edit w/ addition of fixture
+def test_raised_exceptions_for_add_item():
     """
     tests raised exceptions for add_item()
     """

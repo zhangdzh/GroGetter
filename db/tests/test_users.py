@@ -46,11 +46,6 @@ def test_add_missing_field():
         usr.add_user('a new user', {'foo': 'bar'})
 
 
-def test_add_missing_field():
-    with pytest.raises(ValueError):
-        usr.add_user('user1', {'foo': 'bar'})
-
-
 def test_get_usernames():
     """
     tests get_usernames()
@@ -65,7 +60,7 @@ def test_get_users_dict():
     assert isinstance(usrs, dict)
     assert len(usrs) > 1
 
-    
+
 def test_get_user_email(new_user):
     """
     tests get_user_email()
@@ -86,7 +81,7 @@ def test_change_password():
     """
     tests change_password()
     """
-    usr.change_password(TEST_USER_NAME, TEST_PW)    
+    usr.change_password(TEST_USER_NAME, TEST_PW)
 
 
 def test_encrypted_password():
