@@ -197,6 +197,18 @@ class RemoveUser(Resource):
         usr.del_user(name)
 
 
+@users.route(f'/{usr.EMAIL}/<name>')
+class UserEmail(Resource):
+    """
+    Get a user's email.
+    """
+    def get(self, name):
+        """
+        Get a user's email.
+        """
+        return {usr.EMAIL: usr.get_email(name)}
+
+
 # groceries endpoints
 @groceries.route(f'/{ITEMS}')
 class GrocItems(Resource):

@@ -65,7 +65,7 @@ def test_get_user_email(new_user):
     """
     tests get_user_email()
     """
-    email = usr.get_user_email(NEW_USER_NAME)
+    email = usr.get_email(NEW_USER_NAME)
     assert isinstance(email, str)
 
 

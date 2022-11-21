@@ -14,7 +14,7 @@ TEST_EMAIL = 'user1@email.com'
 TEST_PASSWORD = 'xyz123'
 
 users = {TEST_USER_NAME: {
-                EMAIL: 'x@y.com', PASSWORD: 'xxx123'},
+                EMAIL: TEST_EMAIL, PASSWORD: TEST_PASSWORD},
          'user2': {
                 EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
 # example structure of users list
@@ -63,7 +63,7 @@ def add_user(username, details):
     users[username] = details
 
 
-def get_user_email(username):
+def get_email(username):
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     if username not in users.keys():
