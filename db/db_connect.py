@@ -22,6 +22,13 @@ def connect_db():
             client = pm.MongoClient()
 
 
+def del_one(collection, filt, db=GROC_DB):
+    """
+    Find with a filter and return on the first doc found.
+    """
+    client[db][collection].delete_one(filt)
+
+
 def fetch_all(collection, db=GROC_DB):
     ret = []
     for doc in client[db][collection].find():

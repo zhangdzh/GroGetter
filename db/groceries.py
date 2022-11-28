@@ -126,6 +126,10 @@ def update_quantity(item: str, quantity: int):
     grocery_list[item][QUANTITY] = quantity
 
 
+def del_groc(name):
+    return dbc.del_one(GROC_COLLECT, {GROC_KEY: name})
+
+
 def main():
     print(get_items())
     print(get_details("item1"))
