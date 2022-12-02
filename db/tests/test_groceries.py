@@ -152,3 +152,13 @@ def test_add_item_dup(new_groc_item):
 
 def test_groc_lst_not_exists():
     assert not grocs.exists('Some nonsense list')
+
+
+def test_add_wrong_name_type():
+    with pytest.raises(TypeError):
+        grocs.add_item(7, {})
+
+
+def test_add_wrong_details_type():
+        with pytest.raises(TypeError):
+            grocs.add_item('a new game', [])
