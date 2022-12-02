@@ -36,7 +36,7 @@ def test_get_items():
         groceries = grocs.get_games()
         assert isinstance(groceries, list)
         assert len(groceries) > 1
-        
+
 
 @pytest.mark.skip("Can't run this test untill the we figure out MongoDB Connection.")
 # gives pymongo.errors.ServerSelectionTimeoutError
@@ -168,5 +168,10 @@ def test_add_wrong_name_type():
 
 
 def test_add_wrong_details_type():
-        with pytest.raises(TypeError):
-            grocs.add_item('a new game', [])
+    with pytest.raises(TypeError):
+        grocs.add_item('a new game', [])
+
+
+def test_add_missing_field():
+    with pytest.raises(KeyError):
+        grocs.add_item('a new game', {'foo': 'bar'})
