@@ -57,3 +57,11 @@ def fetch_all_as_dict(key, collection, db=GROC_DB):
         del doc['_id']
         ret[doc[key]] = doc
     return ret
+
+
+def fetch_keys_as_list(key, collection, db=GROC_DB):
+    ret = []
+    for doc in client[db][collection].find():
+        del doc['_id']
+        ret.append(doc[key])
+    return ret

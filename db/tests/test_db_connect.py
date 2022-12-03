@@ -27,16 +27,23 @@ def temp_rec():
         return True
 
 
-@pytest.mark.skip("Can't run this test untill the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_fetch_one(temp_rec):
     if not RUNNING_ON_CICD_SERVER:
         ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: TEST_NAME})
         assert ret is not None
 
 
-@pytest.mark.skip("Can't run this test untill the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_fetch_one_not_there(temp_rec):
     if not RUNNING_ON_CICD_SERVER:
         ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: 'invalid field in db'})
         assert ret is None
 
+
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+def test_fetch_keys_as_list(temp_rec):
+    if not RUNNING_ON_CICD_SERVER:
+        ret = dbc.fetch_keys_as_list(TEST_NAME, TEST_COLLECT)
+        assert ret is None
+        assert isinstance(ret, list)
