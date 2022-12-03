@@ -126,6 +126,17 @@ def update_quantity(item: str, quantity: int):
     grocery_list[item][QUANTITY] = quantity
 
 
+def get_grocs_by_type(type):
+    """
+    Returns dictionary containing items of given type
+    """
+    for key, val in grocery_list.items():
+        ret = {}
+        if val[GROC_TYPE] == type:
+            ret[key] = val
+    return val
+
+
 def del_groc(name):
     return dbc.del_one(GROC_COLLECT, {GROC_KEY: name})
 

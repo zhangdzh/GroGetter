@@ -8,7 +8,6 @@ import db.groceries as groc
 
 TEST_CLIENT = ep.app.test_client()
 
-
 def test_main_page():
     """
     Checks ability to display main page
@@ -36,13 +35,6 @@ def test_get_grocery_type_list():
     # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
     assert isinstance(resp_json, dict)
     assert len(resp_json) > 0
-
-
-def test_add_grocery_list():
-    """
-    Check if grocery list can be added
-    """
-    pass
 
 
 SAMPLE_USER_NM = 'SampleUser'

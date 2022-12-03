@@ -8,7 +8,7 @@ import db.groc_types as gtyp
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {
-                    grocs.GROC_TYPE: "Carbs",
+                    grocs.GROC_TYPE: gtyp.CARBS,
                     grocs.QUANTITY: 2,
                     grocs.EXPIRATION_DATE: "10-31-2024"
                     }
@@ -158,8 +158,8 @@ def test_add_item_dup(new_groc_item):
         grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
 
 
-def test_groc_lst_not_exists():
-    assert not grocs.exists('Some nonsense list')
+def test_groc_item_not_exists():
+    assert not grocs.exists('Some nonsense')
 
 
 def test_add_wrong_name_type():
@@ -175,3 +175,9 @@ def test_add_wrong_details_type():
 def test_add_missing_field():
     with pytest.raises(KeyError):
         grocs.add_item('a new game', {'foo': 'bar'})
+
+
+def test_get_grocs_by_type(new_groc_item):
+    type_items = grocs.get_grocs_by_type(gtyp.CARBS)
+    assert isinstance(type_items, dict)
+    assert len(type_items) > 0
