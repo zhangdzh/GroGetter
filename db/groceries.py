@@ -43,7 +43,7 @@ def exists(item: str) -> bool:
     """
     returns True if item exists in the grocery list
     """
-    return item in grocery_list
+    return item in get_grocery_list()
 
 
 def get_details(item: str) -> dict:
