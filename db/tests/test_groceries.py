@@ -23,7 +23,7 @@ def new_groc_item():
     grocs.remove_item(NEW_GROC_NAME)
 
 
-@pytest.mark.skip("Can't run this test untill the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_items():
     """
     tests get_items()
@@ -38,7 +38,7 @@ def test_get_items():
         assert len(groceries) > 1
 
 
-@pytest.mark.skip("Can't run this test untill the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 # gives pymongo.errors.ServerSelectionTimeoutError
 def test_get_grocery_list():
     """
@@ -64,6 +64,13 @@ def test_exists(new_groc_item):
     tests exists()
     """
     assert grocs.exists(NEW_GROC_NAME)
+
+
+def test_not_exists():
+    """
+    makes sure that exists works for non-existent items
+    """
+    assert not grocs.exists("definitely not a gorcery item")
 
 
 def test_get_details(new_groc_item):
