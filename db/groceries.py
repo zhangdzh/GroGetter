@@ -27,7 +27,7 @@ def get_items() -> list:
     """
     returns a list of all items in the grocery list
     """
-    return list(grocery_list.keys())
+    return list(get_grocery_list().keys())
 
 
 def get_grocery_list() -> dict:

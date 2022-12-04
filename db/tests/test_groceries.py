@@ -33,7 +33,7 @@ def test_get_items():
     assert len(grocs.get_items()) > 0
     '''
     if not RUNNING_ON_CICD_SERVER:
-        groceries = grocs.get_games()
+        groceries = grocs.get_items()
         assert isinstance(groceries, list)
         assert len(groceries) > 1
 
