@@ -2,8 +2,8 @@ import os
 
 import pymongo as pm
 
-REMOTE = "0"
-LOCAL = "1"
+LOCAL = "0"
+CLOUD = "1"
 
 GROC_DB = "grocdb"
 
@@ -17,7 +17,14 @@ def connect_db():
     global client
     if client is None:
         print("No connection with client yet.")
-        if os.environ.get("LOCAL_MONGO", LOCAL) == LOCAL:
+        if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
+            password = os.environ.get("GROC_MONGO_PW")
+            if not password:
+                raise ValueError("Please set a password" +
+                                 "to use Mongo in the cloud")
+            print("Connecting to Mongo Cloud")
+            # client = pm.MongoClient()
+        else:
             print("Connecting to MongoDB locally.")
             client = pm.MongoClient()
 
@@ -40,7 +47,8 @@ def insert_one(collection, doc, db=GROC_DB):
     """
     Insert a single doc into collection.
     """
-    client[db][collection].insert_one(doc)
+    print(f'{db=}')
+    return client[db][collection].insert_one(doc)
 
 
 def fetch_one(collection, filt, db=GROC_DB):
