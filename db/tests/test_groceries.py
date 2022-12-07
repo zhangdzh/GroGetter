@@ -15,12 +15,20 @@ NEW_GROC_DETAILS = {
 
 RUNNING_ON_CICD_SERVER = os.environ.get('CI', False)
 
+TEST_DEL_GROC = "Grocery to be deleted"
+
 
 @pytest.fixture(scope='function')
 def new_groc_item():
     grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
     yield
     grocs.remove_item(NEW_GROC_NAME)
+
+
+@pytest.fixture
+def test_del_groc(new_groc):
+    grocs.del_groc(TEST_DEL_GROC)
+    assert not grocs.exists(TEST_DEL_GROC)
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -35,7 +43,7 @@ def test_get_items():
     if not RUNNING_ON_CICD_SERVER:
         groceries = grocs.get_items()
         assert isinstance(groceries, list)
-        assert len(groceries) > 1
+        assert len(groceries) > 0
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
