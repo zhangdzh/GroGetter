@@ -25,7 +25,7 @@ def new_groc_item():
     grocs.remove_item(NEW_GROC_NAME)
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def test_del_groc(new_groc):
     grocs.del_groc(TEST_DEL_GROC)
     assert not grocs.exists(TEST_DEL_GROC)
@@ -66,6 +66,7 @@ def test_get_grocery_list():
         # length later - perhaps after adding fixture to create new
         # note: dict currently empty?
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_exists(new_groc_item):
     """
@@ -73,12 +74,14 @@ def test_exists(new_groc_item):
     """
     assert grocs.exists(NEW_GROC_NAME)
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_not_exists():
     """
     makes sure that exists works for non-existent items
     """
     assert not grocs.exists("definitely not a gorcery item")
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_details(new_groc_item):
@@ -99,6 +102,7 @@ def test_get_types():
     for field in grocs.get_types():
         assert field in gtyp.GROC_TYPES
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_item():
     """
@@ -116,6 +120,7 @@ def test_add_and_remove_item():
     grocs.remove_item(TEST_ITEM)
     assert not grocs.exists(TEST_ITEM)
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_update_item(new_groc_item):
     """
@@ -129,6 +134,7 @@ def test_update_item(new_groc_item):
     }
     grocs.update_item(NEW_GROC_NAME, TEST_GROCERY)
     assert TEST_GROCERY == grocs.get_details(NEW_GROC_NAME)
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_raised_exceptions_for_add_item():
@@ -157,6 +163,7 @@ def test_raised_exceptions_for_add_item():
     with pytest.raises(KeyError):
         grocs.add_item(TEST_ITEM, TEST_GROCERY)
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_update_quantity(new_groc_item):
     """
@@ -167,29 +174,35 @@ def test_update_quantity(new_groc_item):
     grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
     assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_item_dup(new_groc_item):
     with pytest.raises(ValueError):
         grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_groc_item_not_exists():
     assert not grocs.exists('Some nonsense')
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_wrong_name_type():
     with pytest.raises(TypeError):
         grocs.add_item(7, {})
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_wrong_details_type():
     with pytest.raises(TypeError):
         grocs.add_item('a new game', [])
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_missing_field():
     with pytest.raises(KeyError):
         grocs.add_item('a new game', {'foo': 'bar'})
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_grocs_by_type(new_groc_item):
