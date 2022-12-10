@@ -25,12 +25,12 @@ def connect_db():
                 raise ValueError("Please set a password" +
                                  "to use Mongo in the cloud")
             print("Connecting to Mongo Cloud")
-            # client = pm.MongoClient()
-        else:
-            print("Connecting to MongoDB locally.")
             client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
                                     + '@cluster0.qfnmmli.mongodb.net/'
                                     + '?retryWrites=true&w=majority')
+        else:
+            print("Connecting to MongoDB locally.")
+            client = pm.MongoClient()
 
 
 def del_one(collection, filt, db=GROC_DB):
