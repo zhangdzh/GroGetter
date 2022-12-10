@@ -7,6 +7,8 @@ CLOUD = "1"
 
 GROC_DB = "grocdb"
 
+PW = "swef22"
+
 client = None
 
 
@@ -18,7 +20,7 @@ def connect_db():
     if client is None:
         print("No connection with client yet.")
         if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
-            password = os.environ.get("GROC_MONGO_PW")
+            password = PW
             if not password:
                 raise ValueError("Please set a password" +
                                  "to use Mongo in the cloud")
@@ -26,7 +28,9 @@ def connect_db():
             # client = pm.MongoClient()
         else:
             print("Connecting to MongoDB locally.")
-            client = pm.MongoClient()
+            client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
+                                    + '@cluster0.qfnmmli.mongodb.net/'
+                                    + '?retryWrites=true&w=majority')
 
 
 def del_one(collection, filt, db=GROC_DB):
