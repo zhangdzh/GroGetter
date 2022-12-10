@@ -15,16 +15,16 @@ TEST_NAME = 'test'
 
 @pytest.fixture(scope='function')
 def temp_rec():
-    if not RUNNING_ON_CICD_SERVER:
-        dbc.connect_db()
-        dbc.client[TEST_DB][TEST_COLLECT].insert_one({TEST_NAME: TEST_NAME})
-        # yield to test function
-        yield
+    # if not RUNNING_ON_CICD_SERVER:
+    dbc.connect_db()
+    dbc.client[TEST_DB][TEST_COLLECT].insert_one({TEST_NAME: TEST_NAME})
+    # yield to test function
+    yield
 
-        dbc.client[TEST_DB][TEST_COLLECT].delete_one({TEST_NAME: TEST_NAME})
-    else:
-        yield
-        return True
+    dbc.client[TEST_DB][TEST_COLLECT].delete_one({TEST_NAME: TEST_NAME})
+    # else:
+    #     yield
+    #     return True
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
