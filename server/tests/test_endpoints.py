@@ -27,6 +27,12 @@ def test_main_menu():
     assert len(resp_json) > 0
 
 
+def test_invalid_menu_option():
+    resp_json = TEST_CLIENT.get(ep.MAIN_MENU).get_json()
+    fake_option = 'bad'
+    assert fake_option not in resp_json["Choices"].keys()
+
+
 def test_get_grocery_type_list():
     """
     Check if grocery type list is proper
