@@ -80,7 +80,7 @@ def test_not_exists():
     """
     makes sure that exists works for non-existent items
     """
-    assert not grocs.exists("definitely not a gorcery item")
+    assert not grocs.exists("definitely not a grocery item")
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -92,7 +92,7 @@ def test_get_details(new_groc_item):
     for field in grocs.REQUIRED_FIELDS:
         assert field in grocs.get_details(NEW_GROC_NAME)
     with pytest.raises(KeyError):
-        grocs.get_details("definitely not a gorcery item")
+        grocs.get_details("definitely not a grocery item")
 
 
 def test_get_types():
@@ -116,11 +116,18 @@ def test_add_and_remove_item():
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
+    # add the item
     grocs.add_item(TEST_ITEM, TEST_GROCERY)
     assert grocs.exists(TEST_ITEM)
     assert TEST_GROCERY == grocs.get_details(TEST_ITEM)
+
+    # remove the item
     grocs.remove_item(TEST_ITEM)
     assert not grocs.exists(TEST_ITEM)
+
+    # test removing a non-existent item
+    with pytest.raises(KeyError):
+        grocs.remove_item("definitely not a grocery item")
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
