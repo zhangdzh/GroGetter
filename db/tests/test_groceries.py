@@ -91,6 +91,8 @@ def test_get_details(new_groc_item):
     assert isinstance(grocs.get_details(NEW_GROC_NAME), dict)
     for field in grocs.REQUIRED_FIELDS:
         assert field in grocs.get_details(NEW_GROC_NAME)
+    with pytest.raises(KeyError):
+        grocs.get_details("definitely not a gorcery item")
 
 
 def test_get_types():
