@@ -1,3 +1,5 @@
+# Groceries Tracker
+
 # Progress
 - MongoDB cluster created and linked, but connection is refused when ran on Github 
     --> Will store users and grocery list information as dictionaries 
