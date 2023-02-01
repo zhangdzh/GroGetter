@@ -6,5 +6,7 @@
 - User endpoints allow basic sign-ins
     --> Will be stored in MongoDB to get specific grocery lists
 - List endpoints allow creation, reading, updating, and deletion of grocery items
+    --> Completes the grocery list aspect of the project
 - Grocery lists and individual details can be retrieved
+    --> Need to retreive them for MongoDB
 

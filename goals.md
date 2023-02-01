@@ -6,4 +6,5 @@
 - Connect database with front-end framework to enable interaction with stored information
 - Create GUI to enable users to enter grocery item and related information
 - Enable sorting of items using different filtered criteria
+- Choose hosting service and deploy it to cloud
 
