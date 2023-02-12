@@ -1,0 +1,20 @@
+/* for navbar */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #4b9fff;
+}
+
+li {
+    float: left;
+}
+
+/* general formatting */
+p {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 24px;
+}
