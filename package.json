@@ -1,0 +1,24 @@
+{
+  "name": "swe-f22",
+  "version": "1.0.0",
+  "description": "A project for software engineering class. The project idea is to create \r an application to help customers keep track of groceries: current items and items to buy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangdzh/SWE-F22.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhangdzh/SWE-F22/issues"
+  },
+  "homepage": "https://github.com/zhangdzh/SWE-F22#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}
