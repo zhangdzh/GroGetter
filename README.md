@@ -17,6 +17,10 @@ To test or lint a specific directory, type `make tests` or `make lint`
 respectively.
 To push changes to github, type `make github`.
 
+### Run in your localhost
+To run locally, type `npm start`.
+Make sure you have node.js or npm installed.
+
 ### User Endpoints
 - User sign up
 - User sign in
