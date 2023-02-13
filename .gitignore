@@ -130,3 +130,6 @@ dmypy.json
 
 # nodejs stuff
 node_modules/
+
+# brew stuff
+Brewfile
