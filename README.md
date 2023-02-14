@@ -8,6 +8,9 @@ an application to help customers keep track of groceries: current items and item
 - Jun Hyung Kim
 - Yeseon Kim
 
+### Web link:
+http://zhangdzh.pythonanywhere.com/
+
 ### Build Instructions (makefile instructions)
 To build production, type `make prod`.
 To create the env for a new developer, run `make dev_env`.
