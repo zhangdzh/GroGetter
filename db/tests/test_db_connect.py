@@ -26,7 +26,7 @@ def temp_rec():
     #     yield
     #     return True
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_fetch_one(temp_rec):
     ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: TEST_NAME})
     assert ret is not None
