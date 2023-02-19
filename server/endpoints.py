@@ -52,7 +52,6 @@ api.add_namespace(groceries)
 
 
 # for webhook
-app = Flask(__name__)
 @app.route('/update_server', methods=['POST'])
 def webhook():
     if request.method == 'POST':
