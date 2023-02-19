@@ -6,6 +6,7 @@ from http import HTTPStatus
 
 from flask import Flask, request
 from flask_restx import Resource, Api, fields, Namespace
+import git
 
 import db.groc_types as gtyp
 import db.users as usr
@@ -48,6 +49,19 @@ groceries = Namespace(GROC, 'Groceries')
 api.add_namespace(groceries)
 # note to self/team: focusing just on users namespace rn
 # until we figure out the organization for groceries and such
+
+
+# for webhook
+app = Flask(__name__)
+@app.route('/update_server', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        repo = git.Repo('zhangdzh/GroGetter')
+        origin = repo.remotes.origin
+        origin.pull()
+        return 'Updated PythonAnywhere successfully', 200
+    else:
+        return 'Wrong event type', 400
 
 
 # api namespace endpoints
