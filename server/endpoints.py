@@ -62,12 +62,15 @@ api.add_namespace(groceries)
 #         return 'Wrong event type', 400
 
 # api namespace endpoints
+
+
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
     This class will serve as live, fetchable documentation of what endpoints
     are available in the system.
     """
+
     def get(self):
         """
         The `get()` method will return a list of available endpoints.
@@ -82,6 +85,7 @@ class MainPage(Resource):
     """
     This will deliver our main app page
     """
+
     def get(self):
         """
         Gets the main homepage
@@ -90,7 +94,7 @@ class MainPage(Resource):
                 'Default': 0,
                 'Choices': {
                     '1': {'text': 'List Grocery Types'},
-                    }}
+                }}
 
 
 @api.route(MAIN_MENU)
@@ -98,6 +102,7 @@ class MainMenu(Resource):
     """
     This is the main menu for the app
     """
+
     def get(self):
         """
         Gets the main menu
@@ -121,6 +126,7 @@ class GrocTypeList(Resource):
     """
     This will get a list of grocery types.
     """
+
     def get(self):
         """
         Returns a list of grocery types.
@@ -134,6 +140,7 @@ class GrocTypeDict(Resource):
     """
     This will get a dict of current grocery types
     """
+
     def get(self):
         """
         Returns a list of grocery types
@@ -149,6 +156,7 @@ class UserDict(Resource):
     """
     This will get a dict of currrent users.
     """
+
     def get(self):
         """
         Returns a list of current users.
@@ -163,6 +171,7 @@ class UserList(Resource):
     """
     This will get a list of currrent users.
     """
+
     def get(self):
         """
         Returns a list of current users.
@@ -213,6 +222,7 @@ class UserEmail(Resource):
     """
     Get a user's email.
     """
+
     def get(self, name):
         """
         Get a user's email.
