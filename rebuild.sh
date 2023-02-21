@@ -12,7 +12,7 @@ echo "Installing packages"
 pip install -r requirements.txt
 
 echo "Going to reboot the webserver"
-pa_reload_webapp.py SWEDemo.pythonanywhere.com
+pa_reload_webapp.py zhangdzh.pythonanywhere.com
 
 touch reboot
 echo "Finished rebuild."
