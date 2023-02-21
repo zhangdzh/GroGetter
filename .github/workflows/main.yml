@@ -50,4 +50,4 @@ jobs:
       - name: Deploy to PythonAnywhere
         run: ./deploy.sh
         env:
-          DEMO_PA_PWD: ${{secrets.DEMO_PA_PWD}}
+          PA_PWD: ${{secrets.PA_PWD}}
