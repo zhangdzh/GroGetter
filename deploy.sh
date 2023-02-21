@@ -1,7 +1,7 @@
 #!/bin/bash
 # This shell script deploys a new version to a server.
 
-export PA_USER=GROC
+export PA_USER="zhangdzh"
 
 if [ -z "$PA_PWD" ]
 then
