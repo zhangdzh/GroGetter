@@ -6,14 +6,14 @@ FORCE:
 tests: lint unit
 
 unit: FORCE
-	pytest $(PYTESTFLAGS)
+	python3 -m pytest $(PYTESTFLAGS)
 
 lint: FORCE
 	$(LINTER) *.py
 
 # test a python file:
 %.py: FORCE
-	pytest -s tests/test_$*.py
+	python3 -m pytest -s tests/test_$*.py
 
 docs: FORCE
 	pydoc3 -w ./*py
