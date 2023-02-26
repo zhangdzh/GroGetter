@@ -1,7 +1,7 @@
 # Groceries Tracker
 
 # Progress
-- MongoDB cluster created and linked, but connection is refused when ran on Github 
+- MongoDB cluster created and linked, auto-deply connection with Github Action works
     --> Will store users and grocery list information as dictionaries 
 - User endpoints allow basic sign-ins
     --> Will be stored in MongoDB to get specific grocery lists
