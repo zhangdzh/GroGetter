@@ -13,6 +13,7 @@ http://zhangdzh.pythonanywhere.com/
 
 ### Build Instructions (makefile instructions)
 To build production, type `make prod`.
+Automatic deploy to PythonAnywhere is done by GitHub Actions.
 To create the env for a new developer, run `make dev_env`.
 To run all tests, type `make all_tests`.
 To lint everything including tests, type `make lint_all`.
