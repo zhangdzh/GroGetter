@@ -1,7 +1,0 @@
-tap "homebrew/bundle"
-tap "homebrew/core"
-brew "gmp"
-brew "icarus-verilog"
-brew "mpfr"
-brew "portaudio"
-brew "python@3.9"
