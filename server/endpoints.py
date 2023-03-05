@@ -275,7 +275,7 @@ class AddGrocItem(Resource):
     Get number of items by types
     """
     @api.response(HTTPStatus.OK, "Success")
-    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
     @groceries.expect(GROC_FIELDS)
     def post(self):
         """
@@ -289,7 +289,7 @@ class AddGrocItem(Resource):
 REMOVE_FIELDS = api.model('remove', {ITEM: fields.String})
 
 
-@groceries.route(f'/{REMOVE}')
+@groceries.route(f'/{REMOVE}/<items>')
 class RemoveGrocItem(Resource):
     """
     Remove grocery item from grocery list
@@ -297,12 +297,12 @@ class RemoveGrocItem(Resource):
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(REMOVE_FIELDS)
-    def post(self):
+    def post(self, items):
         """
         Remove grocery item from grocery list
         """
         print(request.json)
-        groc.remove_item(request.json[ITEM])
+        groc.remove_item(request.json[items])
 
 
 @groceries.route(f'/{DETAILS}/<item>')
