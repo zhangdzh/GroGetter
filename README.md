@@ -22,6 +22,7 @@ respectively.
 To push changes to github, type `make github`.
 
 ### Run in your localhost
+Frontend repository: https://github.com/zhangdzh/GroGetterFrontend
 To run locally, type `npm start`.
 Make sure you have node.js or npm installed.
 
