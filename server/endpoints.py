@@ -6,6 +6,7 @@ from http import HTTPStatus
 
 from flask import Flask, request
 from flask_restx import Resource, Api, fields, Namespace
+import werkzeug.exceptions as wz
 # import git
 
 import db.groc_types as gtyp
@@ -301,8 +302,12 @@ class RemoveGrocItem(Resource):
         """
         Remove grocery item from grocery list
         """
-        print(request.json)
-        groc.remove_item(request.json[items])
+        item_remove = groc.get_details(items)
+        if item_remove is not None:
+            print(request.json)
+            groc.remove_item(request.json[items])
+        else:
+            raise wz.NotFound(f'{items} not found.')
 
 
 @groceries.route(f'/{DETAILS}/<item>')
