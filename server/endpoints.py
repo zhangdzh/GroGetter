@@ -159,7 +159,7 @@ class UserDict(Resource):
 
     def get(self):
         """
-        Returns a list of current users.
+        Returns a dict of current users.
         """
         return {'Data': usr.get_users_dict(),
                 'Type': 'Data',
