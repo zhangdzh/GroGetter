@@ -184,7 +184,7 @@ def test_update_quantity(new_groc_item):
     assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
 
 
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_update_expiration(new_groc_item):
     """
     tests update_expiration()
