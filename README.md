@@ -27,27 +27,21 @@ To run locally, type `npm start`.
 Make sure you have node.js or npm installed.
 
 ### User Endpoints
-- User sign up
 - User sign in
 - List all available users
-- Get description of a user
-- Delete a user
+- Add a new user
+- Remove an existing user
+- Get descriptive details of a user
 
-### Grocery List Endpoints
-- List all active user lists
-- Create a list
+### Groceries Endpoints
+- List items in grocery list
+- Create a new list
 - Delete a list
-- Get description of a list
-
-### Grocery Type Endpoints
-- List all grocery types
-- Get descriptions of each grocery type
-
-### List Manager Actions
-- Enter expiration dates
-- Add information to a list
-- Sort list items by expiration date
-- Add items to list
+- Get descriptive details of a list
+- List items by type
+- Update item details
+    - Expiration date
+    - Quantity
 
 ### Design
 - Required features will correspond to API endpoints
