@@ -327,14 +327,14 @@ class GrocTypes(Resource):
 @groceries.route(f'/{UPDATE}')
 class UpdateGrocItem(Resource):
     """
-    Update grocery item
+    Update grocery item with new details
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(GROC_FIELDS)
-    def post(self):
+    def put(self):
         """
-        Update grocery item
+        Update grocery item with new details
         """
         item = request.json[ITEM]
         del request.json[ITEM]
@@ -353,10 +353,13 @@ class UpdateGrocItemQuantity(Resource):
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(GROC_FIELDS)
-    def post(self):
+    def put(self):
         """
         Update grocery item quantity
         """
         item = request.json[ITEM]
         del request.json[ITEM]
         groc.update_item_quantity(item, request.json)
+
+# Note: this should exist if update_quantity exists
+# @groceries.route(f'/{UPDATE}_{EXPIRATION}')

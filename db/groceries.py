@@ -94,7 +94,7 @@ def remove_item(item: str):
 
 def update_item(item: str, details: dict):
     """
-    updates an item in the grocery list
+    Updates all details of an item in the grocery list
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
@@ -115,7 +115,7 @@ def update_item(item: str, details: dict):
 
 def update_quantity(item: str, quantity: int):
     """
-    updates the quantity of an item in the grocery list
+    Updates the quantity of an item in the grocery list
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
@@ -124,6 +124,19 @@ def update_quantity(item: str, quantity: int):
     if not isinstance(quantity, int):
         raise TypeError(f'Wrong type for quantity: {type(quantity)=}')
     grocery_list[item][QUANTITY] = quantity
+
+
+def update_expiration(item: str, exp: str):
+    """
+    Updates expiration date of an item in grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if not exists(item):
+        raise ValueError(f'Item {item=} not in grocery list.')
+    if not isinstance(exp, str):
+        raise TypeError(f'Wrong type for expiration date: {type(exp)=}')
+    grocery_list[item][EXPIRATION_DATE] = exp
 
 
 def get_grocs_by_type(type):

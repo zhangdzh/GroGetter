@@ -8,10 +8,10 @@ import db.groc_types as gtyp
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {
-                    grocs.GROC_TYPE: gtyp.CARBS,
-                    grocs.QUANTITY: 2,
-                    grocs.EXPIRATION_DATE: "10-31-2024"
-                    }
+    grocs.GROC_TYPE: gtyp.CARBS,
+    grocs.QUANTITY: 2,
+    grocs.EXPIRATION_DATE: "10-31-2024"
+}
 
 RUNNING_ON_CICD_SERVER = os.environ.get('CI', False)
 
@@ -182,6 +182,16 @@ def test_update_quantity(new_groc_item):
     TEST_QUANTITY = 20
     grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
     assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
+
+
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+def test_update_expiration(new_groc_item):
+    """
+    tests update_expiration()
+    """
+    TEST_EXP = "10-02-2022"
+    grocs.update_quantity(NEW_GROC_NAME, TEST_EXP)
+    assert TEST_EXP == grocs.get_details(NEW_GROC_NAME)[grocs.EXPIRATION_DATE]
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
