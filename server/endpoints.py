@@ -38,6 +38,7 @@ GROC_LIST = f'{GROC}_{LIST}'
 USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
 GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
+EXPIRATION = 'expiration'
 
 # name spaces
 groc_types = Namespace(GROC_TYPES, 'Grocery Types')
@@ -353,13 +354,30 @@ class UpdateGrocItemQuantity(Resource):
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(GROC_FIELDS)
+    # ^Is this supposed to expect all the fields or just the quantity?
     def put(self):
         """
         Update grocery item quantity
         """
         item = request.json[ITEM]
         del request.json[ITEM]
-        groc.update_item_quantity(item, request.json)
+        groc.update_quantity(item, request.json)
 
 # Note: this should exist if update_quantity exists
-# @groceries.route(f'/{UPDATE}_{EXPIRATION}')
+
+
+@groceries.route(f'/{UPDATE}_{EXPIRATION}')
+class UpdateGrocItemExpiration(Resource):
+    """
+    Update grocery item expiration date
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect('string')  # Syntax?
+    def put(self):
+        """
+        Update grocery item expiration date
+        """
+        item = request.json[ITEM]
+        del request.json[ITEM]
+        groc.update_expiration(item, request.json)

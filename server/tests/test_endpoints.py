@@ -9,6 +9,7 @@ import pytest
 
 TEST_CLIENT = ep.app.test_client()
 
+
 def test_main_page():
     """
     Checks ability to display main page
@@ -85,13 +86,15 @@ def test_del_user():
     usr.add_user(SAMPLE_USER_NM, SAMPLE_USER)
     assert usr.user_exists(SAMPLE_USER_NM)
     print("after adding: ", usr.get_users_dict())
-    resp = TEST_CLIENT.post(f'/{ep.USERS}/{ep.REMOVE}', json={usr.USER_NAME: SAMPLE_USER_NM})
+    resp = TEST_CLIENT.post(
+        f'/{ep.USERS}/{ep.REMOVE}', json={usr.USER_NAME: SAMPLE_USER_NM})
     print("after removing: ", usr.get_users_dict())
     assert not usr.user_exists(SAMPLE_USER_NM)
 
 
 def test_get_user_email():
-    resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{usr.EMAIL}/{usr.TEST_USER_NAME}').get_json()
+    resp_json = TEST_CLIENT.get(
+        f'/{ep.USERS}/{usr.EMAIL}/{usr.TEST_USER_NAME}').get_json()
     usr_email = resp_json[usr.EMAIL]
     assert usr_email == usr.TEST_EMAIL
 
@@ -117,12 +120,15 @@ SAMPLE_REMOVE_GROCITEM_NM = {
     ep.ITEM: SAMPLE_GROCITEM_NM
 }
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_grocitem():
     resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.ADD}', json=SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
-    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
+    resp_json = TEST_CLIENT.post(
+        f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
     assert not groc.exists(SAMPLE_GROCITEM_NM)
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_groc_details():
@@ -131,24 +137,33 @@ def test_get_groc_details():
     for field in groc.REQUIRED_FIELDS:
         assert field in resp_json
 
+
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_update_grocitem():
     groc.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
     SAMPLE_GROCLIST[groc.QUANTITY] = 20
     SAMPLE_GROCLIST[groc.EXPIRATION_DATE] = "10/30/2022"
-    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.UPDATE}', json=SAMPLE_GROCLIST)
+    resp_json = TEST_CLIENT.post(
+        f'/{ep.GROC}/{ep.UPDATE}', json=SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
     assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.QUANTITY] == 20
-    assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.EXPIRATION_DATE] == "10/30/2022"
+    assert groc.get_details(SAMPLE_GROCITEM_NM)[
+        groc.EXPIRATION_DATE] == "10/30/2022"
     groc.remove_item(SAMPLE_GROCITEM_NM)
+
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_update_quantity():
     groc.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
     SAMPLE_GROCLIST[groc.QUANTITY] = 15
-    resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.UPDATE}_{ep.QUANTITY}', json=SAMPLE_GROCLIST)
+    resp_json = TEST_CLIENT.post(
+        f'/{ep.GROC}/{ep.UPDATE}_{ep.QUANTITY}', json=SAMPLE_GROCLIST)
     assert groc.exists(SAMPLE_GROCITEM_NM)
     assert groc.get_details(SAMPLE_GROCITEM_NM)[groc.QUANTITY] == 15
     groc.remove_item(SAMPLE_GROCITEM_NM)
+
+
+def test_update_expiration():  # Temporary so we remember to fill this in
+    pass
