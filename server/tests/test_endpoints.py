@@ -109,8 +109,8 @@ def test_get_groc_items():
 
 
 def test_get_groc_items_not_found():
-    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/NotAnItem').get_json()
-    assert resp_json.status_code == HTTPStatus.NOT_FOUND
+    resp = TEST_CLIENT.get(f'/{ep.GROC}/NotAnItem')
+    assert resp.status_code == HTTPStatus.NOT_FOUND
 
 
 SAMPLE_GROCITEM_NM = 'SampleItem'
