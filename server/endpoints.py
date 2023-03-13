@@ -265,8 +265,8 @@ class GrocDict(Resource):
         list = groc.get_grocery_list()
         if list is not None:
             return {'Data': list,
-            'Type': 'Data',
-            'Title': 'Grocery List'}
+                    'Type': 'Data',
+                    'Title': 'Grocery List'}
         else:
             raise wz.NotFound(f'{list} not found.')
 
