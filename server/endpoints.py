@@ -244,7 +244,11 @@ class GrocItems(Resource):
         """
         Returns list of grocery list items.
         """
-        return groc.get_items()
+        item = groc.get_items()
+        if item is not None:
+            return item
+        else:
+            raise wz.NotFound(f'{item} not found.')
 
 
 @groceries.route(f'/{DICT}')
