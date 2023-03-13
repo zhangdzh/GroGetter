@@ -262,9 +262,13 @@ class GrocDict(Resource):
         """
         Returns list of grocery lists
         """
-        return {'Data': groc.get_grocery_list(),
+        list = groc.get_grocery_list()
+        if list is not None:
+            return {'Data': list,
                 'Type': 'Data',
                 'Title': 'Grocery List'}
+        else:
+            raise wz.NotFound(f'{list} not found.')
 
 
 GROC_FIELDS = api.model('item', {
