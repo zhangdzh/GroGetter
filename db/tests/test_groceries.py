@@ -179,6 +179,17 @@ def test_update_quantity(new_groc_item):
     tests update_quantity()
     """
     # TEST_ITEM = "item1"
+    TEST_GROC_TYPE = 'Fruit'
+    grocs.update_groc_type(NEW_GROC_NAME, TEST_GROC_TYPE)
+    assert TEST_GROC_TYPE == grocs.get_details(NEW_GROC_NAME)[grocs.GROC_TYPE]
+
+
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+def test_update_quantity(new_groc_item):
+    """
+    tests update_quantity()
+    """
+    # TEST_ITEM = "item1"
     TEST_QUANTITY = 20
     grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
     assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]

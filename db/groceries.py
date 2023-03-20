@@ -113,6 +113,19 @@ def update_item(item: str, details: dict):
     grocery_list[item] = details
 
 
+def update_groc_type(item: str, groc_type: str):
+    """
+    Updates the grocery type of an item in the grocery list
+    """
+    if not isinstance(item, str):
+        raise TypeError(f'Wrong type for item: {type(item)=}')
+    if not exists(item):
+        raise ValueError(f'Item {item=} not in grocery list.')
+    if not isinstance(type, int):
+        raise TypeError(f'Wrong type for quantity: {type(groc_type)=}')
+    grocery_list[item][GROC_TYPE] = groc_type
+
+
 def update_quantity(item: str, quantity: int):
     """
     Updates the quantity of an item in the grocery list
