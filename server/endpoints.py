@@ -354,6 +354,23 @@ UPDATE_QUANTITY_FIELDS = api.model('update_quantity',
                                    {QUANTITY: fields.Integer})
 
 
+@groceries.route(f'/{UPDATE}_{GROC_TYPES}')
+class UpdateGrocItemType(Resource):
+    """
+    Update grocery item type
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+    @groceries.expect(GROC_FIELDS)
+    def put(self):
+        """
+        Update grocery item type
+        """
+        item = request.json[ITEM]
+        del request.json[ITEM]
+        groc.update_groc_type(item, request.json)
+
+
 @groceries.route(f'/{UPDATE}_{QUANTITY}')
 class UpdateGrocItemQuantity(Resource):
     """

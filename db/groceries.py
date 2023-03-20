@@ -121,7 +121,7 @@ def update_groc_type(item: str, groc_type: str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
     if not exists(item):
         raise ValueError(f'Item {item=} not in grocery list.')
-    if not isinstance(type, int):
+    if not isinstance(groc_type, int):
         raise TypeError(f'Wrong type for quantity: {type(groc_type)=}')
     grocery_list[item][GROC_TYPE] = groc_type
 
