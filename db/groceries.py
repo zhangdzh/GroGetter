@@ -3,8 +3,18 @@ This module is for a singular grocery list structure. It contains functions
 necessary to interact with a grocery list.
 """
 
-import db.groc_types as gtyp
 import db.db_connect as dbc
+
+# Grocery types
+BAKED_GOODS = 'Baked Goods'
+CARBS = 'Carbs'
+FRUIT = 'Fruit'
+DAIRY = 'Dairy'
+VEGETABLES = 'Vegetables'
+SNACKS = 'Snacks'
+DRINKS = 'Drinks'
+MEAT = 'Meat'
+MISC = 'Misc'
 
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
@@ -16,11 +26,30 @@ REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 # example of a grocery list structure
 grocery_list = {
     "item1": {
-        GROC_TYPE: gtyp.BAKED_GOODS,
+        GROC_TYPE: BAKED_GOODS,
         QUANTITY: 10,
         EXPIRATION_DATE: "10-20-2022"
     }
 }
+
+
+GROC_TYPES = {BAKED_GOODS: {},
+              CARBS: {},
+              FRUIT: {},
+              DAIRY: {},
+              VEGETABLES: {},
+              SNACKS: {},
+              DRINKS: {},
+              MEAT: {},
+              MISC: {}}
+
+
+def get_groc_types():
+    return list(GROC_TYPES.keys())
+
+
+def get_groc_types_dict():
+    return GROC_TYPES
 
 
 def get_items() -> list:
@@ -73,9 +102,9 @@ def add_item(item: str, details: dict):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise KeyError(f'Required {field=} missing from details.')
-    if details[GROC_TYPE] not in gtyp.get_groc_types():
+    if details[GROC_TYPE] not in get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-                         + f'Must be one of: {gtyp.get_groc_types()}')
+                         + f'Must be one of: {get_groc_types()}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
@@ -105,9 +134,9 @@ def update_item(item: str, details: dict):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise KeyError(f'Required {field=} missing from details.')
-    if details[GROC_TYPE] not in gtyp.get_groc_types():
+    if details[GROC_TYPE] not in get_groc_types():
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-                         + f'Must be one of: {gtyp.get_groc_types()}')
+                         + f'Must be one of: {get_groc_types()}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details

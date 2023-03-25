@@ -9,7 +9,7 @@ from flask_restx import Resource, Api, fields, Namespace
 import werkzeug.exceptions as wz
 # import git
 
-import db.groc_types as gtyp
+# import db.groc_types as gtyp
 import db.users as usr
 import db.groceries as groc
 
@@ -37,12 +37,12 @@ GROC_TYPES = f'{GROC}_{TYPES}'
 GROC_LIST = f'{GROC}_{LIST}'
 USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
-GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
+# GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 EXPIRATION = 'expiration'
 
 # name spaces
-groc_types = Namespace(GROC_TYPES, 'Grocery Types')
-api.add_namespace(groc_types)
+# groc_types = Namespace(GROC_TYPES, 'Grocery Types')
+# api.add_namespace(groc_types)
 groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
 api.add_namespace(groc_lists)
 users = Namespace(USERS, 'Users')
@@ -112,44 +112,44 @@ class MainMenu(Resource):
         return {'Title': MAIN_MENU_NM,
                 'Default': 0,
                 'Choices': {
-                    '1': {'url': '/groc_types/dict',
-                          'method': 'get', 'text': 'List Grocery Types'},
+                    '1': {'url': '/groc/items',
+                          'method': 'get', 'text': 'Show Grocery Items'},
                     '2': {'url': '/groc/dict',
-                          'method': 'get', 'text': 'List Groceries'},
+                          'method': 'get', 'text': 'Show Grocery Lists'},
                     '3': {'url': '/users/dict',
-                          'method': 'get', 'text': 'List Users'},
+                          'method': 'get', 'text': 'Show Users'},
                     'X': {'text': 'Exit'},
                 }}
 
 
-# grocery types namespace endpoints
-@groc_types.route(f'/{LIST}')
-class GrocTypeList(Resource):
-    """
-    This will get a list of grocery types.
-    """
+# # grocery types namespace endpoints
+# @groc_types.route(f'/{LIST}')
+# class GrocTypeList(Resource):
+#     """
+#     This will get a list of grocery types.
+#     """
 
-    def get(self):
-        """
-        Returns a list of grocery types.
-        """
-        # leads to "grocery_types_list" key error which is GROC_TYPE_LIST_NM
-        return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
+#     def get(self):
+#         """
+#         Returns a list of grocery types.
+#         """
+#         # leads to "grocery_types_list" key error which is GROC_TYPE_LIST_NM
+#         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
 
 
-@groc_types.route(f'/{DICT}')
-class GrocTypeDict(Resource):
-    """
-    This will get a dict of current grocery types
-    """
+# @groc_types.route(f'/{DICT}')
+# class GrocTypeDict(Resource):
+#     """
+#     This will get a dict of current grocery types
+#     """
 
-    def get(self):
-        """
-        Returns a list of grocery types
-        """
-        return {'Data': gtyp.get_groc_types_dict(),
-                'Type': 'Data',
-                'Title': 'Grocery Types'}
+#     def get(self):
+#         """
+#         Returns a list of grocery types
+#         """
+#         return {'Data': gtyp.get_groc_types_dict(),
+#                 'Type': 'Data',
+#                 'Title': 'Grocery Types'}
 
 
 # users namespace endpoints

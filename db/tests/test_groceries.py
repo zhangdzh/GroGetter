@@ -4,11 +4,11 @@ Testing module for the groceries.py
 import pytest
 import os
 import db.groceries as grocs
-import db.groc_types as gtyp
+# import db.deprecated.groc_types as gtyp
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {
-    grocs.GROC_TYPE: gtyp.CARBS,
+    grocs.GROC_TYPE: grocs.CARBS,
     grocs.QUANTITY: 2,
     grocs.EXPIRATION_DATE: "10-31-2024"
 }
@@ -102,7 +102,7 @@ def test_get_types():
     assert isinstance(grocs.get_types(), list)
     assert len(grocs.get_types()) > 0
     for field in grocs.get_types():
-        assert field in gtyp.GROC_TYPES
+        assert field in grocs.GROC_TYPES
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -112,7 +112,7 @@ def test_add_and_remove_item():
     """
     TEST_ITEM = "item2"
     TEST_GROCERY = {
-        grocs.GROC_TYPE: gtyp.MISC,
+        grocs.GROC_TYPE: grocs.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
@@ -137,7 +137,7 @@ def test_update_item(new_groc_item):
     """
     # TEST_ITEM = "item1"
     TEST_GROCERY = {
-        grocs.GROC_TYPE: gtyp.MISC,
+        grocs.GROC_TYPE: grocs.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
@@ -151,7 +151,7 @@ def test_raised_exceptions_for_add_item():
     tests raised exceptions for add_item()
     """
     TEST_GROCERY = {
-        grocs.GROC_TYPE: gtyp.MISC,
+        grocs.GROC_TYPE: grocs.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
@@ -236,6 +236,6 @@ def test_add_missing_field():
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_grocs_by_type(new_groc_item):
-    type_items = grocs.get_grocs_by_type(gtyp.CARBS)
+    type_items = grocs.get_grocs_by_type(grocs.CARBS)
     assert isinstance(type_items, dict)
     assert len(type_items) > 0
