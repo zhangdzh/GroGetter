@@ -3,7 +3,6 @@ Module for testing endpoints
 """
 from http import HTTPStatus
 import server.endpoints as ep
-# import db.deprecated.groc_types as gtyp
 import db.users as usr
 import db.groceries as grocs
 import pytest
@@ -35,15 +34,16 @@ def test_invalid_menu_option():
     assert fake_option not in resp_json["Choices"].keys()
 
 
-# def test_get_grocery_type_list():
-#     """
-#     Check if grocery type list is proper
-#     """
-#     resp_json = TEST_CLIENT.get(f'/{ep.GROC_TYPES}/{ep.LIST}').get_json()
-#     print(resp_json)
-#     # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
-#     assert isinstance(resp_json, dict)
-#     assert len(resp_json) > 0
+def test_get_groc_type_list():
+    """
+    Check if grocery type list is proper
+    """
+    resp_json = TEST_CLIENT.get(
+        f'/{ep.GROC}/{ep.GROC}_{ep.TYPES}_{ep.LIST}').get_json()
+    print(resp_json)
+    # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
+    assert isinstance(resp_json, list)
+    assert len(resp_json) > 0
 
 
 SAMPLE_USER_NM = 'SampleUser'

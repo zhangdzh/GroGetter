@@ -4,7 +4,6 @@ Testing module for the groceries.py
 import pytest
 import os
 import db.groceries as grocs
-# import db.deprecated.groc_types as gtyp
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {

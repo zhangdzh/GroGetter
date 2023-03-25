@@ -7,9 +7,6 @@ from http import HTTPStatus
 from flask import Flask, request
 from flask_restx import Resource, Api, fields, Namespace
 import werkzeug.exceptions as wz
-# import git
-
-# import db.groc_types as gtyp
 import db.users as usr
 import db.groceries as groc
 
@@ -37,35 +34,18 @@ GROC_TYPES = f'{GROC}_{TYPES}'
 GROC_LIST = f'{GROC}_{LIST}'
 USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
-# GROC_TYPE_LIST_NM = f'{GROC_TYPES}_{LIST}'
 EXPIRATION = 'expiration'
 
 # name spaces
-# groc_types = Namespace(GROC_TYPES, 'Grocery Types')
-# api.add_namespace(groc_types)
 groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
 api.add_namespace(groc_lists)
 users = Namespace(USERS, 'Users')
 api.add_namespace(users)
 groceries = Namespace(GROC, 'Groceries')
 api.add_namespace(groceries)
-# note to self/team: focusing just on users namespace rn
-# until we figure out the organization for groceries and such
 
-# for webhook
-# @app.route('/update_server', methods=['POST'])
-# def webhook():
-#     if request.method == 'POST':
-#         repo = git.Repo('zhangdzh/GroGetter')
-#         origin = repo.remotes.origin
-#         origin.pull()
-#         return 'Updated PythonAnywhere successfully', 200
-#     else:
-#         return 'Wrong event type', 400
 
 # api namespace endpoints
-
-
 @api.route('/endpoints')
 class Endpoints(Resource):
     """
@@ -249,6 +229,21 @@ class GrocItems(Resource):
             return item
         else:
             raise wz.NotFound(f'{item} not found.')
+
+
+@groceries.route(f'/{GROC}_{TYPES}_{LIST}')
+class GrocTypesList(Resource):
+    """
+    This will get a list of grocery types.
+    """
+    @api.response(HTTPStatus.OK, "Success")
+    @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
+    def get(self):
+        """
+        Returns a list of grocery types.
+        """
+        types = groc.get_groc_types()
+        return types
 
 
 @groceries.route(f'/{DICT}')
