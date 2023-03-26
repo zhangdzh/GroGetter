@@ -51,3 +51,5 @@ Make sure you have node.js or npm installed.
 
 ### Team Meeting Notes
 [Software Engineering Project Team Notes](https://docs.google.com/document/d/11KMQVGyT2PAPuXw1jjtB6jfMHi0jvwKVs2K-rYYlDuw/edit?usp=sharing)
+
+Checking auto deployment
