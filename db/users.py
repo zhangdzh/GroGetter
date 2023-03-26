@@ -48,8 +48,8 @@ def get_usernames():
     return list(users.keys())
 
 
-def del_user(name):
-    del users[name]
+#def del_user(name):
+#    del users[name]
 
 
 def add_user(username, details):
