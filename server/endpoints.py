@@ -35,6 +35,7 @@ GROC_LIST = f'{GROC}_{LIST}'
 USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
 EXPIRATION = 'expiration'
+RECORDS = 'records'
 
 # name spaces
 groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
@@ -102,34 +103,18 @@ class MainMenu(Resource):
                 }}
 
 
-# # grocery types namespace endpoints
-# @groc_types.route(f'/{LIST}')
-# class GrocTypeList(Resource):
-#     """
-#     This will get a list of grocery types.
-#     """
+# Developer endpoint
+@api.route(f'/N_{RECORDS}')
+class Records(Resource):
+    """
+    Developer endpoint to check number of records
+    """
 
-#     def get(self):
-#         """
-#         Returns a list of grocery types.
-#         """
-#         # leads to "grocery_types_list" key error which is GROC_TYPE_LIST_NM
-#         return {GROC_TYPE_LIST_NM: gtyp.get_groc_types()}
-
-
-# @groc_types.route(f'/{DICT}')
-# class GrocTypeDict(Resource):
-#     """
-#     This will get a dict of current grocery types
-#     """
-
-#     def get(self):
-#         """
-#         Returns a list of grocery types
-#         """
-#         return {'Data': gtyp.get_groc_types_dict(),
-#                 'Type': 'Data',
-#                 'Title': 'Grocery Types'}
+    def get(self):
+        """
+        Returns number of records in database
+        """
+        return len(groc.get_items())
 
 
 # users namespace endpoints
