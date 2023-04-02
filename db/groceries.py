@@ -19,7 +19,7 @@ MISC = 'Misc'
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
-GROC_COLLECT = "groceries"
+GROC_COLLECT = "grocdb"
 GROC_KEY = "item"
 
 REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]

@@ -4,3 +4,7 @@ Documentation of current issues:
 - MongoDB connection inconsistent
 - Some groceries methods not incorporated into endpoints
     - Revisit and see which ones are needed
+
+Notes:
+- Database is called "groceries"
+- Collection is called "grocdb" at the moment
