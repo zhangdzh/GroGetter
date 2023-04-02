@@ -9,7 +9,7 @@ import db.db_connect as dbc
 RUNNING_ON_CICD_SERVER = os.environ.get('CI', False)
 
 TEST_DB = dbc.GROC_DB
-TEST_COLLECT = 'test_collect'
+TEST_COLLECT = 'grocdb'
 TEST_NAME = 'test'
 
 

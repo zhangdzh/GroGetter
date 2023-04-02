@@ -5,7 +5,7 @@ import pymongo as pm
 LOCAL = "0"
 CLOUD = "1"
 
-GROC_DB = "grocdb"
+GROC_DB = "groceries"
 
 PW = "swef22"
 

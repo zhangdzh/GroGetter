@@ -34,6 +34,12 @@ def test_invalid_menu_option():
     assert fake_option not in resp_json["Choices"].keys()
 
 
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+def test_n_records():
+    resp_json = TEST_CLIENT.get(f'/N_{ep.RECORDS}')
+    assert isinstance(resp_json, int)
+
+
 def test_get_groc_type_list():
     """
     Check if grocery type list is proper

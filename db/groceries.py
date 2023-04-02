@@ -19,7 +19,7 @@ MISC = 'Misc'
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
-GROC_COLLECT = "groceries"
+GROC_COLLECT = "grocdb"
 GROC_KEY = "item"
 
 REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
@@ -52,6 +52,7 @@ def get_groc_types_dict():
     return GROC_TYPES
 
 
+# All items...? Assume only working with 1 list
 def get_items() -> list:
     """
     returns a list of all items in the grocery list
