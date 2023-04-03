@@ -21,6 +21,15 @@ def connect_db():
     global client
     if client is None:
         print("No connection with client yet.")
+    #     password = PW
+    #     if not password:
+    #         raise ValueError("Please set a password" +
+    #                          "to use Mongo in the cloud")
+    #     print("Connecting to Mongo Cloud")
+    #     client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
+    #                             + '@cluster0.qfnmmli.mongodb.net/'
+    #                             + '?retryWrites=true&w=majority')
+    if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
         password = PW
         if not password:
             raise ValueError("Please set a password" +
@@ -29,6 +38,9 @@ def connect_db():
         client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
                                 + '@cluster0.qfnmmli.mongodb.net/'
                                 + '?retryWrites=true&w=majority')
+    else:
+        print("Connecting to MongoDB locally.")
+        client = pm.MongoClient()
 
 
 def del_one(collection, filt, db=GROC_DB):
