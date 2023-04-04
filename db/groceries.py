@@ -76,6 +76,7 @@ def exists(item: str) -> bool:
     return item in get_grocery_list()
 
 
+# TODO: change to use db
 def get_details(item: str) -> dict:
     """
     returns a dictionary of details for a singular grocery item
@@ -83,6 +84,7 @@ def get_details(item: str) -> dict:
     return grocery_list[item]
 
 
+# TODO: change to use db
 def get_types():
     """
     returns all unique grocery types in the grocery list
@@ -90,6 +92,7 @@ def get_types():
     return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
 
 
+# TODO: change to use db
 def add_item(item: str, details: dict):
     """
     adds an item to the grocery list
@@ -111,6 +114,7 @@ def add_item(item: str, details: dict):
     grocery_list[item] = details
 
 
+# TODO: change to use db
 def remove_item(item: str):
     """
     removes an item from the grocery list
@@ -122,6 +126,7 @@ def remove_item(item: str):
     del grocery_list[item]
 
 
+# TODO: change to use db
 def update_item(item: str, details: dict):
     """
     Updates all details of an item in the grocery list
@@ -143,6 +148,7 @@ def update_item(item: str, details: dict):
     grocery_list[item] = details
 
 
+# TODO: change to use db
 def update_groc_type(item: str, groc_type: str):
     """
     Updates the grocery type of an item in the grocery list
@@ -156,6 +162,7 @@ def update_groc_type(item: str, groc_type: str):
     grocery_list[item][GROC_TYPE] = groc_type
 
 
+# TODO: change to use db
 def update_quantity(item: str, quantity: int):
     """
     Updates the quantity of an item in the grocery list
@@ -169,6 +176,7 @@ def update_quantity(item: str, quantity: int):
     grocery_list[item][QUANTITY] = quantity
 
 
+# TODO: change to use db
 def update_expiration(item: str, exp: str):
     """
     Updates expiration date of an item in grocery list
@@ -182,6 +190,7 @@ def update_expiration(item: str, exp: str):
     grocery_list[item][EXPIRATION_DATE] = exp
 
 
+# TODO: change to use db
 def get_grocs_by_type(type):
     """
     Returns dictionary containing items of given type
@@ -198,9 +207,10 @@ def del_groc(name):
 
 
 def main():
-    print(get_items())
-    print(get_details("item1"))
-    print(get_types())
+    # print(get_items())
+    # print(get_details("item1"))
+    # print(get_types())
+    pass
 
 
 if __name__ == '__main__':

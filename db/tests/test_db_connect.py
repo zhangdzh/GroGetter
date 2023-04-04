@@ -1,7 +1,5 @@
 import os
 
-import pymongo as pm
-
 import pytest
 
 import db.db_connect as dbc

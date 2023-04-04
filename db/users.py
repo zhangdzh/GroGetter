@@ -26,6 +26,7 @@ users = {TEST_USER_NAME: {
 # }
 
 
+# TODO: change all functions to use db
 def user_exists(name):
     """
     Returns whether or not a user exists.
