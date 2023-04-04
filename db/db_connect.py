@@ -16,8 +16,8 @@ def connect_db():
     """
     Creates a uniform connection to the DB.
     """
-    # TODO: found out that the github actions doesn't pass when using 
-    # mongo from cloud. But to test, it would make sense for it to 
+    # TODO: found out that the github actions doesn't pass when using
+    # mongo from cloud. But to test, it would make sense for it to
     # use the cloud. I'm not sure what to do with that.
     global client
     if client is None:
