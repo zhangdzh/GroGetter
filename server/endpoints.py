@@ -5,6 +5,7 @@ The endpoint called `endpoints` will return all available endpoints.
 from http import HTTPStatus
 
 from flask import Flask, request
+from flask_cors import CORS
 from flask_restx import Resource, Api, fields, Namespace
 import werkzeug.exceptions as wz
 import db.users as usr
@@ -12,6 +13,7 @@ import db.groceries as groc
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 # string constants
 GROC = 'groc'
