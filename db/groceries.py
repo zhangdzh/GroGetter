@@ -20,7 +20,9 @@ GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
 GROC_COLLECT = "grocdb"
-GROC_KEY = "item"
+
+# testing for the manually created grocery list
+GROC_KEY = "item1"
 
 REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 # example of a grocery list structure
@@ -60,6 +62,7 @@ def get_items() -> list:
     return list(get_grocery_list().keys())
 
 
+# TODO: this currently only fetches one list
 def get_grocery_list() -> dict:
     """
     returns the entire grocery list
