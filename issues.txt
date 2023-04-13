@@ -1,9 +1,8 @@
 Documentation of current issues:
-- PA does not seem to be auto-reloading
-    - Potential issue with the connection to GitHub
 - MongoDB connection inconsistent
 - Some groceries methods not incorporated into endpoints
     - Revisit and see which ones are needed
+- Grocery update methods should be consolidated into one that takes optional parameters
 
 Notes:
 - Database is called "groceries"

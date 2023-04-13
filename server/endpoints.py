@@ -281,7 +281,7 @@ class AddGrocItem(Resource):
 REMOVE_FIELDS = api.model('remove', {ITEM: fields.String})
 
 
-@groceries.route(f'/{REMOVE}/<items>')
+@groceries.route(f'/{REMOVE}/<item>')
 class RemoveGrocItem(Resource):
     """
     Remove grocery item from grocery list
