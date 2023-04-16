@@ -1,11 +1,14 @@
 Documentation of current issues:
-- MongoDB connection inconsistent
 - Some groceries methods not incorporated into endpoints
     - Revisit and see which ones are needed
 - Grocery update endpoints have been reorganized and different fields can be updated
     note: this is not consolidated into one singular endpoint, 
     because it didn't seem to make sense; if we want one singular endpoint,
     we would have to figure out a different organization
+- Mongodb should be conected now with the new environ var, but the get groc 
+    endpoint isn't working because of our groceries structure in the db right now. 
+    This might be because the current single item is wrong. so have to input 
+    a new item to test the get item.
 
 Notes:
 - Database is called "groceries"

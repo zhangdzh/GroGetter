@@ -54,7 +54,8 @@ def get_groc_types_dict():
     return GROC_TYPES
 
 
-# All items...? Assume only working with 1 list
+# TODO: currently comes out with an error because a dict is being 
+# used as a key
 def get_items() -> list:
     """
     returns a list of all items in the grocery list
@@ -95,26 +96,28 @@ def get_types():
     return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
 
 
-# TODO: change to use db
 def add_item(item: str, details: dict):
     """
     adds an item to the grocery list
     """
-    if not isinstance(item, str):
-        raise TypeError(f'Wrong type for item: {type(item)=}')
-    if exists(item):
-        raise ValueError(f'Item {item=} already exists in grocery list.')
-    if not isinstance(details, dict):
-        raise TypeError(f'Wrong type for details: {type(details)=}')
-    for field in REQUIRED_FIELDS:
-        if field not in details:
-            raise KeyError(f'Required {field=} missing from details.')
-    if details[GROC_TYPE] not in get_groc_types():
-        raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-                         + f'Must be one of: {get_groc_types()}')
-    if not isinstance(details[QUANTITY], int):
-        raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
-    grocery_list[item] = details
+    # if not isinstance(item, str):
+    #     raise TypeError(f'Wrong type for item: {type(item)=}')
+    # if exists(item):
+    #     raise ValueError(f'Item {item=} already exists in grocery list.')
+    # if not isinstance(details, dict):
+    #     raise TypeError(f'Wrong type for details: {type(details)=}')
+    # for field in REQUIRED_FIELDS:
+    #     if field not in details:
+    #         raise KeyError(f'Required {field=} missing from details.')
+    # if details[GROC_TYPE] not in get_groc_types():
+    #     raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
+    #                      + f'Must be one of: {get_groc_types()}')
+    # if not isinstance(details[QUANTITY], int):
+    #     raise TypeError(f'Wrong type for quantity: "
+    #                     + {type(details[QUANTITY])=}')
+    # grocery_list[item] = details
+    dbc.connect_db()
+    dbc.insert_one(GROC_KEY, details, GROC_COLLECT)
 
 
 # TODO: change to use db
