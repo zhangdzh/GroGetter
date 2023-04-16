@@ -151,43 +151,45 @@ def test_get_groc_details():
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_update_grocitem():
+def test_update_groc_item():
+    # note: currently only testing that quantity is updated
     grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
     assert grocs.exists(SAMPLE_GROCITEM_NM)
     SAMPLE_GROCLIST[grocs.QUANTITY] = 20
     SAMPLE_GROCLIST[grocs.EXPIRATION_DATE] = "10/30/2022"
-    resp_json = TEST_CLIENT.post(
-        f'/{ep.GROC}/{ep.UPDATE}', json=SAMPLE_GROCLIST)
+    resp_json = TEST_CLIENT.put(
+        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={ep.ITEM: SAMPLE_GROCITEM_NM})
     assert grocs.exists(SAMPLE_GROCITEM_NM)
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 20
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[
-        grocs.EXPIRATION_DATE] == "10/30/2022"
+    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 100
+    # assert grocs.get_details(SAMPLE_GROCITEM_NM)[
+    #     grocs.EXPIRATION_DATE] == "10/30/2022"
     grocs.remove_item(SAMPLE_GROCITEM_NM)
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_update_groc_type():
-    grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    SAMPLE_GROCLIST[grocs.GROC_TYPE] = 'Fruit'
-    resp_json = TEST_CLIENT.post(
-        f'/{ep.GROC}/{ep.UPDATE}_{ep.GROC_TYPES}', json=SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.GROC_TYPE] == 'Fruit'
-    grocs.remove_item(SAMPLE_GROCITEM_NM)
+# Deprecated tests
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# def test_update_groc_type():
+#     grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
+#     assert grocs.exists(SAMPLE_GROCITEM_NM)
+#     SAMPLE_GROCLIST[grocs.GROC_TYPE] = 'Fruit'
+#     resp_json = TEST_CLIENT.post(
+#         f'/{ep.GROC}/{ep.UPDATE}_{ep.GROC_TYPES}', json=SAMPLE_GROCLIST)
+#     assert grocs.exists(SAMPLE_GROCITEM_NM)
+#     assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.GROC_TYPE] == 'Fruit'
+#     grocs.remove_item(SAMPLE_GROCITEM_NM)
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_update_quantity():
-    grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    SAMPLE_GROCLIST[grocs.QUANTITY] = 15
-    resp_json = TEST_CLIENT.post(
-        f'/{ep.GROC}/{ep.UPDATE}_{ep.QUANTITY}', json=SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 15
-    grocs.remove_item(SAMPLE_GROCITEM_NM)
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# def test_update_quantity():
+#     grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
+#     assert grocs.exists(SAMPLE_GROCITEM_NM)
+#     SAMPLE_GROCLIST[grocs.QUANTITY] = 15
+#     resp_json = TEST_CLIENT.post(
+#         f'/{ep.GROC}/{ep.UPDATE}_{ep.QUANTITY}', json=SAMPLE_GROCLIST)
+#     assert grocs.exists(SAMPLE_GROCITEM_NM)
+#     assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 15
+#     grocs.remove_item(SAMPLE_GROCITEM_NM)
 
 
-def test_update_expiration():  # Temporary so we remember to fill this in
-    pass
+# def test_update_expiration():  # Temporary so we remember to fill this in
+#     pass

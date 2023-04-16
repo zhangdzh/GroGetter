@@ -315,76 +315,108 @@ class GrocTypes(Resource):
         return groc.get_details(item)
 
 
-@groceries.route(f'/{UPDATE}')
+UPDATE_FIELDS = api.model('update', {ITEM: fields.String})
+
+
+@groceries.route(f'/{UPDATE}/{QUANTITY}/<num>')
+@groceries.route(f'/{UPDATE}/{EXPIRATION}/<date>')
+@groceries.route(f'/{UPDATE}/{groc.GROC_TYPE}/<type>')
 class UpdateGrocItem(Resource):
     """
-    Update grocery item with new details
+    Update grocery item with new details via optional parameters
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    @groceries.expect(GROC_FIELDS)
-    def put(self):
+    @groceries.expect(UPDATE_FIELDS)
+    def put(self, num=None, date=None, type=None):
         """
-        Update grocery item with new details
+        Update grocery item with relevant new details
         """
-        item = request.json[ITEM]
+        item = request.json[ITEM]  # should this be ITEM?
         del request.json[ITEM]
-        groc.update_item(item, request.json)
+
+        # need to update each of the fields if not None
+        if num is not None:
+            groc.update_quantity(item, num)
+
+        if date is not None:
+            groc.update_expiration(item, date)
+
+        if type is not None:
+            groc.update_groc_type(item, type)
 
 
-UPDATE_QUANTITY_FIELDS = api.model('update_quantity',
-                                   {QUANTITY: fields.Integer})
+# Deprecated --separate update endpoints
+# @groceries.route(f'/{UPDATE}')
+# class UpdateGrocItem(Resource):
+#     """
+#     Update grocery item with new details
+#     """
+#     @api.response(HTTPStatus.OK, "Success")
+#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+#     @groceries.expect(GROC_FIELDS)
+#     def put(self):
+#         """
+#         Update grocery item with new details
+#         """
+#         item = request.json[ITEM]
+#         del request.json[ITEM]
+#         groc.update_item(item, request.json)
 
 
-@groceries.route(f'/{UPDATE}_{GROC_TYPES}')
-class UpdateGrocItemType(Resource):
-    """
-    Update grocery item type
-    """
-    @api.response(HTTPStatus.OK, "Success")
-    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    @groceries.expect(GROC_FIELDS)
-    def put(self):
-        """
-        Update grocery item type
-        """
-        item = request.json[ITEM]
-        del request.json[ITEM]
-        groc.update_groc_type(item, request.json)
+# UPDATE_QUANTITY_FIELDS = api.model('update_quantity',
+#                                    {QUANTITY: fields.Integer})
 
 
-@groceries.route(f'/{UPDATE}_{QUANTITY}')
-class UpdateGrocItemQuantity(Resource):
-    """
-    Update grocery item quantity
-    """
-    @api.response(HTTPStatus.OK, "Success")
-    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    @groceries.expect(GROC_FIELDS)
-    # ^Is this supposed to expect all the fields or just the quantity?
-    def put(self):
-        """
-        Update grocery item quantity
-        """
-        item = request.json[ITEM]
-        del request.json[ITEM]
-        groc.update_quantity(item, request.json)
-
-# Note: this should exist if update_quantity exists
+# @groceries.route(f'/{UPDATE}_{GROC_TYPES}')
+# class UpdateGrocItemType(Resource):
+#     """
+#     Update grocery item type
+#     """
+#     @api.response(HTTPStatus.OK, "Success")
+#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+#     @groceries.expect(GROC_FIELDS)
+#     def put(self):
+#         """
+#         Update grocery item type
+#         """
+#         item = request.json[ITEM]
+#         del request.json[ITEM]
+#         groc.update_groc_type(item, request.json)
 
 
-@groceries.route(f'/{UPDATE}_{EXPIRATION}')
-class UpdateGrocItemExpiration(Resource):
-    """
-    Update grocery item expiration date
-    """
-    @api.response(HTTPStatus.OK, "Success")
-    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    @groceries.expect('string')  # Syntax?
-    def put(self):
-        """
-        Update grocery item expiration date
-        """
-        item = request.json[ITEM]
-        del request.json[ITEM]
-        groc.update_expiration(item, request.json)
+# @groceries.route(f'/{UPDATE}_{QUANTITY}')
+# class UpdateGrocItemQuantity(Resource):
+#     """
+#     Update grocery item quantity
+#     """
+#     @api.response(HTTPStatus.OK, "Success")
+#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+#     @groceries.expect(GROC_FIELDS)
+#     # ^Is this supposed to expect all the fields or just the quantity?
+#     def put(self):
+#         """
+#         Update grocery item quantity
+#         """
+#         item = request.json[ITEM]
+#         del request.json[ITEM]
+#         groc.update_quantity(item, request.json)
+
+# # Note: this should exist if update_quantity exists
+
+
+# @groceries.route(f'/{UPDATE}_{EXPIRATION}')
+# class UpdateGrocItemExpiration(Resource):
+#     """
+#     Update grocery item expiration date
+#     """
+#     @api.response(HTTPStatus.OK, "Success")
+#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
+#     @groceries.expect('string')  # Syntax?
+#     def put(self):
+#         """
+#         Update grocery item expiration date
+#         """
+#         item = request.json[ITEM]
+#         del request.json[ITEM]
+#         groc.update_expiration(item, request.json)
