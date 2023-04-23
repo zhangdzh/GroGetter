@@ -4,6 +4,7 @@ necessary to interact with a grocery list.
 """
 
 import db.db_connect as dbc
+from db.users import USERNAME
 
 # Grocery types
 BAKED_GOODS = 'Baked Goods'
@@ -28,7 +29,7 @@ ITEM = 'item'
 # testing for the manually created grocery list
 GROC_KEY = "item1"
 
-REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
+REQUIRED_FIELDS = [USERNAME, GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 
 # example of a grocery list structure
 # update as of 4/23 - this should not be used. old structure.
@@ -123,8 +124,7 @@ def add_item(item: str, details: dict):
     dbc.insert_one(GROC_COLLECT, doc, dbc.GROC_DB)
 
 
-# TODO: change to use db
-def remove_item(item: str):
+def remove_item(item: str, user: str):
     """
     removes an item from the grocery list
     """
@@ -132,7 +132,8 @@ def remove_item(item: str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
     if not exists:
         raise ValueError(f'Item {item=} not in grocery list.')
-    del grocery_list[item]
+    dbc.connect_db()
+    dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
 
 
 # TODO: change to use db
