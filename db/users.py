@@ -39,7 +39,10 @@ def user_exists(name):
     """
     Returns whether or not a user exists.
     """
-    pass
+    if name in get_usernames():
+        return True
+    else:
+        return False
 
 
 # Mongo

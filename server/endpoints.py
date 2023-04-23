@@ -38,6 +38,7 @@ USER_DICT_NM = f'{USERS}_{DICT}'
 USER_LIST_NM = f'{USERS}_{LIST}'
 EXPIRATION = 'expiration'
 RECORDS = 'records'
+LOGIN = 'login'
 
 # name spaces
 groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
@@ -190,7 +191,7 @@ LOGIN_FIELDS = api.model('ExistingUser', {
 })
 
 
-@users.route(f'/login')  # no test yet
+@users.route(f'/{LOGIN}')  # no test yet
 class Login(Resource):
     @users.expect(LOGIN_FIELDS)
     def get(self):
