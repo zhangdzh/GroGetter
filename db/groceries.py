@@ -16,7 +16,7 @@ DRINKS = 'Drinks'
 MEAT = 'Meat'
 MISC = 'Misc'
 
-groc_types = (BAKED_GOODS, CARBS, FRUIT, DAIRY, 
+groc_types = (BAKED_GOODS, CARBS, FRUIT, DAIRY,
               VEGETABLES, SNACKS, DRINKS, MEAT, MISC)
 
 GROC_TYPE = 'grocery_type'

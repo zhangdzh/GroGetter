@@ -22,7 +22,6 @@ USER_COLLECT = 'userdb'
 #     'user2': {
 #     EMAIL: 'z@y.com', PASSWORD: 'yyy456'}}
 
-
 # sample document
 '''
 {
@@ -103,11 +102,12 @@ def get_email(username):
 def get_user_password(username):
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
-    if username not in users.keys():
-        raise KeyError('Username not found')
-    return users[username].get(PASSWORD)
+    dbc.connect_db()
+    filter = {USERNAME: username}
+    return dbc.fetch_one(USER_COLLECT, filter)[PASSWORD]
 
 
+# Not changed fully - see comments
 def change_password(username, new_password):
     """
     Changes user's password.
@@ -116,9 +116,11 @@ def change_password(username, new_password):
     """
     if not isinstance(new_password, str):
         raise TypeError
-    if username not in users.keys():
+    if username not in get_usernames():
         raise KeyError("Username not found")
-    users[username][PASSWORD] = new_password
+    # delete old user doc
+    # insert new one w new password?
+    pass  # for now
 
 
 def encrypt_password(password):

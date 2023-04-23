@@ -120,21 +120,6 @@ class Records(Resource):
 
 
 # users namespace endpoints
-@users.route(f'/{DICT}')
-class UserDict(Resource):
-    """
-    This will get a dict of currrent users.
-    """
-
-    def get(self):
-        """
-        Returns a dict of current users.
-        """
-        return {'Data': usr.get_users_dict(),
-                'Type': 'Data',
-                'Title': 'Active Users'}
-
-
 @users.route(f'/{LIST}')
 class UserList(Resource):
     """
@@ -145,7 +130,7 @@ class UserList(Resource):
         """
         Returns a list of current users.
         """
-        return {USER_LIST_NM: usr.get_usernames()}
+        return usr.get_usernames()
 
 
 USER_FIELDS = api.model('NewUser', {
