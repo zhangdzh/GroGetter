@@ -149,7 +149,7 @@ class UserList(Resource):
 
 
 USER_FIELDS = api.model('NewUser', {
-    usr.USER_NAME: fields.String,
+    usr.USERNAME: fields.String,
     usr.EMAIL: fields.String,
     usr.PASSWORD: fields.String,
 })
@@ -165,8 +165,8 @@ class AddUser(Resource):
         """
         Add a user.
         """
-        name = request.json[usr.USER_NAME]
-        del request.json[usr.USER_NAME]
+        name = request.json[usr.USERNAME]
+        del request.json[usr.USERNAME]
         usr.add_user(name, request.json)
 
 
@@ -175,14 +175,14 @@ class RemoveUser(Resource):
     """
     Remove a user.
     """
-    REMOVE_USER = api.model('RemoveUser', {usr.USER_NAME: fields.String})
+    REMOVE_USER = api.model('RemoveUser', {usr.USERNAME: fields.String})
 
     @users.expect(REMOVE_USER)
     def post(self):
         """
         Remove a user using the del_user function.
         """
-        name = request.json[usr.USER_NAME]
+        name = request.json[usr.USERNAME]
         usr.del_user(name)
 
 

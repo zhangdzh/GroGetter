@@ -55,9 +55,9 @@ def test_get_usernames():
     assert len(usrs) > 1
 
 
-def test_get_users_dict():
-    usrs = usr.get_users_dict()
-    assert isinstance(usrs, dict)
+def test_get_users():
+    usrs = usr.get_users()
+    assert isinstance(usrs, list)
     assert len(usrs) > 1
 
 

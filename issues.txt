@@ -5,10 +5,15 @@ Documentation of current issues:
     note: this is not consolidated into one singular endpoint, 
     because it didn't seem to make sense; if we want one singular endpoint,
     we would have to figure out a different organization
-- Mongodb should be conected now with the new environ var, but the get groc 
+- Mongodb should be connected now with the new environ var, but the get groc 
     endpoint isn't working because of our groceries structure in the db right now. 
     This might be because the current single item is wrong. so have to input 
     a new item to test the get item.
+        - 4/23 update: add_item fixed to work with low-level organization
+                issues due to parameter orders have been fixed, but if we 
+                modify the organization of the document then we would need to 
+                revisit this again
+- Need to solidify what a document looks like, so all the code can follow the same regulations
 
 Notes:
 - Database is called "groceries"
