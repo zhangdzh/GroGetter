@@ -16,6 +16,9 @@ DRINKS = 'Drinks'
 MEAT = 'Meat'
 MISC = 'Misc'
 
+groc_types = (BAKED_GOODS, CARBS, FRUIT, DAIRY, 
+              VEGETABLES, SNACKS, DRINKS, MEAT, MISC)
+
 GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
@@ -38,37 +41,32 @@ grocery_list = {
     }
 }
 
-# 4/23 mongo doc example
+# document structure for mongodb
 '''
 {
-ITEM: 'bread',
-GROC_TYPE: BAKED_GOODS,
-QUANTITY: 2,
-EXPIRATION_DATE: '10-20-2022'
-
+    user: "user1",
+    list_name: "list1",
+    items: [
+    {
+        item: "item1",
+        grocery_type: "Baked Goods",
+        quantity: 10,
+        expiration_date: "10-20-2022"
+    },
+    {
+        item: "item2",
+        grocery_type: "Carbs",
+        quantity: 5,
+        expiration_date: "10-20-2022"
+    },
+    {
+        item: "item3",
+        grocery_type: "Fruit",
+        quantity: 3,
+        expiration_date: "10-20-2022"
+    }
 }
 '''
-
-# 4/23 is this still applicable?
-# why is it a dictionary?
-GROC_TYPES = {BAKED_GOODS: {},
-              CARBS: {},
-              FRUIT: {},
-              DAIRY: {},
-              VEGETABLES: {},
-              SNACKS: {},
-              DRINKS: {},
-              MEAT: {},
-              MISC: {}}
-
-
-def get_groc_types():
-    return list(GROC_TYPES.keys())
-
-
-# 4/23 why is this here?
-def get_groc_types_dict():
-    return GROC_TYPES
 
 
 def get_items() -> list:
@@ -167,9 +165,9 @@ def update_item(item: str, details: dict):
     for field in REQUIRED_FIELDS:
         if field not in details:
             raise KeyError(f'Required {field=} missing from details.')
-    if details[GROC_TYPE] not in get_groc_types():
+    if details[GROC_TYPE] not in groc_types:
         raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-                         + f'Must be one of: {get_groc_types()}')
+                         + f'Must be one of: {groc_types}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
     grocery_list[item] = details
