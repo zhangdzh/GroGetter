@@ -68,7 +68,7 @@ def insert_one(collection, doc, db=GROC_DB):
     return client[db][collection].insert_one(doc)
 
 
-def fetch_one(collection, filt, db=GROC_DB):
+def fetch_one(collection, filt: dict, db=GROC_DB):
     """
     Find with a filter and return on the first doc found.
     """

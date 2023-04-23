@@ -20,12 +20,16 @@ GROC_TYPE = 'grocery_type'
 QUANTITY = 'quantity'
 EXPIRATION_DATE = 'expiration_date'
 GROC_COLLECT = "grocdb"
+ITEM = 'item'
 
 # testing for the manually created grocery list
 GROC_KEY = "item1"
 
 REQUIRED_FIELDS = [GROC_TYPE, QUANTITY, EXPIRATION_DATE]
+
 # example of a grocery list structure
+# update as of 4/23 - this should not be used. old structure.
+# transferring fully to mongodb version
 grocery_list = {
     "item1": {
         GROC_TYPE: BAKED_GOODS,
@@ -34,7 +38,19 @@ grocery_list = {
     }
 }
 
+# 4/23 mongo doc example
+'''
+{
+ITEM: 'bread',
+GROC_TYPE: BAKED_GOODS,
+QUANTITY: 2,
+EXPIRATION_DATE: '10-20-2022'
 
+}
+'''
+
+# 4/23 is this still applicable?
+# why is it a dictionary?
 GROC_TYPES = {BAKED_GOODS: {},
               CARBS: {},
               FRUIT: {},
@@ -50,27 +66,26 @@ def get_groc_types():
     return list(GROC_TYPES.keys())
 
 
+# 4/23 why is this here?
 def get_groc_types_dict():
     return GROC_TYPES
 
 
-# TODO: currently comes out with an error because a dict is being 
-# used as a key
 def get_items() -> list:
     """
     returns a list of all items in the grocery list
     """
-    return list(get_grocery_list().keys())
+    return dbc.fetch_all(GROC_COLLECT)
 
 
-# TODO: this currently only fetches one list
+# this currently fetches all from a collection
 def get_grocery_list() -> dict:
     """
     returns the entire grocery list
     """
     # return grocery_list
     dbc.connect_db()
-    return dbc.fetch_all_as_dict(GROC_KEY, GROC_COLLECT)
+    return dbc.fetch_all_as_dict(ITEM, GROC_COLLECT)
 
 
 def exists(item: str) -> bool:
@@ -80,12 +95,13 @@ def exists(item: str) -> bool:
     return item in get_grocery_list()
 
 
-# TODO: change to use db
 def get_details(item: str) -> dict:
     """
     returns a dictionary of details for a singular grocery item
     """
-    return grocery_list[item]
+    filter = {ITEM: item}
+    dbc.connect_db()
+    dbc.fetch_one(GROC_COLLECT, filter)
 
 
 # TODO: change to use db
@@ -96,6 +112,7 @@ def get_types():
     return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
 
 
+# allegedly fixed as of 4/23
 def add_item(item: str, details: dict):
     """
     adds an item to the grocery list
@@ -116,8 +133,12 @@ def add_item(item: str, details: dict):
     #     raise TypeError(f'Wrong type for quantity: "
     #                     + {type(details[QUANTITY])=}')
     # grocery_list[item] = details
+
+    # create doc to insert
+    doc = details
+    doc[ITEM] = item
     dbc.connect_db()
-    dbc.insert_one(GROC_KEY, details, GROC_COLLECT)
+    dbc.insert_one(GROC_COLLECT, doc, dbc.GROC_DB)
 
 
 # TODO: change to use db
