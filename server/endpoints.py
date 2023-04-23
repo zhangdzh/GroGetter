@@ -184,6 +184,33 @@ class UserEmail(Resource):
         return {usr.EMAIL: usr.get_email(name)}
 
 
+LOGIN_FIELDS = api.model('ExistingUser', {
+    usr.USERNAME: fields.String,
+    usr.PASSWORD: fields.String,
+})
+
+
+@users.route(f'/login')  # no test yet
+class Login(Resource):
+    @users.expect(LOGIN_FIELDS)
+    def get(self):
+        """
+        Authenticate a login attempt
+        True if successful, False otherwise
+        """
+        name = request.json[usr.USERNAME]
+        pw = request.json[usr.PASSWORD]
+        del request.json[usr.USERNAME]
+        del request.json[usr.PASSWORD]
+
+        if not usr.user_exists(name):
+            return False
+        if usr.get_user_password(name) == pw:
+            return True
+        else:
+            return False
+
+
 # groceries endpoints
 @groceries.route(f'/{ITEMS}')
 class GrocItems(Resource):
