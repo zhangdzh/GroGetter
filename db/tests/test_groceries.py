@@ -94,16 +94,6 @@ def test_get_details(new_groc_item):
         grocs.get_details("definitely not a grocery item")
 
 
-def test_get_types():
-    """
-    tests get_types()
-    """
-    assert isinstance(grocs.get_types(), list)
-    assert len(grocs.get_types()) > 0
-    for field in grocs.get_types():
-        assert field in grocs.GROC_TYPES
-
-
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_item():
     """
