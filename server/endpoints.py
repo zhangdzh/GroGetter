@@ -89,7 +89,7 @@ class MainMenu(Resource):
     This is the main menu for the app
     """
 
-    def get(self):
+    def post(self):
         """
         Gets the main menu
         """
