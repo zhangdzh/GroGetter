@@ -45,26 +45,10 @@ grocery_list = {
 '''
 {
     user: "user1",
-    list_name: "list1",
-    items: [
-    {
-        item: "item1",
-        grocery_type: "Baked Goods",
-        quantity: 10,
-        expiration_date: "10-20-2022"
-    },
-    {
-        item: "item2",
-        grocery_type: "Carbs",
-        quantity: 5,
-        expiration_date: "10-20-2022"
-    },
-    {
-        item: "item3",
-        grocery_type: "Fruit",
-        quantity: 3,
-        expiration_date: "10-20-2022"
-    }
+    item: "item1",
+    grocery_type: "Baked Goods",
+    quantity: 10,
+    expiration_date: "10-20-2022"
 }
 '''
 

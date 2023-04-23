@@ -240,6 +240,7 @@ class GrocDict(Resource):
 
 GROC_FIELDS = api.model('item', {
     ITEM: fields.String,
+    usr.USERNAME: fields.String,
     groc.GROC_TYPE: fields.String,
     groc.QUANTITY: fields.Integer,
     groc.EXPIRATION_DATE: fields.String,
