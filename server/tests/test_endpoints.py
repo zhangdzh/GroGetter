@@ -124,7 +124,7 @@ def test_login():
 # grocery endpoints tests
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_groc_items():
-    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.ITEMS}').get_json()
+    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{grocs.ITEMS}').get_json()
     assert isinstance(resp_json, list)
     assert len(resp_json) > 0
 
@@ -136,7 +136,7 @@ def test_get_groc_items_not_found():
 
 SAMPLE_GROCITEM_NM = 'SampleItem'
 SAMPLE_GROCLIST = {
-    ep.ITEM: SAMPLE_GROCITEM_NM,
+    grocs.ITEM: SAMPLE_GROCITEM_NM,
     grocs.GROC_TYPE: grocs.BAKED_GOODS,
     grocs.QUANTITY: 10,
     grocs.EXPIRATION_DATE: "10/10/2022"
@@ -144,7 +144,7 @@ SAMPLE_GROCLIST = {
 
 
 SAMPLE_REMOVE_GROCITEM_NM = {
-    ep.ITEM: SAMPLE_GROCITEM_NM
+    grocs.ITEM: SAMPLE_GROCITEM_NM
 }
 
 
@@ -173,7 +173,7 @@ def test_update_groc_item():
     SAMPLE_GROCLIST[grocs.QUANTITY] = 20
     SAMPLE_GROCLIST[grocs.EXPIRATION_DATE] = "10/30/2022"
     resp_json = TEST_CLIENT.put(
-        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={ep.ITEM: SAMPLE_GROCITEM_NM})
+        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={groc.ITEM: SAMPLE_GROCITEM_NM})
     assert grocs.exists(SAMPLE_GROCITEM_NM)
     assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 100
     # assert grocs.get_details(SAMPLE_GROCITEM_NM)[
