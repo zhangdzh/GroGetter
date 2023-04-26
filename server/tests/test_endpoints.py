@@ -112,6 +112,15 @@ def test_get_user_email():
     assert usr_email == usr.TEST_EMAIL
 
 
+def test_login():
+    """
+    Test login endpoint
+    """
+    resp = TEST_CLIENT.post(
+        f'/{ep.USERS}/{ep.LOGIN}', json={usr.USERNAME: usr.TEST_USER_NAME, usr.PASSWORD: usr.TEST_PASSWORD})
+    assert resp.status_code == HTTPStatus.OK
+
+
 # grocery endpoints tests
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_groc_items():

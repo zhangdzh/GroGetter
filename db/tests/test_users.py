@@ -69,13 +69,11 @@ def test_get_user_email(new_user):
     assert isinstance(email, str)
 
 
-def test_get_user_password(new_user):
+def test_authenticate(new_user):
     """
-    tests get_user_password()
+    tests authenticate()
     """
-    pass  # 4/23 until we fix method
-    # password = usr.get_user_password(NEW_USER_NAME)
-    # assert isinstance(password, str)
+    assert usr.authenticate(NEW_USER_NAME, NEW_DETAILS[usr.PASSWORD])
 
 
 def test_change_password():

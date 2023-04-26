@@ -30,8 +30,6 @@ def connect_db():
     #     client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
     #                             + '@cluster0.qfnmmli.mongodb.net/'
     #                             + '?retryWrites=true&w=majority')
-    print("LOCAL_MONGO: ", os.environ.get("LOCAL_MONGO"),
-          os.environ.get("LOCAL_MONGO", LOCAL))
     if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
         password = PW
         if not password:

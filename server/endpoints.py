@@ -191,25 +191,16 @@ LOGIN_FIELDS = api.model('ExistingUser', {
 })
 
 
-@users.route(f'/{LOGIN}')  # no test yet
+@users.route(f'/{LOGIN}')
 class Login(Resource):
     @users.expect(LOGIN_FIELDS)
-    def get(self):
+    def post(self):
         """
-        Authenticate a login attempt
-        True if successful, False otherwise
+        calls the authenticate function to login
         """
         name = request.json[usr.USERNAME]
         pw = request.json[usr.PASSWORD]
-        del request.json[usr.USERNAME]
-        del request.json[usr.PASSWORD]
-
-        if not usr.user_exists(name):
-            return False
-        if usr.get_user_password(name) == pw:
-            return True
-        else:
-            return False
+        return usr.authenticate(name, pw)
 
 
 # groceries endpoints
