@@ -23,7 +23,6 @@ DETAILS = 'details'
 ADD = 'add'
 DICT = 'dict'
 TYPES = 'types'
-ITEM = 'item'
 ITEMS = 'items'
 REMOVE = 'remove'
 UPDATE = 'update'
@@ -197,6 +196,7 @@ class Login(Resource):
     def post(self):
         """
         calls the authenticate function to login
+        returns true if successful, false if not
         """
         name = request.json[usr.USERNAME]
         pw = request.json[usr.PASSWORD]
@@ -258,7 +258,7 @@ class GrocDict(Resource):
 
 
 GROC_FIELDS = api.model('item', {
-    ITEM: fields.String,
+    groc.ITEM: fields.String,
     usr.USERNAME: fields.String,
     groc.GROC_TYPE: fields.String,
     groc.QUANTITY: fields.Integer,
@@ -278,12 +278,10 @@ class AddGrocItem(Resource):
         """
         Add grocery item
         """
-        item = request.json[ITEM]
-        del request.json[ITEM]
-        groc.add_item(item, request.json)
+        groc.add_item(request.json)
 
 
-REMOVE_FIELDS = api.model('remove', {ITEM: fields.String})
+REMOVE_FIELDS = api.model('remove', {groc.ITEM: fields.String})
 
 
 @groceries.route(f'/{REMOVE}/<item>/<user>')
@@ -298,7 +296,7 @@ class RemoveGrocItem(Resource):
         """
         Remove grocery item from grocery list
         """
-        item_remove = groc.get_details(item)
+        item_remove = groc.get_details(item, user)
         if item_remove is not None:
             print(request.json)
             groc.remove_item(item, user)
@@ -320,7 +318,7 @@ class GrocTypes(Resource):
         return groc.get_details(item)
 
 
-UPDATE_FIELDS = api.model('update', {ITEM: fields.String})
+UPDATE_FIELDS = api.model('update', {groc.ITEM: fields.String})
 
 
 @groceries.route(f'/{UPDATE}/{QUANTITY}/<num>')
@@ -337,8 +335,8 @@ class UpdateGrocItem(Resource):
         """
         Update grocery item with relevant new details
         """
-        item = request.json[ITEM]  # should this be ITEM?
-        del request.json[ITEM]
+        item = request.json[groc.ITEM]  # should this be ITEM?
+        del request.json[groc.ITEM]
 
         # need to update each of the fields if not None
         if num is not None:

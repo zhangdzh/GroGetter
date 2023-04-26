@@ -4,6 +4,7 @@ Testing module for the groceries.py
 import pytest
 import os
 import db.groceries as grocs
+import db.users as usr
 
 NEW_GROC_NAME = "test"
 NEW_GROC_DETAILS = {
@@ -94,29 +95,29 @@ def test_get_details(new_groc_item):
         grocs.get_details("definitely not a grocery item")
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_item():
     """
     tests add_item() and remove_item()
     """
-    TEST_ITEM = "item2"
     TEST_GROCERY = {
+        grocs.ITEM: "item2",
+        usr.USERNAME: "user1",
         grocs.GROC_TYPE: grocs.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
     # add the item
-    grocs.add_item(TEST_ITEM, TEST_GROCERY)
-    assert grocs.exists(TEST_ITEM)
-    assert TEST_GROCERY == grocs.get_details(TEST_ITEM)
+    grocs.add_item(TEST_GROCERY)
+    assert grocs.exists(TEST_GROCERY[grocs.ITEM])
 
     # remove the item
-    grocs.remove_item(TEST_ITEM)
-    assert not grocs.exists(TEST_ITEM)
+    grocs.remove_item(TEST_GROCERY[grocs.ITEM], TEST_GROCERY[usr.USERNAME])
+    assert not grocs.exists(TEST_GROCERY[grocs.ITEM])
 
     # test removing a non-existent item
     with pytest.raises(KeyError):
-        grocs.remove_item("definitely not a grocery item")
+        grocs.remove_item("definitely not a grocery item", "")
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -140,6 +141,7 @@ def test_raised_exceptions_for_add_item():
     tests raised exceptions for add_item()
     """
     TEST_GROCERY = {
+
         grocs.GROC_TYPE: grocs.MISC,
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"

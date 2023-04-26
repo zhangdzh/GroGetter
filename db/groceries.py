@@ -62,6 +62,7 @@ def get_items() -> list:
 
 
 # this currently fetches all from a collection
+# TODO: need to add user filter
 def get_grocery_list() -> dict:
     """
     returns the entire grocery list
@@ -78,50 +79,37 @@ def exists(item: str) -> bool:
     return item in get_grocery_list()
 
 
-def get_details(item: str) -> dict:
+def get_details(item: str, user: str) -> dict:
     """
     returns a dictionary of details for a singular grocery item
     """
-    filter = {ITEM: item}
+    filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
     dbc.fetch_one(GROC_COLLECT, filter)
 
 
-# TODO: change to use db
-def get_types():
+def get_types() -> list:
     """
     returns all unique grocery types in the grocery list
     """
-    return list(set([item[GROC_TYPE] for item in grocery_list.values()]))
+    types = []
+    for item in get_grocery_list():
+        if item[GROC_TYPE] not in types:
+            types.append(item[GROC_TYPE])
+    return types
 
 
-# allegedly fixed as of 4/23
-def add_item(item: str, details: dict):
+def add_item(details: dict):
     """
     adds an item to the grocery list
     """
-    # if not isinstance(item, str):
-    #     raise TypeError(f'Wrong type for item: {type(item)=}')
-    # if exists(item):
-    #     raise ValueError(f'Item {item=} already exists in grocery list.')
-    # if not isinstance(details, dict):
-    #     raise TypeError(f'Wrong type for details: {type(details)=}')
-    # for field in REQUIRED_FIELDS:
-    #     if field not in details:
-    #         raise KeyError(f'Required {field=} missing from details.')
-    # if details[GROC_TYPE] not in get_groc_types():
-    #     raise ValueError(f'Invalid {details[GROC_TYPE]=} in details. '
-    #                      + f'Must be one of: {get_groc_types()}')
-    # if not isinstance(details[QUANTITY], int):
-    #     raise TypeError(f'Wrong type for quantity: "
-    #                     + {type(details[QUANTITY])=}')
-    # grocery_list[item] = details
-
-    # create doc to insert
-    doc = details
-    doc[ITEM] = item
+    if not isinstance(details, dict):
+        raise TypeError(f'Wrong type for details: {type(details)=}')
+    for field in REQUIRED_FIELDS:
+        if field not in details:
+            raise KeyError(f'Required {field=} missing from details.')
     dbc.connect_db()
-    dbc.insert_one(GROC_COLLECT, doc, dbc.GROC_DB)
+    dbc.insert_one(GROC_COLLECT, details, dbc.GROC_DB)
 
 
 def remove_item(item: str, user: str):
@@ -130,8 +118,8 @@ def remove_item(item: str, user: str):
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists:
-        raise ValueError(f'Item {item=} not in grocery list.')
+    if not exists(item):
+        raise KeyError(f'Item {item=} not in grocery list.')
     dbc.connect_db()
     dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
 
