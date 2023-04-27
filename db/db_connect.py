@@ -30,8 +30,6 @@ def connect_db():
     #     client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
     #                             + '@cluster0.qfnmmli.mongodb.net/'
     #                             + '?retryWrites=true&w=majority')
-    print("LOCAL_MONGO: ", os.environ.get("LOCAL_MONGO"),
-          os.environ.get("LOCAL_MONGO", LOCAL))
     if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
         password = PW
         if not password:
@@ -50,7 +48,7 @@ def del_one(collection, filt, db=GROC_DB):
     """
     Find with a filter and return on the first doc found.
     """
-    client[db][collection].delete_one(filt)
+    return client[db][collection].delete_one(filt)
 
 
 def fetch_all(collection, db=GROC_DB):

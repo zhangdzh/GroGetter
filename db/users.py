@@ -102,12 +102,25 @@ def get_email(username):
     return dbc.fetch_one(USER_COLLECT, filter)[EMAIL]
 
 
-def get_user_password(username):
+def authenticate(username, password):
+    """
+    Returns whether or not the username and password match.
+    """
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
+    if not isinstance(password, str):
+        raise TypeError(f'Wrong type for password: {type(password)=}')
     dbc.connect_db()
     filter = {USERNAME: username}
-    return dbc.fetch_one(USER_COLLECT, filter)[PASSWORD]
+    user = dbc.fetch_one(USER_COLLECT, filter)
+    if user is None:
+        return False
+    # TODO: encrypted version of password
+    # if encrypt_password(password) == user[PASSWORD]:
+    if password == user[PASSWORD]:
+        return True
+    else:
+        return False
 
 
 # Not changed fully - see comments
