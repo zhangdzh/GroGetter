@@ -234,7 +234,7 @@ class GrocItems(Resource):
 @groceries.route(f'/{GROC}_{TYPES}_{LIST}')
 class GrocTypesList(Resource):
     """
-    This will get a list of grocery types.
+    Gets list of grocery types
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
@@ -249,7 +249,7 @@ class GrocTypesList(Resource):
 @groceries.route(f'/{DICT}')
 class GrocDict(Resource):
     """
-    Gets a dictionary of grocery lists
+    Gets a dictionary of grocery list info
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
@@ -278,7 +278,7 @@ GROC_FIELDS = api.model('item', {
 @groceries.route(f'/{ADD}')
 class AddGrocItem(Resource):
     """
-    Get number of items by types
+    Add a grocery item 
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
@@ -318,7 +318,7 @@ class RemoveGrocItem(Resource):
 @groceries.route(f'/{DETAILS}/<item>')
 class GrocTypes(Resource):
     """
-    Get all groceries with given type
+    Get details of an item
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
