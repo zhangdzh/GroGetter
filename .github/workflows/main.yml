@@ -14,6 +14,7 @@ on:
 env:
   DEMO_HOME: /home/zhangdzh/GroGetter/
   PYTHONPATH: /home/zhangdzh/GroGetter/
+  LOCAL_MONGO: '1'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
