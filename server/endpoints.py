@@ -181,7 +181,7 @@ class UserEmail(Resource):
         """
         Get a user's email.
         """
-        return {usr.EMAIL: usr.get_email(name)}
+        return usr.get_email(name)
 
 
 LOGIN_FIELDS = api.model('ExistingUser', {
