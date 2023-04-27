@@ -90,6 +90,9 @@ def add_user(username, details):
     doc = details
     doc[USERNAME] = username
     dbc.connect_db()
+
+    # note: should encrypt password here before inserting
+
     dbc.insert_one(USER_COLLECT, doc)
 
 
@@ -100,6 +103,14 @@ def get_email(username):
     dbc.connect_db()
     filter = {USERNAME: username}
     return dbc.fetch_one(USER_COLLECT, filter)[EMAIL]
+
+
+def get_password(username):
+    if not isinstance(username, str):
+        raise TypeError(f'Wrong type for name: {type(username)=}')
+    dbc.connect_db()
+    filter = {USERNAME: username}
+    return dbc.fetch_one(USER_COLLECT, filter)[PASSWORD]
 
 
 def authenticate(username, password):
@@ -134,9 +145,10 @@ def change_password(username, new_password):
         raise TypeError
     if username not in get_usernames():
         raise KeyError("Username not found")
-    # delete old user doc
-    # insert new one w new password?
-    pass  # for now
+    filter = {USERNAME: username}
+    dbc.connect_db()
+    new = {PASSWORD: new_password}
+    return dbc.update_one(USER_COLLECT, filter, new)
 
 
 def encrypt_password(password):

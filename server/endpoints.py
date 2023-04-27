@@ -269,7 +269,7 @@ GROC_FIELDS = api.model('item', {
 @groceries.route(f'/{ADD}')
 class AddGrocItem(Resource):
     """
-    Add a grocery item 
+    Add a grocery item
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")

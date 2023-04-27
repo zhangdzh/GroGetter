@@ -76,12 +76,13 @@ def test_authenticate(new_user):
     assert usr.authenticate(NEW_USER_NAME, NEW_DETAILS[usr.PASSWORD])
 
 
-def test_change_password():
+def test_change_password(new_user):
     """
     tests change_password()
     """
-    # 4/23 this is not fleshed out
-    usr.change_password(TEST_USER_NAME, TEST_PW)
+    test_pw = '99999'
+    usr.change_password(NEW_USER_NAME, )
+    assert usr.get_password() == test_pw
 
 
 def test_encrypted_password():
