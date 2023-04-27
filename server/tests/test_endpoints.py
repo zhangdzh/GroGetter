@@ -105,8 +105,8 @@ def test_del_user():
 def test_get_user_email():
     resp_json = TEST_CLIENT.get(
         f'/{ep.USERS}/{usr.EMAIL}/{usr.TEST_USER_NAME}').get_json()
-    usr_email = resp_json[usr.EMAIL]
-    assert usr_email == usr.TEST_EMAIL
+    # usr_email = resp_json[usr.EMAIL]
+    assert str(resp_json) == usr.TEST_EMAIL
 
 
 def test_login():

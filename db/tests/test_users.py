@@ -29,6 +29,8 @@ def test_add_user():
     details[usr.EMAIL] = usr.TEST_EMAIL
     details[usr.PASSWORD] = usr.TEST_PASSWORD
     usr.add_user(usr.TEST_USER_NAME, details)
+    assert usr.user_exists(TEST_USER_NAME)
+    usr.del_user(TEST_USER_NAME)
 
 
 def test_add_wrong_name_type():
