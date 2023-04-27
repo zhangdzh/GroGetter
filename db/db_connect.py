@@ -87,4 +87,4 @@ def fetch_keys_as_list(key, collection, db=GROC_DB):
 
 
 def update_one(collection, filt: dict, new, db=GROC_DB):
-    return client[db][collection].update_one(filt, new)
+    return client[db][collection].update_one(filt, {"$set": new})
