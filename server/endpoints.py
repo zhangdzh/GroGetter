@@ -216,7 +216,7 @@ class GrocItems(Resource):
         Returns list of grocery list items.
         """
         item = groc.get_items()
-        if item is not None:
+        if isinstance(item, list):
             return item
         else:
             raise wz.NotFound(f'{item} not found.')

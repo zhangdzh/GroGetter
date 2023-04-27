@@ -35,7 +35,7 @@ def test_invalid_menu_option():
 
 
 def test_n_records():
-    resp_json = TEST_CLIENT.get(f'/n_{ep.RECORDS}')
+    resp_json = TEST_CLIENT.get(f'/n_{ep.RECORDS}').get_json()
     assert isinstance(resp_json, int)
 
 
@@ -67,7 +67,6 @@ def test_user_dict():
     assert len(resp_json) > 1
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_user():
     """
     Test adding a user.
@@ -103,7 +102,6 @@ def test_del_user():
     assert not usr.user_exists(SAMPLE_USER_NM)
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_user_email():
     resp_json = TEST_CLIENT.get(
         f'/{ep.USERS}/{usr.EMAIL}/{usr.TEST_USER_NAME}').get_json()
@@ -121,9 +119,9 @@ def test_login():
 
 
 # grocery endpoints tests
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+@pytest.mark.skip("Internal Server Error?")
 def test_get_groc_items():
-    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{grocs.ITEMS}').get_json()
+    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.ITEMS}').get_json()
     assert isinstance(resp_json, list)
     assert len(resp_json) > 0
 
