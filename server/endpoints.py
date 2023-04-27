@@ -38,6 +38,7 @@ USER_LIST_NM = f'{USERS}_{LIST}'
 EXPIRATION = 'expiration'
 RECORDS = 'records'
 LOGIN = 'login'
+DEVELOPER = 'developer'
 
 # name spaces
 groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
@@ -46,6 +47,8 @@ users = Namespace(USERS, 'Users')
 api.add_namespace(users)
 groceries = Namespace(GROC, 'Groceries')
 api.add_namespace(groceries)
+developer = Namespace(DEVELOPER, 'Developer')
+api.add_namespace(developer)
 
 
 # api namespace endpoints
@@ -106,7 +109,7 @@ class MainMenu(Resource):
 
 
 # Developer endpoint
-@api.route(f'/n_{RECORDS}')
+@developer.route(f'/n_{RECORDS}')
 class Records(Resource):
     """
     Developer endpoint to check number of records

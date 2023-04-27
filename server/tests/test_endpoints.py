@@ -35,7 +35,7 @@ def test_invalid_menu_option():
 
 
 def test_n_records():
-    resp_json = TEST_CLIENT.get(f'/n_{ep.RECORDS}').get_json()
+    resp_json = TEST_CLIENT.get(f'/{ep.DEVELOPER}/n_{ep.RECORDS}').get_json()
     assert isinstance(resp_json, int)
 
 
