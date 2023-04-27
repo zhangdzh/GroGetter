@@ -81,7 +81,7 @@ def test_change_password(new_user):
     tests change_password()
     """
     test_pw = '99999'
-    usr.change_password(NEW_USER_NAME, )
+    usr.change_password(NEW_USER_NAME, test_pw)
     assert usr.get_password() == test_pw
 
 
