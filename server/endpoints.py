@@ -106,7 +106,7 @@ class MainMenu(Resource):
 
 
 # Developer endpoint
-@api.route(f'/N_{RECORDS}')
+@api.route(f'/n_{RECORDS}')
 class Records(Resource):
     """
     Developer endpoint to check number of records

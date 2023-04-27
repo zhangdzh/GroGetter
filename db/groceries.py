@@ -58,6 +58,7 @@ def get_items() -> list:
     """
     returns a list of all items in the grocery list
     """
+    dbc.connect_db()
     return dbc.fetch_all(GROC_COLLECT)
 
 
