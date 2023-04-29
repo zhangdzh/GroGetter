@@ -141,6 +141,14 @@ def update_item(item: str, user: str, details: dict):
     dbc.update_one(GROC_COLLECT, filter)
 
 
+def purge():
+    """
+    Deletes all items from collection
+    """
+    dbc.connect_db()
+    dbc.delete_many(GROC_COLLECT, {})
+
+
 def main():
     # print(get_items())
     # print(get_details("item1"))

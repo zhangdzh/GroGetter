@@ -147,6 +147,14 @@ def encrypt_password(password):
     return encrypted
 
 
+def purge():
+    """
+    Deletes all items from collection
+    """
+    dbc.connect_db()
+    dbc.delete_many(USER_COLLECT, {})
+
+
 def main():
     usernames = get_usernames()
     print(f'{usernames=}')
