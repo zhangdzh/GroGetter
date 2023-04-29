@@ -76,6 +76,8 @@ def get_details(item: str, user: str) -> dict:
     """
     filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
+    if not exists(item, user):
+        raise KeyError(f'Item {item=} not in user\'s list.')
     return dbc.fetch_one(GROC_COLLECT, filter)
 
 
