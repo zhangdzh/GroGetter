@@ -35,6 +35,7 @@ USER_COLLECT = 'userdb'
 def user_exists(name):
     """
     Returns whether or not a user exists.
+    :param name: Username
     """
     if name in get_usernames():
         return True
@@ -52,7 +53,7 @@ def get_users() -> list:
 
 def get_usernames() -> list:
     """
-    returns a list of usernames
+    Returns a list of usernames
     """
     dbc.connect_db()
     all = dbc.fetch_all(USER_COLLECT)
@@ -63,6 +64,10 @@ def get_usernames() -> list:
 
 
 def del_user(name):
+    """
+    Deletes a user from collection
+    :param name: User name
+    """
     dbc.connect_db()
     filter = {USERNAME: name}
     dbc.del_one(USER_COLLECT, filter)
@@ -70,6 +75,7 @@ def del_user(name):
 
 def add_user(username, details):
     """
+    Adds user to collection
     :param username: string
     :param details: Dictionary with keys email and password
     """
@@ -90,6 +96,10 @@ def add_user(username, details):
 
 
 def get_email(username):
+    """
+    Gets user's name
+    :param username: User name
+    """
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     dbc.connect_db()
@@ -98,6 +108,10 @@ def get_email(username):
 
 
 def get_password(username):
+    """
+    Gets user's password
+    :param username: User name
+    """
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
     dbc.connect_db()
@@ -108,6 +122,8 @@ def get_password(username):
 def authenticate(username, password):
     """
     Returns whether or not the username and password match.
+    :param username: User name
+    :param password: Password to authenticate
     """
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')
@@ -131,6 +147,8 @@ def change_password(username, new_password):
     Changes user's password.
     Note: In implementation, should precede this method call
     by ensuring that the same password is entered twice.
+    :param username: User name
+    :param new_password: New password
     """
     if not isinstance(new_password, str):
         raise TypeError
@@ -143,6 +161,10 @@ def change_password(username, new_password):
 
 
 def encrypt_password(password):
+    """
+    Returns encrypted password
+    :param password: Unencrypted password
+    """
     encrypted = hashlib.sha1(password.encode('utf-8')).hexdigest().strip()
     return encrypted
 
