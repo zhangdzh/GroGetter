@@ -6,6 +6,7 @@ import server.endpoints as ep
 import db.users as usr
 import db.groceries as grocs
 import pytest
+from unittest.mock import patch
 
 TEST_CLIENT = ep.app.test_client()
 TEST_E_ITEM = 'test_endpts_item'
@@ -133,7 +134,8 @@ def test_get_groc_items(new_user_with_item):
     assert len(resp_json) > 0
 
 
-def test_get_groc_items_not_found():
+@patch('db.groceries.get_details', return_value=None)
+def test_get_groc_items_not_found(mock_get_details):
     resp = TEST_CLIENT.get(f'/{ep.GROC}/NotAnItem')
     assert resp.status_code == HTTPStatus.NOT_FOUND
 
@@ -159,7 +161,6 @@ def test_add_and_remove_item():
     assert grocs.exists(SAMPLE_GROCITEM_NM, TEST_USER)
     resp_json = TEST_CLIENT.delete(
         f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
-    # grocs.remove_item(SAMPLE_GROCITEM_NM, TEST_USER)
     assert not grocs.exists(SAMPLE_GROCITEM_NM, TEST_USER)
 
 
@@ -171,17 +172,10 @@ def test_get_groc_details(new_user_with_item):
         assert field in resp_json
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_update_groc_item():
-    # note: currently only testing that quantity is updated
-    grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    SAMPLE_GROCLIST[grocs.QUANTITY] = 20
-    SAMPLE_GROCLIST[grocs.EXPIRATION_DATE] = "10/30/2022"
+def test_update_groc_item(new_user_with_item):
+    # update quantity
     resp_json = TEST_CLIENT.put(
-        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={groc.ITEM: SAMPLE_GROCITEM_NM})
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 100
-    # assert grocs.get_details(SAMPLE_GROCITEM_NM)[
-    #     grocs.EXPIRATION_DATE] == "10/30/2022"
-    grocs.remove_item(SAMPLE_GROCITEM_NM)
+        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={grocs.ITEM: TEST_E_ITEM, usr.USERNAME: TEST_USER}).get_json()
+    assert grocs.get_details(TEST_E_ITEM, TEST_USER)[ep.QUANTITY] == 100
+
+    # update

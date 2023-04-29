@@ -349,9 +349,7 @@ UPDATE_FIELDS = api.model('update', {groc.ITEM: fields.String,
                                      usr.USERNAME: fields.String})
 
 
-@groceries.route(f'/{UPDATE}/{QUANTITY}/<num>')
-@groceries.route(f'/{UPDATE}/{EXPIRATION}/<date>')
-@groceries.route(f'/{UPDATE}/{groc.GROC_TYPE}/<type>')
+@groceries.route(f'/{UPDATE}/<field>/<data>')
 class UpdateGrocItem(Resource):
     """
     Update grocery item with new details via optional parameters
@@ -359,14 +357,14 @@ class UpdateGrocItem(Resource):
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(UPDATE_FIELDS)
-    def put(self, num=None, date=None, type=None):
+    def put(self, field, data):
         """
         Update grocery item with relevant new details
         """
         item = request.json[groc.ITEM]  # should this be ITEM?
         user = request.json[usr.USERNAME]
         del request.json[groc.ITEM]
-        del request[usr.USERNAME]
+        del request.json[usr.USERNAME]
 
         # Check if user and item are valid
         if not usr.user_exists(user):
@@ -375,14 +373,14 @@ class UpdateGrocItem(Resource):
             raise Exception('Item not found.')
 
         # Update relevant fields
-        details = {}
-        if num is not None:
-            details[QUANTITY] = num
+        details = groc.get_details(item, user)
+        if field.lower() == QUANTITY:
+            details[QUANTITY] = int(data)
 
-        if date is not None:
-            details[EXPIRATION] = date
+        elif field.lower() == EXPIRATION:
+            details[EXPIRATION] = data
 
-        if type is not None:
-            details[groc.GROC_TYPE]
+        elif field.lower() == groc.GROC_TYPE:
+            details[groc.GROC_TYPE] = data
 
         groc.update_item(item, user, details)
