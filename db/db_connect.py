@@ -71,6 +71,7 @@ def fetch_one(collection, filt: dict, db=GROC_DB):
     Find with a filter and return on the first doc found.
     """
     for doc in client[db][collection].find(filt):
+        del doc['_id']
         return doc
 
 

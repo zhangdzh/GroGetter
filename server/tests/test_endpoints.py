@@ -163,9 +163,9 @@ def test_add_and_remove_item():
     assert not grocs.exists(SAMPLE_GROCITEM_NM, TEST_USER)
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_get_groc_details():
-    resp_json = TEST_CLIENT.get(f'/{ep.GROC}/{ep.DETAILS}/item1').get_json()
+def test_get_groc_details(new_user_with_item):
+    resp_json = TEST_CLIENT.get(
+        f'/{ep.GROC}/{ep.DETAILS}/{TEST_USER}/{TEST_E_ITEM}').get_json()
     assert isinstance(resp_json, dict)
     for field in grocs.REQUIRED_FIELDS:
         assert field in resp_json

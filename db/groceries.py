@@ -76,7 +76,7 @@ def get_details(item: str, user: str) -> dict:
     """
     filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
-    dbc.fetch_one(GROC_COLLECT, filter)
+    return dbc.fetch_one(GROC_COLLECT, filter)
 
 
 def get_types(user) -> list:

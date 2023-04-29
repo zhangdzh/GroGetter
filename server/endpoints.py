@@ -129,6 +129,9 @@ class Purge(Resource):
     """
 
     def delete(self, collection):
+        """
+        Empties collection
+        """
         if collection == usr.USER_COLLECT:
             usr.purge()
         elif collection == groc.GROC_COLLECT:
@@ -325,14 +328,14 @@ class RemoveGrocItem(Resource):
         groc.remove_item(item, user)
 
 
-@groceries.route(f'/{DETAILS}/<item>/<user>')
+@groceries.route(f'/{DETAILS}/<user>/<item>')
 class GrocTypes(Resource):
     """
     Get details of an item from a user's list
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    def get(self, item, user):
+    def get(self, user, item):
         """
         Get details of an item from a user's list
         """
