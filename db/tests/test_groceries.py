@@ -35,20 +35,23 @@ def new_groc_item():
 #     assert not grocs.exists(TEST_DEL_GROC)
 
 
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_items():
     """
     tests get_items()
     """
-    '''
-    assert isinstance(grocs.get_items(), list)
-    assert len(grocs.get_items()) > 0
-    '''
-    if not RUNNING_ON_CICD_SERVER:
-        groceries = grocs.get_all_items()
-        assert isinstance(groceries, list)
-        assert len(groceries) > 0
+    groceries = grocs.get_all_items()
+    assert isinstance(groceries, list)
+    assert len(groceries) > 0
 
+
+def test_get_user_list(new_groc_item):
+    """
+    tests get_user_list()
+    """
+    groceries = grocs.get_user_list(FIXTURE_GROC[usr.USERNAME])
+    assert isinstance(groceries, list)
+    assert len(groceries) > 0
+    assert FIXTURE_GROC == groceries[0]
 
 # @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 # # gives pymongo.errors.ServerSelectionTimeoutError

@@ -68,7 +68,7 @@ def exists(item: str, user) -> bool:
         if doc[ITEM] == item:
             return True
     return False
-    
+
 
 def get_details(item: str, user: str) -> dict:
     """
