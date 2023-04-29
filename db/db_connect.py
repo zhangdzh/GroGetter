@@ -78,10 +78,11 @@ def fetch_all_filtered(collection, filt: dict, db=GROC_DB) -> list:
     """
     Find with a filter and return all results
     """
-    results = []
+    ret = []
     for doc in client[db][collection].find(filt):
-        results.append(doc)
-    return results
+        del doc['_id']
+        ret.append(doc)
+    return ret
 
 
 def fetch_all_as_dict(key, collection, db=GROC_DB):
