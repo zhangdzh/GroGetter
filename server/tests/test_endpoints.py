@@ -130,7 +130,7 @@ def test_get_groc_items(new_user_with_item):
     resp_json = TEST_CLIENT.get(
         f'/{ep.GROC}/{ep.ITEMS}/{TEST_USER}').get_json()
     assert isinstance(resp_json, list)
-    # assert len(resp_json) > 0
+    assert len(resp_json) > 0
 
 
 def test_get_groc_items_not_found():
@@ -140,25 +140,27 @@ def test_get_groc_items_not_found():
 
 SAMPLE_GROCITEM_NM = 'SampleItem'
 SAMPLE_GROCLIST = {
+    usr.USERNAME: TEST_USER,
     grocs.ITEM: SAMPLE_GROCITEM_NM,
     grocs.GROC_TYPE: grocs.BAKED_GOODS,
     grocs.QUANTITY: 10,
-    grocs.EXPIRATION_DATE: "10/10/2022"
+    grocs.EXPIRATION_DATE: "10-10-2022"
 }
 
 
 SAMPLE_REMOVE_GROCITEM_NM = {
-    grocs.ITEM: SAMPLE_GROCITEM_NM
+    grocs.ITEM: SAMPLE_GROCITEM_NM,
+    usr.USERNAME: TEST_USER
 }
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_add_and_remove_grocitem():
+def test_add_and_remove_item():
     resp_json = TEST_CLIENT.post(f'/{ep.GROC}/{ep.ADD}', json=SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    resp_json = TEST_CLIENT.post(
+    assert grocs.exists(SAMPLE_GROCITEM_NM, TEST_USER)
+    resp_json = TEST_CLIENT.delete(
         f'/{ep.GROC}/{ep.REMOVE}', json=SAMPLE_REMOVE_GROCITEM_NM)
-    assert not grocs.exists(SAMPLE_GROCITEM_NM)
+    # grocs.remove_item(SAMPLE_GROCITEM_NM, TEST_USER)
+    assert not grocs.exists(SAMPLE_GROCITEM_NM, TEST_USER)
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")

@@ -297,7 +297,7 @@ REMOVE_FIELDS = api.model('remove',
                            })
 
 
-@groceries.route(f'/{REMOVE}/<item>/<user>')
+@groceries.route(f'/{REMOVE}')
 class RemoveGrocItem(Resource):
     """
     Remove grocery item from grocery list
@@ -305,16 +305,23 @@ class RemoveGrocItem(Resource):
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     @groceries.expect(REMOVE_FIELDS)
-    def delete(self, item, user):
+    def delete(self):
         """
         Remove grocery item from grocery list
         """
-        item_remove = groc.get_details(item, user)
-        if item_remove is not None:
-            print(request.json)
-            groc.remove_item(item, user)
-        else:
-            raise wz.NotFound(f'{item} not found.')
+        item = request.json[groc.ITEM]
+        user = request.json[usr.USERNAME]
+        # if usr.user_exists(user) and groc.exists(item, user):
+        #     groc.remove_item(item, user)
+        # else:
+        #     raise wz.NotFound(f'{item} or {user} not found.')
+        # item_remove = groc.get_details(item, user)
+        # if item_remove is not None:
+        #     print(request.json)
+        #     groc.remove_item(item, user)
+        # else:
+        #     raise wz.NotFound(f'{item} not found.')
+        groc.remove_item(item, user)
 
 
 @groceries.route(f'/{DETAILS}/<item>/<user>')

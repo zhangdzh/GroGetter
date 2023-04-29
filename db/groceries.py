@@ -34,7 +34,7 @@ REQUIRED_FIELDS = [USERNAME, GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 # document structure for mongodb
 '''
 {
-    user: "user1",
+    username: "user1",
     item: "item1",
     grocery_type: BAKED_GOODS,
     quantity: 10,
@@ -112,7 +112,8 @@ def remove_item(item: str, user: str):
     if not exists(item, user):
         raise KeyError(f'Item {item=} not in grocery list.')
     dbc.connect_db()
-    dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
+    filt = {ITEM: item, USERNAME: user}
+    dbc.del_one(GROC_COLLECT, filt)
 
 
 def update_item(item: str, user: str, details: dict):
