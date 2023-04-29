@@ -119,7 +119,7 @@ class Records(Resource):
         """
         Returns number of records in database
         """
-        return len(groc.get_items())
+        return len(groc.get_all_items())
 
 
 # users namespace endpoints
@@ -218,7 +218,7 @@ class GrocItems(Resource):
         """
         Returns list of grocery list items.
         """
-        item = groc.get_items()
+        item = groc.get_all_items()
         if isinstance(item, list):
             return item
         else:
@@ -350,79 +350,3 @@ class UpdateGrocItem(Resource):
 
         if type is not None:
             groc.update_groc_type(item, type)
-
-
-# Deprecated --separate update endpoints
-# @groceries.route(f'/{UPDATE}')
-# class UpdateGrocItem(Resource):
-#     """
-#     Update grocery item with new details
-#     """
-#     @api.response(HTTPStatus.OK, "Success")
-#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-#     @groceries.expect(GROC_FIELDS)
-#     def put(self):
-#         """
-#         Update grocery item with new details
-#         """
-#         item = request.json[ITEM]
-#         del request.json[ITEM]
-#         groc.update_item(item, request.json)
-
-
-# UPDATE_QUANTITY_FIELDS = api.model('update_quantity',
-#                                    {QUANTITY: fields.Integer})
-
-
-# @groceries.route(f'/{UPDATE}_{GROC_TYPES}')
-# class UpdateGrocItemType(Resource):
-#     """
-#     Update grocery item type
-#     """
-#     @api.response(HTTPStatus.OK, "Success")
-#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-#     @groceries.expect(GROC_FIELDS)
-#     def put(self):
-#         """
-#         Update grocery item type
-#         """
-#         item = request.json[ITEM]
-#         del request.json[ITEM]
-#         groc.update_groc_type(item, request.json)
-
-
-# @groceries.route(f'/{UPDATE}_{QUANTITY}')
-# class UpdateGrocItemQuantity(Resource):
-#     """
-#     Update grocery item quantity
-#     """
-#     @api.response(HTTPStatus.OK, "Success")
-#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-#     @groceries.expect(GROC_FIELDS)
-#     # ^Is this supposed to expect all the fields or just the quantity?
-#     def put(self):
-#         """
-#         Update grocery item quantity
-#         """
-#         item = request.json[ITEM]
-#         del request.json[ITEM]
-#         groc.update_quantity(item, request.json)
-
-# # Note: this should exist if update_quantity exists
-
-
-# @groceries.route(f'/{UPDATE}_{EXPIRATION}')
-# class UpdateGrocItemExpiration(Resource):
-#     """
-#     Update grocery item expiration date
-#     """
-#     @api.response(HTTPStatus.OK, "Success")
-#     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-#     @groceries.expect('string')  # Syntax?
-#     def put(self):
-#         """
-#         Update grocery item expiration date
-#         """
-#         item = request.json[ITEM]
-#         del request.json[ITEM]
-#         groc.update_expiration(item, request.json)

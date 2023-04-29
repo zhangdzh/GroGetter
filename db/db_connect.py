@@ -22,14 +22,7 @@ def connect_db():
     global client
     if client is None:
         print("No connection with client yet.")
-    #     password = PW
-    #     if not password:
-    #         raise ValueError("Please set a password" +
-    #                          "to use Mongo in the cloud")
-    #     print("Connecting to Mongo Cloud")
-    #     client = pm.MongoClient(f'mongodb+srv://swef22:{password}'
-    #                             + '@cluster0.qfnmmli.mongodb.net/'
-    #                             + '?retryWrites=true&w=majority')
+
     if os.environ.get("LOCAL_MONGO", LOCAL) == CLOUD:
         password = PW
         if not password:
@@ -72,6 +65,16 @@ def fetch_one(collection, filt: dict, db=GROC_DB):
     """
     for doc in client[db][collection].find(filt):
         return doc
+
+
+def fetch_all_filtered(collection, filt: dict, db=GROC_DB):
+    """
+    Find with a filter and return all results
+    """
+    results = []
+    for doc in client[db][collection].find(filt):
+        results.append(doc)
+    return results
 
 
 def fetch_all_as_dict(key, collection, db=GROC_DB):

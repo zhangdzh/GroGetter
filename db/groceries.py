@@ -31,53 +31,41 @@ GROC_KEY = "item1"
 
 REQUIRED_FIELDS = [USERNAME, GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 
-# example of a grocery list structure
-# update as of 4/23 - this should not be used. old structure.
-# transferring fully to mongodb version
-grocery_list = {
-    "item1": {
-        GROC_TYPE: BAKED_GOODS,
-        QUANTITY: 10,
-        EXPIRATION_DATE: "10-20-2022"
-    }
-}
-
 # document structure for mongodb
 '''
 {
     user: "user1",
     item: "item1",
-    grocery_type: "Baked Goods",
+    grocery_type: BAKED_GOODS,
     quantity: 10,
     expiration_date: "10-20-2022"
 }
 '''
 
 
-def get_items() -> list:
+def get_all_items() -> list:
     """
-    returns a list of all items in the grocery list
+    Returns all items of all users in the collection
     """
     dbc.connect_db()
     return dbc.fetch_all(GROC_COLLECT)
 
 
-# this currently fetches all from a collection
-# TODO: need to add user filter
-def get_grocery_list() -> dict:
+def get_user_list(user) -> list:
     """
-    returns the entire grocery list
+    Returns a user's list of items
     """
-    # return grocery_list
     dbc.connect_db()
-    return dbc.fetch_all_as_dict(ITEM, GROC_COLLECT)
+    filter = {USERNAME: user}
+    return dbc.fetch_all_filtered(GROC_COLLECT, filter)
 
 
-def exists(item: str) -> bool:
+def exists(item: str, user) -> bool:
     """
-    returns True if item exists in the grocery list
+    returns True if item exists in the user's list
     """
-    return item in get_grocery_list()
+
+    return item in get_user_list(user)
 
 
 def get_details(item: str, user: str) -> dict:
@@ -89,12 +77,12 @@ def get_details(item: str, user: str) -> dict:
     dbc.fetch_one(GROC_COLLECT, filter)
 
 
-def get_types() -> list:
+def get_types(user) -> list:
     """
     returns all unique grocery types in the grocery list
     """
     types = []
-    for item in get_grocery_list():
+    for item in get_user_list():
         if item[GROC_TYPE] not in types:
             types.append(item[GROC_TYPE])
     return types
@@ -102,7 +90,7 @@ def get_types() -> list:
 
 def add_item(details: dict):
     """
-    adds an item to the grocery list
+    adds an item to the user's grocery list
     """
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
@@ -125,15 +113,16 @@ def remove_item(item: str, user: str):
     dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
 
 
-# TODO: change to use db
-def update_item(item: str, details: dict):
+def update_item(item: str, user: str, details: dict):
     """
     Updates all details of an item in the grocery list
+    :param item: Name of item to update
+    :param details: Details to be changed
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
-        raise ValueError(f'Item {item=} not in grocery list.')
+    if not exists(item, user):
+        raise ValueError(f"Item {item=} not in user's list.")
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
     for field in REQUIRED_FIELDS:
@@ -144,65 +133,10 @@ def update_item(item: str, details: dict):
                          + f'Must be one of: {groc_types}')
     if not isinstance(details[QUANTITY], int):
         raise TypeError(f'Wrong type for quantity: {type(details[QUANTITY])=}')
-    grocery_list[item] = details
-
-
-# TODO: change to use db
-def update_groc_type(item: str, groc_type: str):
-    """
-    Updates the grocery type of an item in the grocery list
-    """
-    if not isinstance(item, str):
-        raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
-        raise ValueError(f'Item {item=} not in grocery list.')
-    if not isinstance(groc_type, int):
-        raise TypeError(f'Wrong type for quantity: {type(groc_type)=}')
-    grocery_list[item][GROC_TYPE] = groc_type
-
-
-# TODO: change to use db
-def update_quantity(item: str, quantity: int):
-    """
-    Updates the quantity of an item in the grocery list
-    """
-    if not isinstance(item, str):
-        raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
-        raise ValueError(f'Item {item=} not in grocery list.')
-    if not isinstance(quantity, int):
-        raise TypeError(f'Wrong type for quantity: {type(quantity)=}')
-    grocery_list[item][QUANTITY] = quantity
-
-
-# TODO: change to use db
-def update_expiration(item: str, exp: str):
-    """
-    Updates expiration date of an item in grocery list
-    """
-    if not isinstance(item, str):
-        raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
-        raise ValueError(f'Item {item=} not in grocery list.')
-    if not isinstance(exp, str):
-        raise TypeError(f'Wrong type for expiration date: {type(exp)=}')
-    grocery_list[item][EXPIRATION_DATE] = exp
-
-
-# TODO: change to use db
-def get_grocs_by_type(type):
-    """
-    Returns dictionary containing items of given type
-    """
-    for key, val in grocery_list.items():
-        ret = {}
-        if val[GROC_TYPE] == type:
-            ret[key] = val
-    return val
-
-
-def del_groc(name):
-    return dbc.del_one(GROC_COLLECT, {GROC_KEY: name})
+    # update
+    filter = {ITEM: item, USERNAME: user}
+    dbc.connect_db()
+    dbc.update_one(GROC_COLLECT, filter)
 
 
 def main():

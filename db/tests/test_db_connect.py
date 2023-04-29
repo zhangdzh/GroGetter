@@ -42,3 +42,9 @@ def test_fetch_keys_as_list(temp_rec):
     ret = dbc.fetch_keys_as_list(TEST_NAME, TEST_COLLECT)
     # assert ret is None
     assert isinstance(ret, list)
+
+
+def test_fetch_all_filtered(temp_rec):
+    ret = dbc.fetch_all_filtered(TEST_COLLECT, {TEST_NAME: TEST_NAME})
+    assert ret is not None
+    assert isinstance(ret, list)

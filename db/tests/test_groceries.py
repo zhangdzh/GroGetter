@@ -6,7 +6,7 @@ import os
 import db.groceries as grocs
 import db.users as usr
 
-NEW_GROC_NAME = "test"
+NEW_GROC_NAME = "test_groc"
 NEW_GROC_DETAILS = {
     grocs.GROC_TYPE: grocs.CARBS,
     grocs.QUANTITY: 2,
@@ -16,6 +16,8 @@ NEW_GROC_DETAILS = {
 RUNNING_ON_CICD_SERVER = os.environ.get('CI', False)
 
 TEST_DEL_GROC = "Grocery to be deleted"
+
+# All need to be checked and fixed!!
 
 
 @pytest.fixture(scope='function')
@@ -41,30 +43,30 @@ def test_get_items():
     assert len(grocs.get_items()) > 0
     '''
     if not RUNNING_ON_CICD_SERVER:
-        groceries = grocs.get_items()
+        groceries = grocs.get_all_items()
         assert isinstance(groceries, list)
         assert len(groceries) > 0
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-# gives pymongo.errors.ServerSelectionTimeoutError
-def test_get_grocery_list():
-    """
-    tests get_grocery_list()
-    """
-    '''
-    groc_list = grocs.get_grocery_list()
-    assert isinstance(groc_list, dict)
-    assert len(groc_list) > 0
-    for item in groc_list:
-        assert isinstance(item, str)
-        assert isinstance(groc_list[item], dict)
-    '''
-    if not RUNNING_ON_CICD_SERVER:
-        groceries = grocs.get_grocery_list()
-        assert isinstance(groceries, dict)
-        # length later - perhaps after adding fixture to create new
-        # note: dict currently empty?
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# # gives pymongo.errors.ServerSelectionTimeoutError
+# def test_get_grocery_list():
+#     """
+#     tests get_grocery_list()
+#     """
+#     '''
+#     groc_list = grocs.get_grocery_list()
+#     assert isinstance(groc_list, dict)
+#     assert len(groc_list) > 0
+#     for item in groc_list:
+#         assert isinstance(item, str)
+#         assert isinstance(groc_list[item], dict)
+#     '''
+#     if not RUNNING_ON_CICD_SERVER:
+#         groceries = grocs.get_grocery_list(usr.TEST_USER_NAME)
+#         assert isinstance(groceries, list)
+#         # length later - perhaps after adding fixture to create new
+#         # note: dict currently empty?
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -95,7 +97,7 @@ def test_get_details(new_groc_item):
         grocs.get_details("definitely not a grocery item")
 
 
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_item():
     """
     tests add_item() and remove_item()
