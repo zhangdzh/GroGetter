@@ -244,7 +244,8 @@ class GrocItems(Resource):
         """
         items = groc.get_user_list(user)
         if isinstance(items, list):
-            return [str(item[groc.ITEM]) for item in items]
+            # return [str(item[groc.ITEM]) for item in items]
+            return items
         else:
             raise wz.NotFound(f'{user} not found.')
 
