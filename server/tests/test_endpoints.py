@@ -90,8 +90,7 @@ def test_add_user():
     usr.del_user(TEST_USER)
 
 
-@patch('db.users.get_user_list', return_value=SAMPLE_USER)
-def test_get_user_list(mock_get_user_list):
+def test_get_user_list(new_user_with_item):
     """
     Check if we can get a list of usernames
     """
@@ -134,7 +133,8 @@ def test_get_groc_items(new_user_with_item):
     assert len(resp_json) > 0
 
 
-def test_get_groc_items_not_found():
+@patch('db.groceries.get_details', return_value=None)
+def test_get_groc_items_not_found(mock_get_details):
     resp = TEST_CLIENT.get(f'/{ep.GROC}/NotAnItem')
     assert resp.status_code == HTTPStatus.NOT_FOUND
 
