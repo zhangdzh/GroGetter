@@ -151,6 +151,7 @@ def purge():
     """
     Deletes all items from collection
     """
+    dbc.connect_db()
     dbc.delete_many(USER_COLLECT, {})
 
 

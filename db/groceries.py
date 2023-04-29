@@ -145,6 +145,7 @@ def purge():
     """
     Deletes all items from collection
     """
+    dbc.connect_db()
     dbc.delete_many(GROC_COLLECT, {})
 
 
