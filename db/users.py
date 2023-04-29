@@ -32,9 +32,6 @@ USER_COLLECT = 'userdb'
 '''
 
 
-# TODO: change all functions to use db
-
-
 def user_exists(name):
     """
     Returns whether or not a user exists.
@@ -45,7 +42,6 @@ def user_exists(name):
         return False
 
 
-# Mongo
 def get_users() -> list:
     """
     Returns a list of the users
@@ -54,7 +50,6 @@ def get_users() -> list:
     return dbc.fetch_all(USER_COLLECT)
 
 
-# Mongo
 def get_usernames():
     """
     returns a list of usernames
@@ -67,14 +62,12 @@ def get_usernames():
     return users
 
 
-# Mongo
 def del_user(name):
     dbc.connect_db()
     filter = {USERNAME: name}
     dbc.del_one(USER_COLLECT, filter)
 
 
-# Mongo
 def add_user(username, details):
     """
     :param username: string
@@ -96,7 +89,6 @@ def add_user(username, details):
     dbc.insert_one(USER_COLLECT, doc)
 
 
-# Mongo
 def get_email(username):
     if not isinstance(username, str):
         raise TypeError(f'Wrong type for name: {type(username)=}')

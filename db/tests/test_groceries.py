@@ -6,8 +6,10 @@ import os
 import db.groceries as grocs
 import db.users as usr
 
-NEW_GROC_NAME = "test_groc"
-NEW_GROC_DETAILS = {
+
+FIXTURE_GROC = {
+    grocs.ITEM: "test",
+    usr.USERNAME: usr.TEST_USER_NAME,
     grocs.GROC_TYPE: grocs.CARBS,
     grocs.QUANTITY: 2,
     grocs.EXPIRATION_DATE: "10-31-2024"
@@ -22,18 +24,18 @@ TEST_DEL_GROC = "Grocery to be deleted"
 
 @pytest.fixture(scope='function')
 def new_groc_item():
-    grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
+    grocs.add_item(FIXTURE_GROC)
     yield
-    grocs.remove_item(NEW_GROC_NAME)
+    grocs.remove_item(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME])
 
 
-@pytest.fixture(scope='function')
-def test_del_groc(new_groc):
-    grocs.del_groc(TEST_DEL_GROC)
-    assert not grocs.exists(TEST_DEL_GROC)
+# @pytest.fixture(scope='function')
+# def test_del_groc(new_groc):
+#     grocs.del_groc(TEST_DEL_GROC)
+#     assert not grocs.exists(TEST_DEL_GROC)
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_items():
     """
     tests get_items()
@@ -69,20 +71,20 @@ def test_get_items():
 #         # note: dict currently empty?
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_exists(new_groc_item):
     """
     tests exists()
     """
-    assert grocs.exists(NEW_GROC_NAME)
+    assert grocs.exists(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME])
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
+# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_not_exists():
     """
     makes sure that exists works for non-existent items
     """
-    assert not grocs.exists("definitely not a grocery item")
+    assert not grocs.exists("definitely not a grocery item", "")
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -90,9 +92,9 @@ def test_get_details(new_groc_item):
     """
     tests get_details()
     """
-    assert isinstance(grocs.get_details(NEW_GROC_NAME), dict)
+    assert isinstance(grocs.get_details(FIXTURE_GROC[usr.USERNAME]), dict)
     for field in grocs.REQUIRED_FIELDS:
-        assert field in grocs.get_details(NEW_GROC_NAME)
+        assert field in grocs.get_details(FIXTURE_GROC[usr.USERNAME])
     with pytest.raises(KeyError):
         grocs.get_details("definitely not a grocery item")
 
@@ -111,11 +113,11 @@ def test_add_and_remove_item():
     }
     # add the item
     grocs.add_item(TEST_GROCERY)
-    assert grocs.exists(TEST_GROCERY[grocs.ITEM])
+    assert grocs.exists(TEST_GROCERY[grocs.ITEM], TEST_GROCERY[usr.USERNAME])
 
     # remove the item
     grocs.remove_item(TEST_GROCERY[grocs.ITEM], TEST_GROCERY[usr.USERNAME])
-    assert not grocs.exists(TEST_GROCERY[grocs.ITEM])
+    assert not grocs.exists(TEST_GROCERY[grocs.ITEM], TEST_GROCERY[usr.USERNAME])
 
     # test removing a non-existent item
     with pytest.raises(KeyError):
@@ -133,8 +135,8 @@ def test_update_item(new_groc_item):
         grocs.QUANTITY: 10,
         grocs.EXPIRATION_DATE: "10-20-2022"
     }
-    grocs.update_item(NEW_GROC_NAME, TEST_GROCERY)
-    assert TEST_GROCERY == grocs.get_details(NEW_GROC_NAME)
+    grocs.update_item(FIXTURE_GROC[usr.USERNAME], TEST_GROCERY)
+    assert TEST_GROCERY == grocs.get_details(FIXTURE_GROC[usr.USERNAME])
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -173,8 +175,8 @@ def test_update_quantity(new_groc_item):
     """
     # TEST_ITEM = "item1"
     TEST_GROC_TYPE = 'Fruit'
-    grocs.update_groc_type(NEW_GROC_NAME, TEST_GROC_TYPE)
-    assert TEST_GROC_TYPE == grocs.get_details(NEW_GROC_NAME)[grocs.GROC_TYPE]
+    grocs.update_groc_type(FIXTURE_GROC[usr.USERNAME], TEST_GROC_TYPE)
+    assert TEST_GROC_TYPE == grocs.get_details(FIXTURE_GROC[usr.USERNAME])[grocs.GROC_TYPE]
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -184,8 +186,8 @@ def test_update_quantity(new_groc_item):
     """
     # TEST_ITEM = "item1"
     TEST_QUANTITY = 20
-    grocs.update_quantity(NEW_GROC_NAME, TEST_QUANTITY)
-    assert TEST_QUANTITY == grocs.get_details(NEW_GROC_NAME)[grocs.QUANTITY]
+    grocs.update_quantity(FIXTURE_GROC[usr.USERNAME], TEST_QUANTITY)
+    assert TEST_QUANTITY == grocs.get_details(FIXTURE_GROC[usr.USERNAME])[grocs.QUANTITY]
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -194,19 +196,14 @@ def test_update_expiration(new_groc_item):
     tests update_expiration()
     """
     TEST_EXP = "10-02-2022"
-    grocs.update_quantity(NEW_GROC_NAME, TEST_EXP)
-    assert TEST_EXP == grocs.get_details(NEW_GROC_NAME)[grocs.EXPIRATION_DATE]
+    grocs.update_quantity(FIXTURE_GROC[usr.USERNAME], TEST_EXP)
+    assert TEST_EXP == grocs.get_details(FIXTURE_GROC[usr.USERNAME])[grocs.EXPIRATION_DATE]
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_item_dup(new_groc_item):
     with pytest.raises(ValueError):
-        grocs.add_item(NEW_GROC_NAME, NEW_GROC_DETAILS)
-
-
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_groc_item_not_exists():
-    assert not grocs.exists('Some nonsense')
+        grocs.add_item(FIXTURE_GROC[usr.USERNAME], FIXTURE_GROC)
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
