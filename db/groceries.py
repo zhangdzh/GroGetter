@@ -64,9 +64,11 @@ def exists(item: str, user) -> bool:
     """
     returns True if item exists in the user's list
     """
-
-    return item in get_user_list(user)
-
+    for doc in get_user_list(user):
+        if doc[ITEM] == item:
+            return True
+    return False
+    
 
 def get_details(item: str, user: str) -> dict:
     """
@@ -107,7 +109,7 @@ def remove_item(item: str, user: str):
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
+    if not exists(item, user):
         raise KeyError(f'Item {item=} not in grocery list.')
     dbc.connect_db()
     dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
