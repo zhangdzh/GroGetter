@@ -373,17 +373,14 @@ class UpdateGrocItem(Resource):
             raise Exception('Item not found.')
 
         # Update relevant fields
-        details = {usr.USERNAME: user}
+        details = groc.get_details(item, user)
         if field.lower() == QUANTITY:
-            details[QUANTITY] = data
+            details[QUANTITY] = int(data)
 
-        if field.lower() == EXPIRATION:
+        elif field.lower() == EXPIRATION:
             details[EXPIRATION] = data
 
-        if field.lower() == groc.GROC_TYPE:
-            if field in groc.groc_types:
-                details[groc.GROC_TYPE] = data
-            else:
-                raise Exception('Invalid type.')
+        elif field.lower() == groc.GROC_TYPE:
+            details[groc.GROC_TYPE] = data
 
         groc.update_item(item, user, details)

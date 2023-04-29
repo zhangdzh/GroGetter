@@ -141,7 +141,7 @@ def update_item(item: str, user: str, details: dict):
     # update
     filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
-    dbc.update_one(GROC_COLLECT, filter)
+    dbc.update_one(GROC_COLLECT, filter, details)
 
 
 def purge():
