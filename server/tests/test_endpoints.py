@@ -171,17 +171,10 @@ def test_get_groc_details(new_user_with_item):
         assert field in resp_json
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_update_groc_item():
-    # note: currently only testing that quantity is updated
-    grocs.add_item(SAMPLE_GROCITEM_NM, SAMPLE_GROCLIST)
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    SAMPLE_GROCLIST[grocs.QUANTITY] = 20
-    SAMPLE_GROCLIST[grocs.EXPIRATION_DATE] = "10/30/2022"
+def test_update_groc_item(new_user_with_item):
+    # update quantity
     resp_json = TEST_CLIENT.put(
-        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={groc.ITEM: SAMPLE_GROCITEM_NM})
-    assert grocs.exists(SAMPLE_GROCITEM_NM)
-    assert grocs.get_details(SAMPLE_GROCITEM_NM)[grocs.QUANTITY] == 100
-    # assert grocs.get_details(SAMPLE_GROCITEM_NM)[
-    #     grocs.EXPIRATION_DATE] == "10/30/2022"
-    grocs.remove_item(SAMPLE_GROCITEM_NM)
+        f'/{ep.GROC}/{ep.UPDATE}/{ep.QUANTITY}/100', json={grocs.ITEM: TEST_E_ITEM, usr.USERNAME: TEST_USER}).get_json()
+    assert grocs.get_details(TEST_E_ITEM, TEST_USER)[ep.QUANTITY] == 100
+
+    # update
