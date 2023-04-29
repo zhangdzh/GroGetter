@@ -50,7 +50,7 @@ def get_users() -> list:
     return dbc.fetch_all(USER_COLLECT)
 
 
-def get_usernames():
+def get_usernames() -> list:
     """
     returns a list of usernames
     """

@@ -74,7 +74,7 @@ def fetch_one(collection, filt: dict, db=GROC_DB):
         return doc
 
 
-def fetch_all_filtered(collection, filt: dict, db=GROC_DB):
+def fetch_all_filtered(collection, filt: dict, db=GROC_DB) -> list:
     """
     Find with a filter and return all results
     """
