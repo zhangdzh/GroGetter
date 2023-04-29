@@ -77,6 +77,9 @@ def test_get_user_list():
     assert len(groceries) > 0
     assert temp == groceries
 
+    grocs.remove_item(temp[0][grocs.ITEM], temp[0][usr.USERNAME])
+    grocs.remove_item(temp[1][grocs.ITEM], temp[1][usr.USERNAME])
+
 
 def test_exists(new_groc_item):
     """
