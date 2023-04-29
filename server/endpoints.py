@@ -102,7 +102,7 @@ class MainMenu(Resource):
                           'method': 'get', 'text': 'Show Grocery Items'},
                     '2': {'url': '/groc/dict',
                           'method': 'get', 'text': 'Show Grocery Lists'},
-                    '3': {'url': '/users/dict',
+                    '3': {'url': '/users/dict',  # invalid path (no more dicts)
                           'method': 'get', 'text': 'Show Users'},
                     'X': {'text': 'Exit'},
                 }}
@@ -120,6 +120,21 @@ class Records(Resource):
         Returns number of records in database
         """
         return len(groc.get_all_items())
+
+
+@developer.route('/purge/<collection>')
+class Purge(Resource):
+    """
+    Purges a collection
+    """
+
+    def delete(self, collection):
+        if collection == usr.USER_COLLECT:
+            usr.purge()
+        elif collection == groc.GROC_COLLECT:
+            groc.purge()
+        else:
+            raise Exception("Invalid collection.")
 
 
 # users namespace endpoints

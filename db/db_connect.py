@@ -44,6 +44,13 @@ def del_one(collection, filt, db=GROC_DB):
     return client[db][collection].delete_one(filt)
 
 
+def delete_many(collection, filt, db=GROC_DB):
+    """
+    Deletes multiple based on filter
+    """
+    return client[db][collection].delete_many(filt)
+
+
 def fetch_all(collection, db=GROC_DB):
     ret = []
     for doc in client[db][collection].find():

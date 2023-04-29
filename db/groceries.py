@@ -68,7 +68,7 @@ def exists(item: str, user) -> bool:
         if doc[ITEM] == item:
             return True
     return False
-    
+
 
 def get_details(item: str, user: str) -> dict:
     """
@@ -139,6 +139,13 @@ def update_item(item: str, user: str, details: dict):
     filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
     dbc.update_one(GROC_COLLECT, filter)
+
+
+def purge():
+    """
+    Deletes all items from collection
+    """
+    dbc.delete_many(GROC_COLLECT, {})
 
 
 def main():

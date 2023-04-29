@@ -74,19 +74,11 @@ def test_get_groc_type_list(new_user_with_item):
     assert len(resp_json) > 0
 
 
-SAMPLE_USER_NM = 'SampleUser'
 SAMPLE_USER = {
-    usr.USERNAME: SAMPLE_USER_NM,
-    usr.EMAIL: 'x@y.com',
-    usr.PASSWORD: 'xxx123'
+    usr.USERNAME: TEST_USER,
+    usr.EMAIL: TEST_DETAILS[usr.EMAIL],
+    usr.PASSWORD: TEST_DETAILS[usr.PASSWORD]
 }
-
-
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_user_dict():
-    resp_json = TEST_CLIENT.get(f'/{ep.USERS}/{ep.DICT}').get_json()
-    assert isinstance(resp_json, dict)
-    assert len(resp_json) > 1
 
 
 def test_add_user():
@@ -94,8 +86,8 @@ def test_add_user():
     Test adding a user.
     """
     resp = TEST_CLIENT.post(f'/{ep.USERS}/{ep.ADD}', json=SAMPLE_USER)
-    assert usr.user_exists(SAMPLE_USER_NM)
-    usr.del_user(SAMPLE_USER_NM)
+    assert usr.user_exists(TEST_USER)
+    usr.del_user(TEST_USER)
 
 
 @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
@@ -124,6 +116,7 @@ def test_del_user():
     assert not usr.user_exists(SAMPLE_USER_NM)
 
 
+@pytest.mark.skip("use fixture.")
 def test_get_user_email():
     resp_json = TEST_CLIENT.get(
         f'/{ep.USERS}/{usr.EMAIL}/{usr.TEST_USER_NAME}').get_json()
