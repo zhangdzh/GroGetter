@@ -155,7 +155,10 @@ class AddUser(Resource):
         """
         name = request.json[usr.USERNAME]
         del request.json[usr.USERNAME]
-        usr.add_user(name, request.json)
+        if usr.user_exists(name):
+            raise Exception("User already exists.")
+        else:
+            usr.add_user(name, request.json)
 
 
 @users.route(f'/{REMOVE}')
@@ -171,7 +174,10 @@ class RemoveUser(Resource):
         Remove a user using the del_user function.
         """
         name = request.json[usr.USERNAME]
-        usr.del_user(name)
+        if usr.user_exists(name):
+            usr.del_user(name)
+        else:
+            raise Exception("User does not exist.")
 
 
 @users.route(f'/{usr.EMAIL}/<name>')
@@ -184,7 +190,10 @@ class UserEmail(Resource):
         """
         Get a user's email.
         """
-        return usr.get_email(name)
+        if usr.user_exists(name):
+            return usr.get_email(name)
+        else:
+            raise Exception("User does not exist.")
 
 
 LOGIN_FIELDS = api.model('ExistingUser', {
@@ -207,62 +216,44 @@ class Login(Resource):
 
 
 # groceries endpoints
-@groceries.route(f'/{ITEMS}')
+@groceries.route(f'/{ITEMS}/<user>')
 class GrocItems(Resource):
     """
-    Gets items in grocery list.
+    Gets items in a user's grocery list.
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    def get(self):
+    def get(self, user):
         """
-        Returns list of grocery list items.
+        Returns list of user's grocery items.
         """
-        item = groc.get_all_items()
-        if isinstance(item, list):
-            return item
+        items = groc.get_user_list(user)
+        if isinstance(items, list):
+            return items
         else:
-            raise wz.NotFound(f'{item} not found.')
+            raise wz.NotFound(f'{user} not found.')
 
 
-@groceries.route(f'/{GROC}_{TYPES}_{LIST}')
+@groceries.route(f'/{GROC}_{TYPES}_{LIST}/<user>')
 class GrocTypesList(Resource):
     """
-    Gets list of grocery types
+    Gets all unique types in a user's list
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
-    def get(self):
+    def get(self, user):
         """
-        Returns a list of grocery types.
+        Returns a list of unique types in user's list.
         """
-        types = groc.get_groc_types()
-        return types
-
-
-@groceries.route(f'/{DICT}')
-class GrocDict(Resource):
-    """
-    Gets a dictionary of grocery list info
-    """
-    @api.response(HTTPStatus.OK, "Success")
-    @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    def get(self):
-        """
-        Returns list of grocery lists
-        """
-        list = groc.get_grocery_list()
-        if list is not None:
-            return {'Data': list,
-                    'Type': 'Data',
-                    'Title': 'Grocery List'}
+        if usr.user_exists(user):
+            return groc.get_types(user)
         else:
-            raise wz.NotFound(f'{list} not found.')
+            raise Exception('User does not exist.')
 
 
 GROC_FIELDS = api.model('item', {
-    groc.ITEM: fields.String,
     usr.USERNAME: fields.String,
+    groc.ITEM: fields.String,
     groc.GROC_TYPE: fields.String,
     groc.QUANTITY: fields.Integer,
     groc.EXPIRATION_DATE: fields.String,
@@ -272,19 +263,23 @@ GROC_FIELDS = api.model('item', {
 @groceries.route(f'/{ADD}')
 class AddGrocItem(Resource):
     """
-    Add a grocery item
+    Add a grocery item to the collection
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
     @groceries.expect(GROC_FIELDS)
     def post(self):
         """
-        Add grocery item
+        Add grocery item to the collection
         """
+        # username included in fields
         groc.add_item(request.json)
 
 
-REMOVE_FIELDS = api.model('remove', {groc.ITEM: fields.String})
+REMOVE_FIELDS = api.model('remove',
+                          {groc.ITEM: fields.String,
+                           usr.USERNAME: fields.String
+                           })
 
 
 @groceries.route(f'/{REMOVE}/<item>/<user>')
@@ -307,21 +302,25 @@ class RemoveGrocItem(Resource):
             raise wz.NotFound(f'{item} not found.')
 
 
-@groceries.route(f'/{DETAILS}/<item>')
+@groceries.route(f'/{DETAILS}/<item>/<user>')
 class GrocTypes(Resource):
     """
-    Get details of an item
+    Get details of an item from a user's list
     """
     @api.response(HTTPStatus.OK, "Success")
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
-    def get(self, item):
+    def get(self, item, user):
         """
-        Returns number of items by types
+        Get details of an item from a user's list
         """
-        return groc.get_details(item)
+        if usr.user_exists(user) and groc.exists(item, user):
+            return groc.get_details(item, user)
+        else:
+            raise Exception("User or item invalid.")
 
 
-UPDATE_FIELDS = api.model('update', {groc.ITEM: fields.String})
+UPDATE_FIELDS = api.model('update', {groc.ITEM: fields.String,
+                                     usr.USERNAME: fields.String})
 
 
 @groceries.route(f'/{UPDATE}/{QUANTITY}/<num>')
@@ -339,14 +338,25 @@ class UpdateGrocItem(Resource):
         Update grocery item with relevant new details
         """
         item = request.json[groc.ITEM]  # should this be ITEM?
+        user = request.json[usr.USERNAME]
         del request.json[groc.ITEM]
+        del request[usr.USERNAME]
 
-        # need to update each of the fields if not None
+        # Check if user and item are valid
+        if not usr.user_exists(user):
+            raise Exception('User not found.')
+        if not groc.exists(item, user):
+            raise Exception('Item not found.')
+
+        # Update relevant fields
+        details = {}
         if num is not None:
-            groc.update_quantity(item, num)
+            details[QUANTITY] = num
 
         if date is not None:
-            groc.update_expiration(item, date)
+            details[EXPIRATION] = date
 
         if type is not None:
-            groc.update_groc_type(item, type)
+            details[groc.GROC_TYPE]
+
+        groc.update_item(item, user, details)

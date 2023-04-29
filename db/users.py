@@ -134,7 +134,6 @@ def authenticate(username, password):
         return False
 
 
-# Not changed fully - see comments
 def change_password(username, new_password):
     """
     Changes user's password.
