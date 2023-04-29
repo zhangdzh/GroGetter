@@ -54,28 +54,7 @@ def test_get_user_list(new_groc_item):
     assert len(groceries) > 0
     assert FIXTURE_GROC == groceries[0]
 
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-# # gives pymongo.errors.ServerSelectionTimeoutError
-# def test_get_grocery_list():
-#     """
-#     tests get_grocery_list()
-#     """
-#     '''
-#     groc_list = grocs.get_grocery_list()
-#     assert isinstance(groc_list, dict)
-#     assert len(groc_list) > 0
-#     for item in groc_list:
-#         assert isinstance(item, str)
-#         assert isinstance(groc_list[item], dict)
-#     '''
-#     if not RUNNING_ON_CICD_SERVER:
-#         groceries = grocs.get_grocery_list(usr.TEST_USER_NAME)
-#         assert isinstance(groceries, list)
-#         # length later - perhaps after adding fixture to create new
-#         # note: dict currently empty?
 
-
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_exists(new_groc_item):
     """
     tests exists()
@@ -83,7 +62,6 @@ def test_exists(new_groc_item):
     assert grocs.exists(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME])
 
 
-# @pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_not_exists():
     """
     makes sure that exists works for non-existent items
@@ -91,19 +69,17 @@ def test_not_exists():
     assert not grocs.exists("definitely not a grocery item", "")
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_get_details(new_groc_item):
     """
     tests get_details()
     """
-    assert isinstance(grocs.get_details(FIXTURE_GROC[usr.USERNAME]), dict)
+    assert isinstance(grocs.get_details(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]), dict)
     for field in grocs.REQUIRED_FIELDS:
-        assert field in grocs.get_details(FIXTURE_GROC[usr.USERNAME])
+        assert field in grocs.get_details(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME])
     with pytest.raises(KeyError):
-        grocs.get_details("definitely not a grocery item")
+        grocs.get_details("definitely not a grocery item", '')
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
 def test_add_and_remove_item():
     """
     tests add_item() and remove_item()
