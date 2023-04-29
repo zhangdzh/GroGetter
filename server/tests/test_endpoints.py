@@ -8,6 +8,29 @@ import db.groceries as grocs
 import pytest
 
 TEST_CLIENT = ep.app.test_client()
+TEST_E_ITEM = 'test_endpts_item'
+TEST_USER = 'test_endpts_user'
+TEST_DETAILS = {usr.EMAIL: 'new@email.com', usr.PASSWORD: 'swe'}
+
+
+@pytest.fixture(scope='function')
+def new_user_with_item():
+    usr.add_user(TEST_USER, TEST_DETAILS)
+
+    item = {
+        usr.USERNAME: TEST_USER,
+        grocs.ITEM: TEST_E_ITEM,
+        grocs.GROC_TYPE: grocs.CARBS,
+        grocs.QUANTITY: 99,
+        grocs.EXPIRATION_DATE: '05-08-2023'
+    }
+
+    grocs.add_item(item)
+
+    yield
+
+    grocs.remove_item(TEST_E_ITEM, TEST_USER)
+    usr.del_user(TEST_USER)
 
 
 def test_main_page():
@@ -39,13 +62,12 @@ def test_n_records():
     assert isinstance(resp_json, int)
 
 
-@pytest.mark.skip("Need to check if this method still exists.")
-def test_get_groc_type_list():
+def test_get_groc_type_list(new_user_with_item):
     """
     Check if grocery type list is proper
     """
     resp_json = TEST_CLIENT.get(
-        f'/{ep.GROC}/{ep.GROC}_{ep.TYPES}_{ep.LIST}').get_json()
+        f'/{ep.GROC}/{ep.GROC}_{ep.TYPES}_{ep.LIST}/{TEST_USER}').get_json()
     print(resp_json)
     # resp_json[ep.GROC_TYPE_LIST_NM] --> keyerror with "grocery_types_list"
     assert isinstance(resp_json, list)

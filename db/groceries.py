@@ -82,7 +82,7 @@ def get_types(user) -> list:
     returns all unique grocery types in the grocery list
     """
     types = []
-    for item in get_user_list():
+    for item in get_user_list(user):
         if item[GROC_TYPE] not in types:
             types.append(item[GROC_TYPE])
     return types
@@ -107,7 +107,7 @@ def remove_item(item: str, user: str):
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
-    if not exists(item):
+    if not exists(item, user):
         raise KeyError(f'Item {item=} not in grocery list.')
     dbc.connect_db()
     dbc.del_one(GROC_COLLECT, {ITEM: item, USERNAME: user})
