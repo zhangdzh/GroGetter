@@ -41,8 +41,6 @@ LOGIN = 'login'
 DEVELOPER = 'developer'
 
 # name spaces
-groc_lists = Namespace(GROC_LIST, 'Grocery Lists')
-api.add_namespace(groc_lists)
 users = Namespace(USERS, 'Users')
 api.add_namespace(users)
 groceries = Namespace(GROC, 'Groceries')
@@ -52,22 +50,6 @@ api.add_namespace(developer)
 
 
 # api namespace endpoints
-@api.route('/endpoints')
-class Endpoints(Resource):
-    """
-    This class will serve as live, fetchable documentation of what endpoints
-    are available in the system.
-    """
-
-    def get(self):
-        """
-        The `get()` method will return a list of available endpoints.
-        """
-        endpoints = ''
-        # sorted(rule.rule for rule in api.app.url_map.iter_rules())
-        return {"Available endpoints": endpoints}
-
-
 @api.route(MAIN_PAGE)
 class MainPage(Resource):
     """
@@ -81,7 +63,7 @@ class MainPage(Resource):
         return {'Title': MAIN_PAGE_NM,
                 'Default': 0,
                 'Choices': {
-                    '1': {'text': 'List Grocery Types'},
+                    '1': {'text': 'List Groceries'},
                 }}
 
 
@@ -98,12 +80,10 @@ class MainMenu(Resource):
         return {'Title': MAIN_MENU_NM,
                 'Default': 0,
                 'Choices': {
-                    '1': {'url': '/groc/items',
-                          'method': 'get', 'text': 'Show Grocery Items'},
-                    '2': {'url': '/groc/dict',
-                          'method': 'get', 'text': 'Show Grocery Lists'},
-                    '3': {'url': '/users/dict',  # invalid path (no more dicts)
+                    '1': {'url': '/users/list',
                           'method': 'get', 'text': 'Show Users'},
+                    '2': {'url': '/users/login',
+                          'method': 'get', 'text': 'User Login'},
                     'X': {'text': 'Exit'},
                 }}
 
@@ -131,6 +111,7 @@ class Purge(Resource):
     def delete(self, collection):
         """
         Empties collection
+        :param collection: Name of collection
         """
         if collection == usr.USER_COLLECT:
             usr.purge()
@@ -207,6 +188,7 @@ class UserEmail(Resource):
     def get(self, name):
         """
         Get a user's email.
+        :param name: User name
         """
         if usr.user_exists(name):
             return usr.get_email(name)
@@ -225,8 +207,8 @@ class Login(Resource):
     @users.expect(LOGIN_FIELDS)
     def post(self):
         """
-        calls the authenticate function to login
-        returns true if successful, false if not
+        Calls the authenticate function to login
+        Returns true if successful, false if not
         """
         name = request.json[usr.USERNAME]
         pw = request.json[usr.PASSWORD]
@@ -244,6 +226,7 @@ class GrocItems(Resource):
     def get(self, user):
         """
         Returns list of user's grocery items.
+        :param user: User name
         """
         items = groc.get_user_list(user)
         if isinstance(items, list):
@@ -263,6 +246,7 @@ class GrocTypesList(Resource):
     def get(self, user):
         """
         Returns a list of unique types in user's list.
+        :param user: User name
         """
         if usr.user_exists(user):
             return groc.get_types(user)
@@ -338,6 +322,8 @@ class GrocTypes(Resource):
     def get(self, user, item):
         """
         Get details of an item from a user's list
+        :param user: User name
+        :param item: Item name
         """
         if usr.user_exists(user) and groc.exists(item, user):
             return groc.get_details(item, user)
@@ -360,6 +346,8 @@ class UpdateGrocItem(Resource):
     def put(self, field, data):
         """
         Update grocery item with relevant new details
+        :param field: Field to update
+        :param data: Replacement data for field
         """
         item = request.json[groc.ITEM]  # should this be ITEM?
         user = request.json[usr.USERNAME]
