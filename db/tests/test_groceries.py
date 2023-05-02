@@ -144,8 +144,10 @@ def test_update_quanitity(new_groc_item):
         grocs.QUANTITY: 4,
         grocs.EXPIRATION_DATE: "10-31-2024"
     }
-    grocs.update_item(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME], updated)
-    assert grocs.get_details(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
+    grocs.update_item(FIXTURE_GROC[grocs.ITEM],
+                      FIXTURE_GROC[usr.USERNAME], updated)
+    assert grocs.get_details(
+        FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
 
 
 def test_update_expiration_date(new_groc_item):
@@ -160,8 +162,10 @@ def test_update_expiration_date(new_groc_item):
         grocs.EXPIRATION_DATE: "10-31-2025"
     }
 
-    grocs.update_item(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME], updated)
-    assert grocs.get_details(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
+    grocs.update_item(FIXTURE_GROC[grocs.ITEM],
+                      FIXTURE_GROC[usr.USERNAME], updated)
+    assert grocs.get_details(
+        FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
 
 
 def test_update_groc_type(new_groc_item):
@@ -176,8 +180,10 @@ def test_update_groc_type(new_groc_item):
         grocs.EXPIRATION_DATE: "10-31-2025"
     }
 
-    grocs.update_item(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME], updated)
-    assert grocs.get_details(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
+    grocs.update_item(FIXTURE_GROC[grocs.ITEM],
+                      FIXTURE_GROC[usr.USERNAME], updated)
+    assert grocs.get_details(
+        FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME]) == updated
 
 
 def test_update_item_name_and_mult_field(new_groc_item):
@@ -193,8 +199,10 @@ def test_update_item_name_and_mult_field(new_groc_item):
         grocs.EXPIRATION_DATE: "10-31-2025"
     }
 
-    grocs.update_item(FIXTURE_GROC[grocs.ITEM], FIXTURE_GROC[usr.USERNAME], updated)
-    assert grocs.get_details(updated[grocs.ITEM], updated[usr.USERNAME]) == updated
+    grocs.update_item(FIXTURE_GROC[grocs.ITEM],
+                      FIXTURE_GROC[usr.USERNAME], updated)
+    assert grocs.get_details(
+        updated[grocs.ITEM], updated[usr.USERNAME]) == updated
 
     # change back to original fixture
     updated = {
@@ -206,46 +214,11 @@ def test_update_item_name_and_mult_field(new_groc_item):
     }
 
     grocs.update_item("test2", updated[usr.USERNAME], updated)
-    assert grocs.get_details(updated[grocs.ITEM], updated[usr.USERNAME]) == updated
+    assert grocs.get_details(
+        updated[grocs.ITEM], updated[usr.USERNAME]) == updated
 
 
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_raised_exceptions_for_add_item():
-    """
-    tests raised exceptions for add_item()
-    """
-    TEST_GROCERY = {
-
-        grocs.GROC_TYPE: grocs.MISC,
-        grocs.QUANTITY: 10,
-        grocs.EXPIRATION_DATE: "10-20-2022"
-    }
-    TEST_ITEM = 1
-    with pytest.raises(TypeError):
-        grocs.add_item(TEST_ITEM, TEST_GROCERY)
-    TEST_ITEM = "item1"
-    with pytest.raises(ValueError):
-        grocs.add_item(TEST_ITEM, TEST_GROCERY)
-    TEST_ITEM = "item2"
-    TEST_GROCERY[grocs.GROC_TYPE] = "invalid"
-    with pytest.raises(ValueError):
-        grocs.add_item(TEST_ITEM, TEST_GROCERY)
-    TEST_GROCERY = {
-        grocs.QUANTITY: 10,
-        grocs.EXPIRATION_DATE: "10-20-2022"
-    }
-    with pytest.raises(KeyError):
-        grocs.add_item(TEST_ITEM, TEST_GROCERY)
-
-
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_add_item_dup(new_groc_item):
-    with pytest.raises(ValueError):
-        grocs.add_item(FIXTURE_GROC[usr.USERNAME], FIXTURE_GROC)
-
-
-@pytest.mark.skip("Can't run this test until the we figure out MongoDB Connection.")
-def test_get_grocs_by_type(new_groc_item):
-    type_items = grocs.get_grocs_by_type(grocs.CARBS)
-    assert isinstance(type_items, dict)
+def test_get_types(new_groc_item):
+    type_items = grocs.get_types(usr.TEST_USER_NAME)
+    assert isinstance(type_items, list)
     assert len(type_items) > 0
