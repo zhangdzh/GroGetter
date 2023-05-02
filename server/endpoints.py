@@ -97,7 +97,8 @@ class Records(Resource):
 
     def get(self):
         """
-        Returns number of records in database
+        Gets number of records in database
+        :return: Number of records
         """
         return len(groc.get_all_items())
 
@@ -110,7 +111,7 @@ class Purge(Resource):
 
     def delete(self, collection):
         """
-        Empties collection
+        Empties collection of all records
         :param collection: Name of collection
         """
         if collection == usr.USER_COLLECT:
@@ -130,7 +131,8 @@ class UserList(Resource):
 
     def get(self):
         """
-        Returns a list of current users.
+        Gets all existing users
+        :return: List of usernames
         """
         return usr.get_usernames()
 
@@ -170,7 +172,7 @@ class RemoveUser(Resource):
     @users.expect(REMOVE_USER)
     def post(self):
         """
-        Remove a user using the del_user function.
+        Remove a user from collection.
         """
         name = request.json[usr.USERNAME]
         if usr.user_exists(name):
@@ -189,6 +191,7 @@ class UserEmail(Resource):
         """
         Get a user's email.
         :param name: User name
+        :return: User email
         """
         if usr.user_exists(name):
             return usr.get_email(name)
@@ -207,8 +210,8 @@ class Login(Resource):
     @users.expect(LOGIN_FIELDS)
     def post(self):
         """
-        Calls the authenticate function to login
-        Returns true if successful, false if not
+        Authenticates a login attempt
+        :return: True if successful, False if not
         """
         name = request.json[usr.USERNAME]
         pw = request.json[usr.PASSWORD]
@@ -225,8 +228,9 @@ class GrocItems(Resource):
     @api.response(HTTPStatus.NOT_FOUND, "Not Found")
     def get(self, user):
         """
-        Returns list of user's grocery items.
+        Gets list of user's grocery items.
         :param user: User name
+        :return: List of grocery items
         """
         items = groc.get_user_list(user)
         if isinstance(items, list):
@@ -245,8 +249,9 @@ class GrocTypesList(Resource):
     @api.response(HTTPStatus.BAD_REQUEST, "Bad Request")
     def get(self, user):
         """
-        Returns a list of unique types in user's list.
+        Gets the unique grocery types in user's list.
         :param user: User name
+        :return: List of grocery types
         """
         if usr.user_exists(user):
             return groc.get_types(user)
@@ -324,6 +329,7 @@ class GrocTypes(Resource):
         Get details of an item from a user's list
         :param user: User name
         :param item: Item name
+        :return: Details of an item
         """
         if usr.user_exists(user) and groc.exists(item, user):
             return groc.get_details(item, user)
