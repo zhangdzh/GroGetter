@@ -142,7 +142,6 @@ def remove_item(item: str, user: str):
 def update_item(item: str, user: str, details: dict):
     """
     Updates all details of an item in the grocery list
-    
     :param item: Name of item to update
     :param details: Details to be changed
     """
