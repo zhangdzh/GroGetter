@@ -45,7 +45,9 @@ REQUIRED_FIELDS = [USERNAME, GROC_TYPE, QUANTITY, EXPIRATION_DATE]
 
 def get_all_items() -> list:
     """
-    Returns all items of all users in the collection
+    Gets all items of all users in the collection
+
+    :return: list of all items
     """
     dbc.connect_db()
     return dbc.fetch_all(GROC_COLLECT)
@@ -53,7 +55,10 @@ def get_all_items() -> list:
 
 def get_user_list(user) -> list:
     """
-    Returns a user's list of items
+    Gets a user's list of items
+
+    :param user: username of the user
+    :return: list of items
     """
     dbc.connect_db()
     filter = {USERNAME: user}
@@ -62,7 +67,11 @@ def get_user_list(user) -> list:
 
 def exists(item: str, user) -> bool:
     """
-    returns True if item exists in the user's list
+    Determine if an item exists in the user's grocery list
+
+    :param item: item to check
+    :param user: username of the user
+    :return: True if item exists, False otherwise
     """
     for doc in get_user_list(user):
         if doc[ITEM] == item:
@@ -72,7 +81,11 @@ def exists(item: str, user) -> bool:
 
 def get_details(item: str, user: str) -> dict:
     """
-    returns a dictionary of details for a singular grocery item
+    Gets the details for a singular grocery item
+
+    :param item: item to get details for
+    :param user: username of the user
+    :return: dictionary of details
     """
     filter = {ITEM: item, USERNAME: user}
     dbc.connect_db()
@@ -83,7 +96,10 @@ def get_details(item: str, user: str) -> dict:
 
 def get_types(user) -> list:
     """
-    returns all unique grocery types in the grocery list
+    Gets all unique grocery types in the grocery list
+
+    :param user: username of the user
+    :return: list of grocery types
     """
     types = []
     for item in get_user_list(user):
@@ -94,7 +110,9 @@ def get_types(user) -> list:
 
 def add_item(details: dict):
     """
-    adds an item to the user's grocery list
+    Adds an item to the user's grocery list
+
+    :param details: dictionary of details for the item
     """
     if not isinstance(details, dict):
         raise TypeError(f'Wrong type for details: {type(details)=}')
@@ -107,7 +125,10 @@ def add_item(details: dict):
 
 def remove_item(item: str, user: str):
     """
-    removes an item from the grocery list
+    Removes an item from the user's grocery list
+
+    :param item: item to remove
+    :param user: username of the user
     """
     if not isinstance(item, str):
         raise TypeError(f'Wrong type for item: {type(item)=}')
@@ -121,6 +142,7 @@ def remove_item(item: str, user: str):
 def update_item(item: str, user: str, details: dict):
     """
     Updates all details of an item in the grocery list
+    
     :param item: Name of item to update
     :param details: Details to be changed
     """
