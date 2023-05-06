@@ -1,22 +1,9 @@
-Documentation of current issues:
+Documentation of current issues/future improvements:
 - Some groceries methods not incorporated into endpoints
-    - Revisit and see which ones are needed
-- Grocery update endpoints have been reorganized and different fields can be updated
-    note: this is not consolidated into one singular endpoint, 
-    because it didn't seem to make sense; if we want one singular endpoint,
-    we would have to figure out a different organization
-- Mongodb should be connected now with the new environ var, but the get groc 
-    endpoint isn't working because of our groceries structure in the db right now. 
-    This might be because the current single item is wrong. so have to input 
-    a new item to test the get item.
-        - 4/23 update: add_item fixed to work with low-level organization
-                issues due to parameter orders have been fixed, but if we 
-                modify the organization of the document then we would need to 
-                revisit this again
-- Need to solidify what a document looks like, so all the code can follow the same regulations
-- User methods have been converted to Mongo; need to flesh out corresponding tests and endpoint tests
-- Login endpoint currently pending test
+    - No pressing need at the moment; can revisit and incorporate
+- Passwords currently not hashed
 
 Notes:
 - Database is called "groceries"
-- Collection is called "grocdb" at the moment
+- Groceries collection is called "grocdb"
+- Users collection is called "userdb"
